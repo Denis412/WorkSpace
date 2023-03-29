@@ -45,7 +45,7 @@ module.exports = configure(function (/* ctx */) {
       },
 
       env: {
-        GRAPHQL_URI: "https://app.stud.druid.1t.ru",
+        GRAPHQL_URI: "https://app.stud.druid.1t.ru/graphiql",
         FILE_STORAGE_URI: "https://cdn.stud.druid.1t.ru",
         RABBITMQ_WEBSTOMP_URI: "wss://stud.druid.1t.ru/ws",
       },
