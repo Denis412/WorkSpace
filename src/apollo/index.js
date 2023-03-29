@@ -1,10 +1,27 @@
 import { createHttpLink, InMemoryCache } from "@apollo/client/core";
+import { setContext } from "@apollo/client/link/context";
+
 export function getClientOptions() {
+  const httpLink = createHttpLink({
+    uri: process.env.GRAPHQL_URI || "https://app.dev.druid.1t.ru/graphql",
+  });
+
+  const authLink = setContext((_, { headers }) => {
+    // const token = sessionStorage.getItem("token");
+
+    return {
+      headers: {
+        ...headers,
+        // Authorization: "Bearer ",
+      },
+    };
+  });
+
+  // console.log(authLink);
+
   return Object.assign(
     {
-      link: createHttpLink({
-        uri: process.env.GRAPHQL_URI || "https://example.com/graphql",
-      }),
+      link: authLink.concat(httpLink),
       cache: new InMemoryCache(),
     },
     process.env.MODE === "spa"

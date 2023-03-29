@@ -1,7 +1,7 @@
 <template>
   <q-form
     class="flex column rounded-borders bg-grey-3 justify-between q-pa-md form-width"
-    @submit="login"
+    @submit="signIn"
   >
     <header class="text-center text-h6">Вход</header>
 
@@ -32,13 +32,30 @@
 
 <script setup>
 import { ref } from "vue";
+import { useRouter } from "vue-router";
+import userApi from "src/sdk/user";
+
+const router = useRouter();
 
 const form = ref({
   email: "",
   password: "",
 });
 
-const login = () => {};
+const signIn = async () => {
+  try {
+    await userApi.signIn({
+      email: form.value.email,
+      password: form.value.password,
+    });
+
+    router.push({
+      name: "home",
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
 </script>
 
 <style scoped>
