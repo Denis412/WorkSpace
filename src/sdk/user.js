@@ -13,16 +13,17 @@ const { mutate: userSignIn } = useMutation(UserSignIn);
 const { refetch: refetchUser } = useQuery(User);
 
 const signIn = async ({ email, password }) => {
-  const { data: signedInf, error } = await userSignIn({
+  const { data: signedInf, error: signInError } = await userSignIn({
     input: {
       login: email,
       password: password,
     },
   });
 
-  if (error) throw error;
+  if (signInError) throw signInError;
 
   sessionStorage.setItem("token", signedInf.userSignIn.record.access_token); // Небезопасно! Надо переделать
+  sessionStorage.setItem("refresh", signedInf.userSignIn.record.refresh_token); // Небезопасно! Надо переделать
 
   const { data: signedUser, error: fetchUserError } = await refetchUser({
     id: signedInf.userSignIn.recordId,
