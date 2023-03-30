@@ -7,12 +7,12 @@ export function getClientOptions() {
   });
 
   const authLink = setContext((_, { headers }) => {
-    // const token = sessionStorage.getItem("token");
+    const token = sessionStorage.getItem("token");
 
     return {
       headers: {
         ...headers,
-        // Authorization: "Bearer ",
+        Authorization: token ? `Bearer ${token}` : "",
       },
     };
   });

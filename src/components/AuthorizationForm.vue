@@ -34,8 +34,10 @@
 import { ref } from "vue";
 import { useRouter } from "vue-router";
 import userApi from "src/sdk/user";
+import { useStore } from "vuex";
 
 const router = useRouter();
+const store = useStore();
 
 const form = ref({
   email: "",
@@ -44,10 +46,12 @@ const form = ref({
 
 const signIn = async () => {
   try {
-    await userApi.signIn({
+    const user = await userApi.signIn({
       email: form.value.email,
       password: form.value.password,
     });
+
+    store.commit("user/SET_CURRENT_USER", user);
 
     router.push({
       name: "home",
