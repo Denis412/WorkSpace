@@ -9,7 +9,7 @@
       </div>
     </q-item-section>
 
-    <q-item-section class="ml-md">
+    <q-item-section class="ml-md" v-if="validLengths">
       <SubjectsList :subjects="subjects?.get_group?.subject" />
 
       <TreeMenu :pages="page?.children?.data" />
@@ -18,9 +18,9 @@
 </template>
 
 <script setup>
+import { computed } from "vue";
 import { useQuery } from "@vue/apollo-composable";
 import { getGroupSubjects } from "src/graphql/queries";
-import { watch } from "vue";
 import TreeMenu from "./TreeMenu.vue";
 import SubjectsList from "./SubjectsList.vue";
 
@@ -28,20 +28,12 @@ const { page } = defineProps({
   page: Object,
 });
 
-const { result: subjects, refetch: refetchSubjects } = useQuery(
-  getGroupSubjects,
-  {
-    group_id: page?.object?.id,
-  }
-);
-
-watch(page, async (value) => {
-  if (!value) return;
-
-  const { data } = await refetchSubjects({
-    group_id: value?.object?.id,
-  });
-
-  console.log(data);
+const { result: subjects } = useQuery(getGroupSubjects, {
+  group_id: page?.object?.id,
 });
+
+const validLengths = computed(
+  () =>
+    subjects?.value?.get_group?.subject.length || page?.children?.data.length
+);
 </script>
