@@ -24,10 +24,25 @@ export const userGroupInviteUser = gql`
 `;
 
 export const permissionRuleCreate = gql`
-  mutation permissionRuleDelete($id: String!) {
-    permissionRuleDelete(id: $id) {
+  mutation permissionRuleUpdate(
+    $id: String!
+    $input: PermissionRuleUpdateInput!
+  ) {
+    permissionRuleUpdate(input: $input, id: $id) {
       recordId
       status
+      record {
+        id
+        author_id
+        level
+        model_type
+        model_id
+        config
+        owner_id
+        owner_type
+        created_at
+        updated_at
+      }
     }
   }
 `;

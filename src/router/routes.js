@@ -14,7 +14,11 @@ const routes = [
     path: "/auth",
     component: () => import("layouts/AuthorizationLayout.vue"),
     children: [
-      { path: "", component: () => import("pages/AuthorizationPage.vue") },
+      {
+        path: "",
+        name: "auth",
+        component: () => import("pages/AuthorizationPage.vue"),
+      },
     ],
   },
   {

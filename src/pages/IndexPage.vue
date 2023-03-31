@@ -12,16 +12,10 @@ const { mutate: inviteGroup } = useMutation(permissionRuleCreate);
 
 const cl = async () => {
   try {
-    // const { data } = await inviteGroup({
-    //   id: "8163715384260902784",
-    // });
     const { data } = await inviteGroup({
+      id: "2636443846587274552",
       input: {
-        model_type: "page",
-        model_id: "7077578782196173015",
-        owner_type: "group",
-        owner_id: "5983896088280179804",
-        level: 7,
+        level: 5,
       },
     });
 
