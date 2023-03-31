@@ -22,3 +22,12 @@ export const userGroupInviteUser = gql`
     }
   }
 `;
+
+export const permissionRuleCreate = gql`
+  mutation permissionRuleDelete($id: String!) {
+    permissionRuleDelete(id: $id) {
+      recordId
+      status
+    }
+  }
+`;

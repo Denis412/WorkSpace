@@ -1,18 +1,19 @@
 <template>
   <q-item class="q-pa-none column">
-    <q-item-section
-      class="cursor-pointer hover-menu-item rounded-borders q-pa-sm"
+    <q-item
+      clickable
+      class="cursor-pointer rounded-borders q-pa-sm flex items-center"
     >
       <div>
-        <q-icon :name="page.icon" />
+        <q-icon v-if="page.icon" :name="page.icon" />
         {{ page.title }}
       </div>
-    </q-item-section>
+    </q-item>
 
-    <q-item-section class="ml-md" v-if="validLengths">
-      <SubjectsList :subjects="subjects?.get_group?.subject" />
+    <q-item-section class="ml-md" v-if="isSubjects || isChildrens">
+      <SubjectsList v-if="isSubjects" :subjects="subjects?.get_group.subject" />
 
-      <TreeMenu :pages="page?.children?.data" />
+      <TreeMenu v-if="isChildrens" :pages="page.children?.data" />
     </q-item-section>
   </q-item>
 </template>
@@ -32,8 +33,6 @@ const { result: subjects } = useQuery(getGroupSubjects, {
   group_id: page?.object?.id,
 });
 
-const validLengths = computed(
-  () =>
-    subjects?.value?.get_group?.subject.length || page?.children?.data.length
-);
+const isSubjects = computed(() => subjects.value?.get_group.subject.length);
+const isChildrens = computed(() => page.children?.data.length);
 </script>

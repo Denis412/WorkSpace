@@ -6,18 +6,22 @@
 
 <script setup>
 import { useMutation } from "@vue/apollo-composable";
-import { userGroupInviteUser } from "src/graphql/mutations";
+import { permissionRuleCreate } from "src/graphql/mutations";
 
-const { mutate: inviteGroup } = useMutation(userGroupInviteUser);
+const { mutate: inviteGroup } = useMutation(permissionRuleCreate);
 
 const cl = async () => {
   try {
+    // const { data } = await inviteGroup({
+    //   id: "8163715384260902784",
+    // });
     const { data } = await inviteGroup({
       input: {
-        name: "Vika",
-        surname: "Payko",
-        email: "miapozilaa785@gmail.com",
-        page_group_id: "4752300662842270917",
+        model_type: "page",
+        model_id: "7077578782196173015",
+        owner_type: "group",
+        owner_id: "5983896088280179804",
+        level: 7,
       },
     });
 

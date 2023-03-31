@@ -10,7 +10,6 @@
 
     <q-page-container>
       <!-- <pre>{{ currentSpacePages?.rootPages?.data }}</pre> -->
-      <pre>{{ test }}</pre>
       <router-view v-slot="{ Component }">
         <keep-alive>
           <component :is="Component" />
