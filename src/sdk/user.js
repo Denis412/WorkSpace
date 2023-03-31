@@ -22,6 +22,8 @@ const signIn = async ({ email, password }) => {
 
   if (signInError) throw signInError;
 
+  console.log(signedInf.userSignIn.record.access_token);
+
   sessionStorage.setItem("token", signedInf.userSignIn.record.access_token); // Небезопасно! Надо переделать
   sessionStorage.setItem("refresh", signedInf.userSignIn.record.refresh_token); // Небезопасно! Надо переделать
 

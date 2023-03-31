@@ -19,3 +19,52 @@ export const User = gql`
     }
   }
 `;
+
+export const pages = gql`
+  query pages {
+    rootPages {
+      data {
+        id
+        parent_id
+        page_type
+        title
+        content
+        icon
+        level
+        is_public
+        is_block
+        position
+        config
+        created_at
+        updated_at
+        children {
+          data {
+            id
+            parent_id
+            page_type
+            title
+            content
+            icon
+            level
+            is_public
+            is_block
+            position
+            config
+            created_at
+            updated_at
+          }
+        }
+      }
+      paginatorInfo {
+        perPage
+        count
+        total
+        currentPage
+        from
+        to
+        lastPage
+        hasMorePages
+      }
+    }
+  }
+`;

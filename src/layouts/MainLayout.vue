@@ -4,7 +4,7 @@
 
     <MainDrawer v-model="leftDrawerOpen" side="left" title="Список">
       <template #list>
-        <TreeMenu :nodes="tree.nodes" :depth="0" :label="tree.label" />
+        <TreeMenu :pages="currentSpacePages?.rootPages?.data" />
       </template>
     </MainDrawer>
 
@@ -26,33 +26,15 @@ import MainHeader from "src/components/MainHeader.vue";
 import MainDrawer from "src/components/MainDrawer.vue";
 import MainFooter from "src/components/MainFooter.vue";
 import TreeMenu from "src/components/TreeMenu.vue";
+import { provideApolloClient, useQuery } from "@vue/apollo-composable";
+import { pages } from "src/graphql/queries";
+import apolloClient from "src/apollo/apollo-client";
+
+provideApolloClient(apolloClient);
 
 const leftDrawerOpen = ref(false);
 
-let tree = ref({
-  label: "root",
-  nodes: [
-    {
-      label: "item1",
-      nodes: [
-        {
-          label: "item1.1",
-        },
-        {
-          label: "item1.2",
-          nodes: [
-            {
-              label: "item1.2.1",
-            },
-          ],
-        },
-      ],
-    },
-    {
-      label: "item2",
-    },
-  ],
-});
+const { result: currentSpacePages } = useQuery(pages);
 
 const toggleLeftDrawer = () => {
   leftDrawerOpen.value = !leftDrawerOpen.value;
