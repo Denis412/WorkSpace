@@ -9,6 +9,8 @@
     </MainDrawer>
 
     <q-page-container>
+      <!-- <pre>{{ currentSpacePages?.rootPages?.data }}</pre> -->
+      <pre>{{ test }}</pre>
       <router-view v-slot="{ Component }">
         <keep-alive>
           <component :is="Component" />
@@ -27,7 +29,7 @@ import MainDrawer from "src/components/MainDrawer.vue";
 import MainFooter from "src/components/MainFooter.vue";
 import TreeMenu from "src/components/TreeMenu.vue";
 import { provideApolloClient, useQuery } from "@vue/apollo-composable";
-import { pages } from "src/graphql/queries";
+import { pages, testQuery } from "src/graphql/queries";
 import apolloClient from "src/apollo/apollo-client";
 
 provideApolloClient(apolloClient);
@@ -35,6 +37,7 @@ provideApolloClient(apolloClient);
 const leftDrawerOpen = ref(false);
 
 const { result: currentSpacePages } = useQuery(pages);
+const { result: test } = useQuery(testQuery);
 
 const toggleLeftDrawer = () => {
   leftDrawerOpen.value = !leftDrawerOpen.value;

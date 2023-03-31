@@ -11,11 +11,3 @@ const { pages } = defineProps({
   pages: Array,
 });
 </script>
-
-<style lang="scss">
-.hover-item {
-  &:hover {
-    background-color: lightgray;
-  }
-}
-</style>

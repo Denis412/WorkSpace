@@ -14,3 +14,11 @@ export const UserSignIn = gql`
     }
   }
 `;
+
+export const userGroupInviteUser = gql`
+  mutation userGroupInviteUser($input: UserGroupInviteUserInput!) {
+    userGroupInviteUser(input: $input) {
+      status
+    }
+  }
+`;
