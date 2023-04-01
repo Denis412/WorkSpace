@@ -7,7 +7,6 @@
 <script setup>
 import { useMutation } from "@vue/apollo-composable";
 import { createModule } from "src/graphql/mutations";
-import MainTable from "src/components/MainTable.vue";
 
 const { mutate: inviteGroup } = useMutation(createModule);
 

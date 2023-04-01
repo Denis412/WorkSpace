@@ -1,9 +1,11 @@
 <template>
-  <MainTable :subjects="subjects?.get_group?.subject" />
+  <MainTable
+    :columnNames="['Имя', 'Фамилия', 'Список групп']"
+    :subjects="subjects?.get_group?.subject"
+  />
 </template>
 
 <script setup>
-import Table from "src/components/PageTable.vue";
 import { computed } from "vue";
 import { getPage, getGroupSubjects } from "src/graphql/queries";
 import { useQuery } from "@vue/apollo-composable";

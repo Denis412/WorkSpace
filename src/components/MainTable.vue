@@ -2,40 +2,33 @@
   <table class="border-black-1 rounded-borders">
     <thead class="rounded-borders border-black-1">
       <tr>
-        <th class="q-pa-md">Имя</th>
-        <th class="q-pa-md">Фамилия</th>
-        <th class="q-pa-md">Список групп</th>
+        <th
+          v-for="columnName in columnNames"
+          :key="columnName"
+          class="q-pa-md text-center"
+        >
+          {{ columnName }}
+        </th>
       </tr>
     </thead>
 
-    <tbody>
-      <tr v-for="subject in subjects" :key="subject.id" class="border-bottom">
-        <td class="q-pa-md text-center">
-          {{ subject.fullname.first_name }}
-        </td>
-
-        <td class="q-pa-md text-center">
-          {{ subject.fullname.last_name }}
-        </td>
-
-        <td class="q-pa-md text-center">
-          <div v-for="group in subject.group" :key="group.id">
-            {{ group.name }}
-          </div>
-        </td>
-      </tr>
-    </tbody>
+    <MainTableModulesBody v-if="modules" :modules="modules" />
+    <MainTableSubjectsBody v-else-if="subjects" :subjects="subjects" />
+    <MainTableTasksBody v-else-if="tasks" :tasks="tasks" />
   </table>
 </template>
 
 <script setup>
-const { subjects } = defineProps({
-  subjects: Array,
-});
+import MainTableModulesBody from "src/components/MainTableModulesBody.vue";
+import MainTableSubjectsBody from "src/components/MainTableSubjectsBody.vue";
+import MainTableTasksBody from "src/components/MainTableTaskBody.vue";
 
-// const subjectColumns = () => {
-//   Object.keys(subject).
-// }
+const { columnNames, subjects, modules, tasks } = defineProps({
+  columnNames: Array,
+  subjects: Array,
+  modules: Array,
+  tasks: Array,
+});
 </script>
 
 <style>
