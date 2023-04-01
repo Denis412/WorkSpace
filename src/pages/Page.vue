@@ -5,6 +5,7 @@
  :subjects="subjects?.get_group?.subject"
  :linkPath="'subject'"
  :pageId="page?.page?.id"
+ :groupId="page?.page?.object.id"
  />
 </template>
 
