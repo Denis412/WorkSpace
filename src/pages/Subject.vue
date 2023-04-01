@@ -1,5 +1,8 @@
 <template>
-  <Table :title="getName()"/>
+  <Table
+  :title="getName()"
+  :groups="subject?.get_subject?.group"
+  :information="[{name:getName()},{name:subject?.get_subject?.email?.email}]"/>
 </template>
 
 <script setup>
@@ -17,6 +20,7 @@ const {result:subject} = useQuery(getSubject,{
 
 const getName = ()=>{
   const fullname = subject.value?.get_subject?.fullname;
+  console.log(subject.value?.get_subject.group)
   return (
     fullname?.first_name+' '+fullname?.last_name
   )
