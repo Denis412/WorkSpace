@@ -5,29 +5,26 @@
       class="cursor-pointer rounded-borders q-pa-sm flex items-center"
     >
       <div>
+        <q-icon
+          @click="toggleShowChildrens"
+          class="icon text-h6"
+          v-if="isSubjects || isChildrens"
+          :name="arrowType"
+        />
+
         <q-icon v-if="page.icon" :name="page.icon" />
+
         {{ page.title }}
       </div>
     </q-item>
 
-    <q-item-section class="ml-md" v-if="isSubjects || isChildrens">
+    <q-item-section
+      class="ml-md"
+      v-if="(isSubjects || isChildrens) && showChildrens"
+    >
       <SubjectsList v-if="isSubjects" :subjects="subjects?.get_group.subject" />
 
       <TreeMenu v-if="isChildrens" :pages="page.children?.data" />
-    <q-item-section class="cursor-pointer hover-item rounded-borders q-pa-sm">
-      <div>
-        <q-icon
-          v-on:click="openHandler()"
-          class="icon"
-          v-if="page?.children?.data?.length > 0"
-          :name="arrowName"
-        />
-        {{ page.title }}
-      </div>
-    </q-item-section>
-
-    <q-item-section class="ml-md" v-if="page?.children?.data.length && isOpen">
-      <TreeMenu :pages="page?.children?.data" />
     </q-item-section>
   </q-item>
 </template>
@@ -48,15 +45,17 @@ const { result: subjects } = useQuery(getGroupSubjects, {
   group_id: page?.object?.id,
 });
 
+const arrowType = ref("keyboard_arrow_right");
+const showChildrens = ref(false);
+
 const isSubjects = computed(() => subjects.value?.get_group.subject.length);
 const isChildrens = computed(() => page.children?.data.length);
-let arrowName = ref("keyboard_arrow_right");
 
-let isOpen = ref(false);
-function openHandler() {
-  isOpen.value = !isOpen.value;
-  arrowName.value = isOpen.value
+const toggleShowChildrens = () => {
+  showChildrens.value = !showChildrens.value;
+
+  arrowType.value = showChildrens.value
     ? "keyboard_arrow_down"
     : "keyboard_arrow_right";
-}
+};
 </script>
