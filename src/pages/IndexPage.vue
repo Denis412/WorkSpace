@@ -8,7 +8,6 @@
 <script setup>
 import { useMutation } from "@vue/apollo-composable";
 import { createModule } from "src/graphql/mutations";
-
 import ModuleCreateForm from "src/components/ModuleCreateForm.vue";
 
 const { mutate: inviteGroup } = useMutation(createModule);

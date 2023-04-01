@@ -102,6 +102,56 @@ export const getGroupSubjects = gql`
   }
 `;
 
+export const getResponsibleGroupSubjects = gql`
+  query getGroupSubjects {
+    get_group(id: "5983896088280179804") {
+      id
+      author_id
+      name
+      description
+      created_at
+      updated_at
+      subject {
+        fullname {
+          first_name
+          last_name
+        }
+        group {
+          id
+          name
+        }
+        user_id
+        id
+      }
+    }
+  }
+`;
+
+export const getExecutorGroupSubjects = gql`
+  query getGroupSubjects {
+    get_group(id: "5631823475896040655") {
+      id
+      author_id
+      name
+      description
+      created_at
+      updated_at
+      subject {
+        fullname {
+          first_name
+          last_name
+        }
+        group {
+          id
+          name
+        }
+        user_id
+        id
+      }
+    }
+  }
+`;
+
 export const getSubject = gql`
   query getSubject($id: String!) {
     get_subject(id: $id) {
