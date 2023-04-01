@@ -1,14 +1,18 @@
 <template>
   <q-item class="q-pa-none column">
+    <router-link :to="{name:'page',params:{id:page.id}}">
+
     <q-item
       clickable
       class="cursor-pointer rounded-borders q-pa-sm flex items-center"
     >
       <div>
         <q-icon v-if="page.icon" :name="page.icon" />
-        {{ page.title }}
+          {{ page.title }}
       </div>
     </q-item>
+  </router-link>
+
 
     <q-item-section class="ml-md" v-if="isSubjects || isChildrens">
       <SubjectsList v-if="isSubjects" :subjects="subjects?.get_group.subject" />
@@ -36,3 +40,10 @@ const { result: subjects } = useQuery(getGroupSubjects, {
 const isSubjects = computed(() => subjects.value?.get_group.subject.length);
 const isChildrens = computed(() => page.children?.data.length);
 </script>
+
+<style lang="scss">
+a{
+  text-decoration: none;
+  color: #000;
+}
+</style>

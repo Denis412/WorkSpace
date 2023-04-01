@@ -11,7 +11,7 @@
     <q-page-container>
       <!-- <pre>{{ currentSpacePages?.rootPages?.data }}</pre> -->
       <router-view v-slot="{ Component }">
-        <keep-alive>
+        <keep-alive :key="$route.fullPath">
           <component :is="Component" />
         </keep-alive>
       </router-view>
