@@ -1,25 +1,25 @@
 <template>
   <q-item class="q-pa-none column">
-    <q-item
-      clickable
-      class="cursor-pointer rounded-borders q-pa-sm flex items-center"
-    >
-      <div>
-        <q-icon
-          @click="toggleShowChildrens"
-          class="icon text-h6"
-          v-if="isSubjects || isChildrens"
-          :name="arrowType"
-        />
+    <router-link :to="{ name: 'page', params: { id: page.id } }">
+      <q-item
+        clickable
+        class="cursor-pointer rounded-borders q-pa-sm flex items-center"
+      >
+        <div>
+          <q-icon
+            @click="toggleShowChildrens"
+            class="icon text-h6"
+            v-if="isSubjects || isChildrens"
+            :name="arrowType"
+          />
 
-        <q-icon v-if="page.icon" :name="page.icon" />
+          <q-icon v-if="page.icon" :name="page.icon" />
 
-        {{ page.title }}
           {{ page.title }}
-      </div>
-    </q-item>
-  </router-link>
-
+          {{ page.title }}
+        </div>
+      </q-item>
+    </router-link>
 
     <q-item-section
       class="ml-md"
