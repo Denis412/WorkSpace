@@ -1,17 +1,27 @@
 <template>
-  <table>
-    <thead>
+  <table class="border-black-1 rounded-borders">
+    <thead class="rounded-borders border-black-1">
       <tr>
-        <th v-for="headerColumn in headerColumns" :key="headerColumn">
-          {{ headerColumn }}
-        </th>
+        <th class="q-pa-md">Имя</th>
+        <th class="q-pa-md">Фамилия</th>
+        <th class="q-pa-md">Список групп</th>
       </tr>
     </thead>
 
     <tbody>
-      <tr v-for="contentRow in bodyContent" :key="contentRow.id">
-        <td v-for="contentCell in contentRow" :key="contentCell">
-          {{ contentCell }}
+      <tr v-for="subject in subjects" :key="subject.id" class="border-bottom">
+        <td class="q-pa-md text-center">
+          {{ subject.fullname.first_name }}
+        </td>
+
+        <td class="q-pa-md text-center">
+          {{ subject.fullname.last_name }}
+        </td>
+
+        <td class="q-pa-md text-center">
+          <div v-for="group in subject.group" :key="group.id">
+            {{ group.name }}
+          </div>
         </td>
       </tr>
     </tbody>
@@ -19,8 +29,17 @@
 </template>
 
 <script setup>
-const { headerColumns, bodyContent } = defineProps({
-  headerColumns: Array,
-  bodyContent: Array,
+const { subjects } = defineProps({
+  subjects: Array,
 });
+
+// const subjectColumns = () => {
+//   Object.keys(subject).
+// }
 </script>
+
+<style>
+.border-bottom {
+  border-bottom: 1px solid black;
+}
+</style>

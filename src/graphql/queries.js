@@ -87,16 +87,16 @@ export const getGroupSubjects = gql`
       created_at
       updated_at
       subject {
-        user_id
-        id
-        group {
-          name
-        }
         fullname {
           first_name
-          middle_name
           last_name
         }
+        group {
+          id
+          name
+        }
+        user_id
+        id
       }
     }
   }

@@ -20,6 +20,8 @@
       </q-item>
     </router-link>
 
+    <!-- <pre>{{ subjects?.get_group.subject }}</pre> -->
+
     <q-item-section
       class="ml-md"
       v-if="(isSubjects || isChildrens) && showChildrens"
