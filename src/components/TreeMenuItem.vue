@@ -1,26 +1,13 @@
 <template>
   <q-item class="q-pa-none column">
-    <q-item-section
-      :style="{ position: 'relative' }"
-      class="cursor-pointer hover-item rounded-borders q-pa-sm"
-    >
-      <q-icon
-        :style="{ position: 'absolute' }"
-        v-on:click="openHandler()"
-        class="icon"
-        v-if="page?.children?.data?.length > 0 && !isOpen"
-        name="keyboard_arrow_right" 
-      />
-
-      <q-icon
-        :style="{ position: 'absolute' }"
-        v-on:click="openHandler()"
-        class="icon"
-        v-if="page?.children?.data?.length > 0 && isOpen"
-        name="keyboard_arrow_down" 
-      />
-
-      <div :style="{ position: 'relative', left: '16px' }">
+    <q-item-section class="cursor-pointer hover-item rounded-borders q-pa-sm">
+      <div>
+        <q-icon
+          v-on:click="openHandler()"
+          class="icon"
+          v-if="page?.children?.data?.length > 0"
+          :name="arrowName"
+        />
         {{ page.title }}
       </div>
     </q-item-section>
@@ -39,11 +26,13 @@ const { page } = defineProps({
   page: Object,
 });
 
-let arrowName = ref("keyboard_arrow_right")
+let arrowName = ref("keyboard_arrow_right");
 
 let isOpen = ref(false);
 function openHandler() {
   isOpen.value = !isOpen.value;
-  arrowName.value = isOpen.value ? "keyboard_arrow_right" : "keyboard_arrow_down"
+  arrowName.value = isOpen.value
+    ? "keyboard_arrow_down"
+    : "keyboard_arrow_right";
 }
 </script>
