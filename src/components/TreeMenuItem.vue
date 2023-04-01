@@ -15,10 +15,11 @@
         <q-icon v-if="page.icon" :name="page.icon" />
 
         {{ page.title }}
+          {{ page.title }}
       </div>
     </q-item>
+  </router-link>
 
-    <!-- <pre>{{ subjects?.get_group.subject }}</pre> -->
 
     <q-item-section
       class="ml-md"
@@ -61,3 +62,10 @@ const toggleShowChildrens = () => {
     : "keyboard_arrow_right";
 };
 </script>
+
+<style lang="scss">
+a {
+  text-decoration: none;
+  color: #000;
+}
+</style>
