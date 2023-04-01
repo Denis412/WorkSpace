@@ -1,5 +1,5 @@
 <template>
-  <q-list>
+  <q-list dense>
     <TreeMenuItem v-for="page in pages" :key="page.id" :page="page" />
   </q-list>
 </template>
@@ -10,4 +10,5 @@ import TreeMenuItem from "./TreeMenuItem.vue";
 const { pages } = defineProps({
   pages: Array,
 });
+
 </script>
