@@ -7,7 +7,7 @@
       >
         <div>
           <q-icon
-            @click="toggleShowChildrens"
+            @click.prevent="toggleShowChildrens"
             class="icon text-h6"
             v-if="isSubjects || isChildrens"
             :name="arrowType"
@@ -15,7 +15,6 @@
 
           <q-icon v-if="page.icon" :name="page.icon" />
 
-          {{ page.title }}
           {{ page.title }}
         </div>
       </q-item>
@@ -33,10 +32,9 @@
 </template>
 
 <script setup>
-import { computed } from "vue";
+import { computed, ref } from "vue";
 import { useQuery } from "@vue/apollo-composable";
 import { getGroupSubjects } from "src/graphql/queries";
-import { ref } from "vue";
 import TreeMenu from "./TreeMenu.vue";
 import SubjectsList from "./SubjectsList.vue";
 

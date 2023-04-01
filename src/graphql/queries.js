@@ -143,27 +143,3 @@ export const getPage = gql`
     }
   }
 `;
-
-export const testQuery = gql`
-  query {
-    get_group(id: "1984073356751936997") {
-      id
-      author_id
-      name
-      description
-      created_at
-      updated_at
-      subject {
-        user_id
-        group {
-          name
-        }
-        fullname {
-          first_name
-          middle_name
-          last_name
-        }
-      }
-    }
-  }
-`;
