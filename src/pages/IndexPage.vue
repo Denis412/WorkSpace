@@ -6,16 +6,29 @@
 
 <script setup>
 import { useMutation } from "@vue/apollo-composable";
-import { permissionRuleCreate } from "src/graphql/mutations";
+import { createModule } from "src/graphql/mutations";
 
-const { mutate: inviteGroup } = useMutation(permissionRuleCreate);
+const { mutate: inviteGroup } = useMutation(createModule);
 
 const cl = async () => {
+  const currentDate = new Date();
+
   try {
     const { data } = await inviteGroup({
-      id: "2636443846587274552",
       input: {
-        level: 5,
+        name: "Модуль1",
+        property1: "Модуль1",
+        property10: {
+          date: currentDate.toLocaleDateString(),
+          time: currentDate.toLocaleTimeString(),
+        },
+        property11: {
+          date: currentDate.toLocaleDateString(),
+          time: currentDate.toLocaleTimeString(),
+        },
+        property12: {
+          6227464153175039000: "6880455107833567813",
+        },
       },
     });
 

@@ -23,25 +23,36 @@ export const userGroupInviteUser = gql`
   }
 `;
 
-export const permissionRuleCreate = gql`
-  mutation permissionRuleUpdate(
-    $id: String!
-    $input: PermissionRuleUpdateInput!
-  ) {
-    permissionRuleUpdate(input: $input, id: $id) {
-      recordId
+export const createModule = gql`
+  mutation ($input: create_type1_input!) {
+    create_type1(input: $input) {
       status
+      recordId
       record {
         id
+        type_id
         author_id
         level
-        model_type
-        model_id
-        config
-        owner_id
-        owner_type
+        position
         created_at
         updated_at
+        name
+        property1
+        property10 {
+          date
+          time
+        }
+        property11 {
+          date
+          time
+        }
+        property12 {
+          id
+          fullname {
+            first_name
+            last_name
+          }
+        }
       }
     }
   }
