@@ -1,12 +1,15 @@
 <template>
   <q-page class="flex flex-center">
     <!-- <q-btn @click="cl">kjshgsdfgjk</q-btn> -->
+    <ModuleCreateForm />
   </q-page>
 </template>
 
 <script setup>
 import { useMutation } from "@vue/apollo-composable";
 import { createModule } from "src/graphql/mutations";
+
+import ModuleCreateForm from "src/components/ModuleCreateForm.vue";
 
 const { mutate: inviteGroup } = useMutation(createModule);
 
