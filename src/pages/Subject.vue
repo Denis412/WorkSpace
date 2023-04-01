@@ -2,7 +2,10 @@
   <Table
   :title="getName()"
   :groups="subject?.get_subject?.group"
-  :information="[{name:getName()},{name:subject?.get_subject?.email?.email}]"/>
+  :information="[
+    {name:getName()},
+    {name:subject?.get_subject?.email?.email}
+  ]"/>
 </template>
 
 <script setup>

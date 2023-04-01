@@ -4,6 +4,7 @@
  :description="subjects?.get_group?.description"
  :subjects="subjects?.get_group?.subject"
  :linkPath="'subject'"
+ :pageId="page?.page?.id"
  />
 </template>
 
