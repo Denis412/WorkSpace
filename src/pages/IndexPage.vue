@@ -1,8 +1,10 @@
 <template>
   <q-page class="flex flex-center">
     <!-- <q-btn @click="cl">kjshgsdfgjk</q-btn> -->
-    <!-- <ModuleCreateForm /> -->
-    <TaskCreateForm />
+    <div class="flex justify-between">
+      <ModuleCreateForm />
+      <TaskCreateForm />
+    </div>
   </q-page>
 </template>
 

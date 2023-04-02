@@ -26,13 +26,20 @@
         :options="executorGroupSubjectsNames"
         placeholder="Выберите исполнителя"
       />
+
+      <q-select
+        v-model="form.module"
+        label="Модуль"
+        :options="executorGroupSubjectsNames"
+        placeholder="Выберите модуль"
+      />
     </main>
 
     <footer class="q-mt-md">
       <q-btn
         class="w-100p"
         color="primary"
-        label="Создать"
+        label="Создать задачу"
         @click="createdTask"
       />
     </footer>

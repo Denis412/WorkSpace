@@ -68,24 +68,6 @@ export const createModule = gql`
     }
   }
 `;
-// Создание модуля
-// {
-//   "input": {
-//       "name": "Модуль1",
-//     "property5": "Модуль1",
-//     "property6": {
-//       "6227464153175039134": "6880455107833567813"
-//     },
-//     "property7": {
-//       "date": "",
-//       "time": ""
-//     },
-//     "property8": {
-//       "date": "",
-//       "time": ""
-//     }
-//   }
-// }
 
 export const createTask = gql`
   mutation ($input: create_type2_input!) {
@@ -128,15 +110,28 @@ export const createTask = gql`
   }
 `;
 
-// Создание задачи
-// {
-//   "input": {
-//     "name": "Задача1",
-//     "property1": "Задача1",
-//     "property2": "Сделать что-то",
-//     "property3": {
-//       "6227464153175039134": "5934844511820789843"
-//     },
-//     "property4": "4827681319781020453"
-//   }
-// }
+export const createPage = gql`
+  mutation ($input: PageCreateInput!) {
+    pageCreate(input: $input) {
+      recordId
+      status
+      record {
+        parent_id
+        page_type
+        title
+        content
+        icon
+        level
+        is_public
+        position
+        config
+        created_at
+        updated_at
+        object {
+          id
+          type_id
+        }
+      }
+    }
+  }
+`;
