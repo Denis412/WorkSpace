@@ -7,10 +7,10 @@
       >
         <div>
           <q-icon
-            @click.prevent="toggleShowChildrens"
-            class="icon text-h6"
+            @click.prevent="toggleShowChildren"
+            :class="dropDownIconClass"
             v-if="isSubjects || isChildrens"
-            :name="arrowType"
+            name="keyboard_arrow_right"
           />
 
           <q-icon v-if="page.icon" :name="page.icon" />
@@ -21,12 +21,12 @@
     </router-link>
 
     <q-item-section
-      class="ml-md"
-      v-if="(isSubjects || isChildrens) && showChildrens"
+      :class="childrenItemsClass"
     >
-      <SubjectsList v-if="isSubjects" :subjects="subjects?.get_group.subject" />
-
-      <TreeMenu v-if="isChildrens" :pages="page.children?.data" />
+      <div>
+        <SubjectsList v-show="isSubjects" :subjects="subjects?.get_group.subject" />
+        <TreeMenu v-show="isChildrens" :pages="page.children?.data" />
+      </div>
     </q-item-section>
   </q-item>
 </template>
@@ -46,18 +46,16 @@ const { result: subjects } = useQuery(getGroupSubjects, {
   group_id: page?.object?.id,
 });
 
-const arrowType = ref("keyboard_arrow_right");
-const showChildrens = ref(false);
+const showChildren = ref(false);
 
 const isSubjects = computed(() => subjects.value?.get_group.subject.length);
 const isChildrens = computed(() => page.children?.data.length);
 
-const toggleShowChildrens = () => {
-  showChildrens.value = !showChildrens.value;
+const dropDownIconClass = computed(() => (isSubjects.value || isChildrens.value) && showChildren.value ? "icon text-h6 drop-down-icon-rotated" : "icon text-h6 drop-down-icon");
+const childrenItemsClass = computed(() => (isSubjects.value || isChildrens.value) && showChildren.value ? "ml-md children-wrapper-expanded" : "ml-md children-wrapper-collapsed");
 
-  arrowType.value = showChildrens.value
-    ? "keyboard_arrow_down"
-    : "keyboard_arrow_right";
+const toggleShowChildren = () => {
+  showChildren.value = !showChildren.value;
 };
 
 const routeName = () =>
@@ -68,5 +66,30 @@ const routeName = () =>
 a {
   text-decoration: none;
   color: #000;
+}
+
+.children-wrapper {
+  overflow: hidden;
+}
+
+.children-wrapper-collapsed {
+  @extend .children-wrapper;
+  max-height: 0;
+  transition: max-height .35s ease-out;
+}
+
+.children-wrapper-expanded {
+  @extend .children-wrapper;
+  max-height: 999px;
+  transition: max-height .67s ease-in;
+}
+
+.drop-down-icon {
+  transition: transform .37s ease-in;
+}
+
+.drop-down-icon-rotated {
+  transition: transform .37s ease-out;
+  transform: rotate(90deg);
 }
 </style>
