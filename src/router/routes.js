@@ -9,14 +9,19 @@ const routes = [
         component: () => import("pages/IndexPage.vue"),
       },
       {
-        path: "page/:id",
-        name: "page",
-        component: () => import("pages/Page.vue"),
+        path: "group/:id",
+        name: "group",
+        component: () => import("pages/Group.vue"),
       },
       {
         path: "subject/:id",
         name: "subject",
         component: () => import("pages/Subject.vue"),
+      },
+      {
+        path: "page/:id",
+        name: "page",
+        component: () => import("pages/Page.vue"),
       }
     ],
   },

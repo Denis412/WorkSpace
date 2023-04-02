@@ -26,7 +26,7 @@
 
 <script setup>
 import {defineProps} from 'vue';
-import Form from './PageTableForm.vue';
+import Form from './GroupTableForm.vue';
 const props = defineProps({
   title: String,
   description: String,

@@ -1,6 +1,6 @@
 <template>
   <q-item class="q-pa-none column">
-    <router-link :to="{name:'page',params:{id:page.id}}">
+    <router-link :to="{name: routeName(),params:{id:page.id}}">
 
     <q-item
       clickable
@@ -39,6 +39,14 @@ const { result: subjects } = useQuery(getGroupSubjects, {
 
 const isSubjects = computed(() => subjects.value?.get_group.subject.length);
 const isChildrens = computed(() => page.children?.data.length);
+
+
+const routeName = ()=>{
+  if(page.object?.type_id===subjects.value?.get_group.type_id)
+    return "group";
+  else
+    return "page";
+}
 </script>
 
 <style lang="scss">
