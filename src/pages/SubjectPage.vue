@@ -1,17 +1,19 @@
 <template>
-  <Table
-    :loading="loading"
-    :title="getName()"
-    :groups="subject?.get_subject?.group"
-    :information="[
-      { name: getName() },
-      { name: subject?.get_subject?.email?.email },
-    ]"
-  />
+  <q-page>
+    <SubjectTable
+      :loading="loading"
+      :title="getName()"
+      :groups="subject?.get_subject?.group"
+      :information="[
+        { name: getName() },
+        { name: subject?.get_subject?.email?.email },
+      ]"
+    />
+  </q-page>
 </template>
 
 <script setup>
-import Table from "src/components/SubjectTable.vue";
+import SubjectTable from "src/components/SubjectTable.vue";
 import { getSubject } from "src/graphql/queries";
 import { useQuery } from "@vue/apollo-composable";
 import { useRoute } from "vue-router";

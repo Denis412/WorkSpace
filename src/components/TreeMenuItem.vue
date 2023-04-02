@@ -20,11 +20,12 @@
       </q-item>
     </router-link>
 
-    <q-item-section
-      :class="childrenItemsClass"
-    >
+    <q-item-section :class="childrenItemsClass">
       <div>
-        <SubjectsList v-show="isSubjects" :subjects="subjects?.get_group.subject" />
+        <SubjectsList
+          v-show="isSubjects"
+          :subjects="subjects?.get_group.subject"
+        />
         <TreeMenu v-show="isChildrens" :pages="page.children?.data" />
       </div>
     </q-item-section>
@@ -51,8 +52,16 @@ const showChildren = ref(false);
 const isSubjects = computed(() => subjects.value?.get_group.subject.length);
 const isChildrens = computed(() => page.children?.data.length);
 
-const dropDownIconClass = computed(() => (isSubjects.value || isChildrens.value) && showChildren.value ? "icon text-h6 drop-down-icon-rotated" : "icon text-h6 drop-down-icon");
-const childrenItemsClass = computed(() => (isSubjects.value || isChildrens.value) && showChildren.value ? "ml-md children-wrapper-expanded" : "ml-md children-wrapper-collapsed");
+const dropDownIconClass = computed(() =>
+  (isSubjects.value || isChildrens.value) && showChildren.value
+    ? "icon text-h6 drop-down-icon-rotated"
+    : "icon text-h6 drop-down-icon"
+);
+const childrenItemsClass = computed(() =>
+  (isSubjects.value || isChildrens.value) && showChildren.value
+    ? "ml-md children-wrapper-expanded"
+    : "ml-md children-wrapper-collapsed"
+);
 
 const toggleShowChildren = () => {
   showChildren.value = !showChildren.value;
@@ -75,21 +84,21 @@ a {
 .children-wrapper-collapsed {
   @extend .children-wrapper;
   max-height: 0;
-  transition: max-height .35s ease-out;
+  transition: max-height 0.35s ease-out;
 }
 
 .children-wrapper-expanded {
   @extend .children-wrapper;
   max-height: 999px;
-  transition: max-height .67s ease-in;
+  transition: max-height 0.67s ease-in;
 }
 
 .drop-down-icon {
-  transition: transform .37s ease-in;
+  transition: transform 0.37s ease-in;
 }
 
 .drop-down-icon-rotated {
-  transition: transform .37s ease-out;
+  transition: transform 0.37s ease-out;
   transform: rotate(90deg);
 }
 </style>
