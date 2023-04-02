@@ -7,7 +7,7 @@
       >
         <div>
           <q-icon
-            @click.prevent="toggleShowChildrens"
+            @click.prevent="toggleShowChildren"
             class="icon text-h6"
             v-if="isSubjects || isChildrens"
             :name="arrowType"
@@ -23,12 +23,12 @@
     <!-- <pre>{{ subjects?.get_group.subject }}</pre> -->
 
     <q-item-section
-      class="ml-md"
-      v-if="(isSubjects || isChildrens) && showChildrens"
+      :class="childrenItemsClass"
     >
-      <SubjectsList v-if="isSubjects" :subjects="subjects?.get_group.subject" />
-
-      <TreeMenu v-if="isChildrens" :pages="page.children?.data" />
+      <div>
+        <SubjectsList v-show="isSubjects" :subjects="subjects?.get_group.subject" />
+        <TreeMenu v-show="isChildrens" :pages="page.children?.data" />
+      </div>
     </q-item-section>
   </q-item>
 </template>
@@ -49,17 +49,20 @@ const { result: subjects } = useQuery(getGroupSubjects, {
 });
 
 const arrowType = ref("keyboard_arrow_right");
-const showChildrens = ref(false);
+const showChildren = ref(false);
 
 const isSubjects = computed(() => subjects.value?.get_group.subject.length);
 const isChildrens = computed(() => page.children?.data.length);
+const childrenItemsClass = computed(() => (isSubjects.value || isChildrens.value) && showChildren.value ? "ml-md children-wrapper-expanded" : "ml-md children-wrapper-collapsed");
 
-const toggleShowChildrens = () => {
-  showChildrens.value = !showChildrens.value;
+const toggleShowChildren = () => {
+  showChildren.value = !showChildren.value;
 
-  arrowType.value = showChildrens.value
+  arrowType.value = showChildren.value
     ? "keyboard_arrow_down"
     : "keyboard_arrow_right";
+
+  console.log(childrenItemsClass);
 };
 </script>
 
@@ -67,5 +70,17 @@ const toggleShowChildrens = () => {
 a {
   text-decoration: none;
   color: #000;
+}
+
+.children-wrapper-collapsed {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height .37s ease-out;
+}
+
+.children-wrapper-expanded {
+  max-height: 500px;
+  transition: max-height .37s ease-in;
+  overflow: hidden;
 }
 </style>
