@@ -1,8 +1,15 @@
 <template>
   <tbody>
-    <tr v-for="subject in subjects" :key="subject.id" class="border-bottom">
+    <tr v-for="subject in subjects" :key="subject.id">
       <td class="q-pa-md text-center">
-        {{ subject.fullname.first_name }}
+        <router-link :to="{ name: 'subject', params: { id: subject.id } }">
+          <q-item
+            clickable
+            class="flex items-center justify-center rounded-borders"
+          >
+            {{ subject.fullname.first_name }}
+          </q-item>
+        </router-link>
       </td>
 
       <td class="q-pa-md text-center">
@@ -10,16 +17,34 @@
       </td>
 
       <td class="q-pa-md text-center">
-        <div v-for="group in subject.group" :key="group.id">
-          {{ group.name }}
-        </div>
+        {{ subject.email?.email }}
+      </td>
+
+      <td
+        v-if="columnLength === 4"
+        class="flex wrap q-pa-md justify-center items-center"
+      >
+        <q-item
+          v-for="propertyObj in subject[calculatedPropertyName()]"
+          :key="propertyObj.id"
+          clickable
+          class="flex rounded-borders q-pa-sm items-center"
+        >
+          {{ propertyObj.name }}
+        </q-item>
       </td>
     </tr>
   </tbody>
 </template>
 
 <script setup>
-const { subjects } = defineProps({
+const { subjects, propertyType, columnLength } = defineProps({
   subjects: Array,
+  propertyType: String,
+  columnLength: Number,
 });
+
+const calculatedPropertyName = () => {
+  return propertyType === "Модули" ? "property6" : "property3";
+};
 </script>

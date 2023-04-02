@@ -1,5 +1,5 @@
 <template>
-  <q-page> Модуль </q-page>
+  <q-page> Задача </q-page>
 </template>
 
 <script setup></script>

@@ -89,16 +89,27 @@ export const getGroupSubjects = gql`
       updated_at
       type_id
       subject {
+        id
+        user_id
         fullname {
           first_name
           last_name
+        }
+        email {
+          email
         }
         group {
           id
           name
         }
-        user_id
-        id
+        property6 {
+          id
+          name
+        }
+        property3 {
+          id
+          name
+        }
       }
     }
   }
@@ -191,6 +202,7 @@ export const getPage = gql`
       updated_at
       object {
         id
+        type_id
       }
     }
   }

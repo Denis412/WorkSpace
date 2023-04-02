@@ -20,8 +20,6 @@
       </q-item>
     </router-link>
 
-    <!-- <pre>{{ subjects?.get_group.subject }}</pre> -->
-
     <q-item-section
       class="ml-md"
       v-if="(isSubjects || isChildrens) && showChildrens"
@@ -62,11 +60,8 @@ const toggleShowChildrens = () => {
     : "keyboard_arrow_right";
 };
 
-const routeName = () => {
-  if (page.object?.type_id === subjects.value?.get_group.type_id)
-    return "group";
-  else return "page";
-};
+const routeName = () =>
+  page.object?.type_id === subjects.value?.get_group.type_id ? "group" : "page";
 </script>
 
 <style lang="scss">
