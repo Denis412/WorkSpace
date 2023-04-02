@@ -8,9 +8,9 @@
         <div>
           <q-icon
             @click.prevent="toggleShowChildren"
-            class="icon text-h6"
+            :class="dropDownIconClass"
             v-if="isSubjects || isChildrens"
-            :name="arrowType"
+            name="keyboard_arrow_right"
           />
 
           <q-icon v-if="page.icon" :name="page.icon" />
@@ -48,21 +48,16 @@ const { result: subjects } = useQuery(getGroupSubjects, {
   group_id: page?.object?.id,
 });
 
-const arrowType = ref("keyboard_arrow_right");
 const showChildren = ref(false);
 
 const isSubjects = computed(() => subjects.value?.get_group.subject.length);
 const isChildrens = computed(() => page.children?.data.length);
+
+const dropDownIconClass = computed(() => (isSubjects.value || isChildrens.value) && showChildren.value ? "icon text-h6 drop-down-icon-rotated" : "icon text-h6 drop-down-icon");
 const childrenItemsClass = computed(() => (isSubjects.value || isChildrens.value) && showChildren.value ? "ml-md children-wrapper-expanded" : "ml-md children-wrapper-collapsed");
 
 const toggleShowChildren = () => {
   showChildren.value = !showChildren.value;
-
-  arrowType.value = showChildren.value
-    ? "keyboard_arrow_down"
-    : "keyboard_arrow_right";
-
-  console.log(childrenItemsClass);
 };
 </script>
 
@@ -72,15 +67,28 @@ a {
   color: #000;
 }
 
-.children-wrapper-collapsed {
-  max-height: 0;
+.children-wrapper {
   overflow: hidden;
-  transition: max-height .37s ease-out;
+}
+
+.children-wrapper-collapsed {
+  @extend .children-wrapper;
+  max-height: 0;
+  transition: max-height .35s ease-out;
 }
 
 .children-wrapper-expanded {
-  max-height: 500px;
-  transition: max-height .37s ease-in;
-  overflow: hidden;
+  @extend .children-wrapper;
+  max-height: 999px;
+  transition: max-height .67s ease-in;
+}
+
+.drop-down-icon {
+  transition: transform .37s ease-in;
+}
+
+.drop-down-icon-rotated {
+  transition: transform .37s ease-out;
+  transform: rotate(90deg);
 }
 </style>
