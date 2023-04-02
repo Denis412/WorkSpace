@@ -40,6 +40,7 @@ export const pages = gql`
 
         object {
           id
+          type_id
         }
         children {
           data {
@@ -86,6 +87,7 @@ export const getGroupSubjects = gql`
       description
       created_at
       updated_at
+      type_id
       subject {
         fullname {
           first_name

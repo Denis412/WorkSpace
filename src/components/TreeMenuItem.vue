@@ -1,6 +1,6 @@
 <template>
   <q-item class="q-pa-none column">
-    <router-link :to="{ name: 'page', params: { id: page.id } }">
+    <router-link :to="{ name: routeName(), params: { id: page.id } }">
       <q-item
         clickable
         class="cursor-pointer rounded-borders q-pa-sm flex items-center"
@@ -60,6 +60,12 @@ const toggleShowChildrens = () => {
   arrowType.value = showChildrens.value
     ? "keyboard_arrow_down"
     : "keyboard_arrow_right";
+};
+
+const routeName = () => {
+  if (page.object?.type_id === subjects.value?.get_group.type_id)
+    return "group";
+  else return "page";
 };
 </script>
 
