@@ -3,6 +3,7 @@
     :columnNames="['Имя', 'Фамилия', 'Список групп']"
     :subjects="subjects?.get_group?.subject"
   />
+  <ModulePage v-if="page?.page.title === 'Модули'" />
 </template>
 
 <script setup>
@@ -11,6 +12,7 @@ import { getPage, getGroupSubjects } from "src/graphql/queries";
 import { useQuery } from "@vue/apollo-composable";
 import { useRoute } from "vue-router";
 import MainTable from "src/components/MainTable.vue";
+import ModulePage from "./ModulePage.vue";
 
 const route = useRoute();
 const id = route.params.id;

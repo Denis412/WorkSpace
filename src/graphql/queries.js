@@ -193,3 +193,40 @@ export const getPage = gql`
     }
   }
 `;
+
+export const getModuleById = gql`
+  query getModuleById($module_id: String!) {
+    get_type1(id: $module_id) {
+      id
+      name
+      property6 {
+        id
+        fullname {
+          first_name
+          last_name
+        }
+      }
+      property7 {
+        date
+        time
+      }
+      property8 {
+        date
+        time
+      }
+      property9 {
+        id
+        name
+        property2
+        property3 {
+          id
+          fullname {
+            first_name
+            last_name
+          }
+        }
+        property4
+      }
+    }
+  }
+`;
