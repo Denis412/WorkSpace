@@ -76,6 +76,7 @@ import { date } from "quasar";
 import { useQuery, useMutation } from "@vue/apollo-composable";
 import { getResponsibleGroupSubjects } from "src/graphql/queries";
 import { createModule, createPage } from "src/graphql/mutations";
+import { useRoute } from "vue-router";
 
 const form = ref({
   name: "",
@@ -121,7 +122,7 @@ const createdModule = async () => {
       },
     });
 
-    const { data: pagec } = await creatingPage({
+    await creatingPage({
       input: {
         title: data.create_type1.record.name,
         parent_id: "7077578782196173015",
@@ -131,8 +132,6 @@ const createdModule = async () => {
         },
       },
     });
-
-    console.log(data, pagec);
   } catch (error) {
     console.log(error);
   }
