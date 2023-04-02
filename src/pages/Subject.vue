@@ -1,5 +1,6 @@
 <template>
   <Table
+  :loading="loading"
   :title="getName()"
   :groups="subject?.get_subject?.group"
   :information="[
@@ -17,7 +18,7 @@ import { useRoute } from "vue-router";
 const route = useRoute();
 const id = route.params.id;
 
-const {result:subject} = useQuery(getSubject,{
+const {result:subject,loading} = useQuery(getSubject,{
   id:id
 });
 

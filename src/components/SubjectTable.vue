@@ -1,9 +1,11 @@
 <template>
   <div class="q-pa-lg">
-    <div class="text-h3">
+    <q-skeleton width="300px" height="100px" type="text" v-if="loading"/>
+    <div v-else class="text-h3">
     {{ props.title }}
     </div>
-    <q-list class="row wrap">
+    <q-skeleton height="200px"  v-if="loading"/>
+    <q-list v-else  class="row wrap">
       <TableItem
       :tableItem="props.groups"
       :name="'Группы'"/>
@@ -22,6 +24,7 @@ const props = defineProps({
   title: String,
   groups: Array,
   information:Array,
+  loading: Boolean,
 })
 </script>
 

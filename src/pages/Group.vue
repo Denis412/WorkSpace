@@ -1,5 +1,6 @@
 <template>
  <Table
+ :loading="loading"
  :title="page?.page?.title"
  :description="subjects?.get_group?.description"
  :subjects="subjects?.get_group?.subject"
@@ -25,7 +26,7 @@ const { result: page } = useQuery(getPage,{
 
 const subjectId = computed(()=>page.value?.page?.object.id);
 
-const { result: subjects } = useQuery(getGroupSubjects, {
+const { result: subjects,loading } = useQuery(getGroupSubjects, {
   group_id: subjectId,
 });
 </script>

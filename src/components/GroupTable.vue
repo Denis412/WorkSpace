@@ -1,12 +1,16 @@
 <template>
   <div class="q-pa-lg">
-    <div class="text-h3 q-mb-md">
-    {{ props.title }}
+    <q-skeleton width="300px" height="150px" type="text" v-if="loading"/>
+    <div v-else class="title">
+      <div class="text-h3 q-mb-md">
+      {{ props.title }}
+      </div>
+      <div class="text-h5 q-mb-lg">
+        {{ props.description }}
+      </div>
     </div>
-    <div class="text-h5 q-mb-lg">
-      {{ props.description }}
-    </div>
-    <q-list class="row wrap">
+    <q-skeleton height="200px"  v-if="loading"/>
+    <q-list v-else class="row wrap">
       <q-item class="col-3 column">
         <div class="text-h6 text-bold q-mb-lg" v-if="props.subjects?.length">
           Участники
@@ -28,6 +32,7 @@
 import {defineProps} from 'vue';
 import Form from './GroupTableForm.vue';
 const props = defineProps({
+  loading:Boolean,
   title: String,
   description: String,
   subjects:Array,
