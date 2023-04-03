@@ -1,5 +1,12 @@
 <template>
-  <q-page> Модуль </q-page>
+  <q-page>
+    <MainTable/>
+  </q-page>
 </template>
 
-<script setup></script>
+<script setup>
+import MainTable from 'src/components/MainTable.vue';
+import { useQuery } from '@vue/apollo-composable';
+import { getModules } from 'src/graphql/queries';
+
+</script>

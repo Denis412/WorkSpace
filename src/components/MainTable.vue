@@ -12,7 +12,10 @@
       </tr>
     </thead>
 
-    <MainTableModulesBody v-if="modules" :modules="modules" />
+    <MainTableModulesBody
+    v-if="modules"
+    :modules="modules"
+    />
 
     <MainTableSubjectsBody
       v-else-if="subjects"

@@ -244,3 +244,50 @@ export const getModuleById = gql`
     }
   }
 `;
+
+export const getModules = gql`
+query getModules{
+  paginate_type1(page: 1, perPage: 100) {
+    data {
+      id
+      type_id
+      author_id
+      level
+      position
+      created_at
+      updated_at
+      name
+      property5
+      property6 {
+        id
+        fullname {
+          first_name
+          middle_name
+          last_name
+        }
+      }
+      property7 {
+        date
+        time
+      }
+      property8 {
+        date
+        time
+      }
+      property9 {
+        id
+      }
+    }
+    paginatorInfo {
+      perPage
+      currentPage
+      lastPage
+      total
+      count
+      from
+      to
+      hasMorePages
+    }
+  }
+}
+`;

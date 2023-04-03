@@ -1,5 +1,20 @@
 <template>
-  <q-page> Модули </q-page>
+  <q-page class="q-pa-md">
+    <div class="text-h3 text-center q-pb-md">
+      Модули
+    </div>
+    <MainTable
+    :modules="modules?.paginate_type1?.data"
+    :columnNames="columnNames"/>
+  </q-page>
 </template>
 
-<script setup></script>
+<script setup>
+import MainTable from 'src/components/MainTable.vue';
+import { useQuery } from '@vue/apollo-composable';
+import { getModules } from 'src/graphql/queries';
+
+const {result: modules} = useQuery(getModules);
+const columnNames = ["Название","Ответственный","Дата и время начала","Дата и время окончания"]
+
+</script>
