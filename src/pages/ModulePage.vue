@@ -1,35 +1,49 @@
 <template>
-  <q-page>
-    <MainTable
-    :singleModule="module?.get_type1"
-    :columnNames="columnNames"
-    />
+  <q-page class="q-pa-md">
+    <header class="text-h3 text-center">
+      {{ resultModule?.get_type2.name }}
+    </header>
+
+    <!-- <pre>{{ page }}</pre> -->
+    <!-- <pre>{{ resultModule }}</pre> -->
+
+    <pre>{{ resultModule?.get_type2.property4.property1 }}</pre>
+
+    <main class="q-mt-md">
+      <MainTable
+        class="w-100p"
+        :column-names="['Название', 'Задачи']"
+        :module-tasks="resultModule?.get_type2.property4.property1"
+      />
+    </main>
   </q-page>
 </template>
 
 <script setup>
-import MainTable from 'src/components/MainTable.vue';
-import { useQuery } from '@vue/apollo-composable';
-import { getModuleById,getPage } from 'src/graphql/queries';
-import { useRoute } from 'vue-router';
-import { computed } from 'vue';
+import MainTable from "src/components/MainTable.vue";
+import { useQuery } from "@vue/apollo-composable";
+import { getModuleById } from "src/graphql/queries";
+import { onMounted } from "vue";
 
-const route = useRoute();
-const id = route.params.id;
+const { page } = defineProps({
+  page: Object,
+});
 
-const { result:page } = useQuery(getPage,{
-  id:id
-})
+const {
+  result: resultModule,
+  refetch: refetchModule,
+  loading,
+} = useQuery(getModuleById, {
+  module_id: page.object.id,
+});
 
-const moduleId = computed(()=> page.value?.page.object?.id);
+onMounted(() => {
+  if (!page) return;
 
-const { result: module } = useQuery(getModuleById,{
-  module_id: moduleId
-})
+  console.log(page);
 
-console.log(module.value?.get_type1);
-
-const columnNames = ["Название","Ответственный","Дата и время начала","Дата и время окончания"]
-
-
+  refetchModule({
+    module_id: page.object.id,
+  });
+});
 </script>
