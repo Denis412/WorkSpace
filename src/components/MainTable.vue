@@ -13,7 +13,14 @@
     </thead>
 
     <MainTableModulesBody v-if="modules" :modules="modules" />
-    <MainTableSubjectsBody v-else-if="subjects" :subjects="subjects" />
+
+    <MainTableSubjectsBody
+      v-else-if="subjects"
+      :columnLength="columnNames.length"
+      :propertyType="columnNames.at(-1)"
+      :subjects="subjects"
+    />
+
     <MainTableTasksBody v-else-if="tasks" :tasks="tasks" />
   </table>
 </template>
@@ -21,7 +28,7 @@
 <script setup>
 import MainTableModulesBody from "src/components/MainTableModulesBody.vue";
 import MainTableSubjectsBody from "src/components/MainTableSubjectsBody.vue";
-import MainTableTasksBody from "src/components/MainTableTaskBody.vue";
+import MainTableTasksBody from "src/components/MainTableTasksBody.vue";
 
 const { columnNames, subjects, modules, tasks } = defineProps({
   columnNames: Array,

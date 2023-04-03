@@ -1,5 +1,8 @@
 <template>
-  <q-form class="bg-grey-2 q-pa-md rounded-borders shadow-5">
+  <q-form
+    class="bg-grey-2 q-pa-md rounded-borders shadow-5"
+    style="min-width: 500px"
+  >
     <header class="text-h4 text-center q-mb-md">Модуль</header>
 
     <main>
@@ -17,26 +20,50 @@
         placeholder="Выберите ответственного"
       />
 
-      <div class="flex q-mt-md">
-        <section class="flex column q-mx-sm">
-          <div class="text-h6 text-center">Дата начала</div>
+      <div class="flex column">
+        <q-btn
+          @click="toggleShowQDateStart"
+          color="primary"
+          class="q-mt-md"
+          label="Выбрать дату начала"
+        />
 
-          <q-date v-model="form.date_start" :options="optionsFnDateStart" />
-        </section>
-
-        <section class="flex column q-mx-sm">
-          <div class="text-h6 text-center">Дата окончания</div>
-
-          <q-date v-model="form.date_end" :options="optionsFnDateEnd" />
-        </section>
+        <q-btn
+          @click="toggleShowQDateEnd"
+          color="primary"
+          class="q-mt-md"
+          label="Выбрать дату окончания"
+        />
       </div>
+
+      <q-dialog v-model="showQDateStart">
+        <q-date v-model="form.date_start" :options="optionsFnDateStart">
+          <q-btn
+            class="w-100p"
+            color="primary"
+            label="Выбрать"
+            @click="toggleShowQDateStart"
+          />
+        </q-date>
+      </q-dialog>
+
+      <q-dialog v-model="showQDateEnd">
+        <q-date v-model="form.date_end" :options="optionsFnDateEnd">
+          <q-btn
+            class="w-100p"
+            color="primary"
+            label="Выбрать"
+            @click="toggleShowQDateEnd"
+          />
+        </q-date>
+      </q-dialog>
     </main>
 
     <footer class="q-mt-md">
       <q-btn
         class="w-100p"
         color="primary"
-        label="Создать"
+        label="Создать модуль"
         @click="createdModule"
       />
     </footer>
@@ -48,7 +75,8 @@ import { computed, ref } from "vue";
 import { date } from "quasar";
 import { useQuery, useMutation } from "@vue/apollo-composable";
 import { getResponsibleGroupSubjects } from "src/graphql/queries";
-import { createModule } from "src/graphql/mutations";
+import { createModule, createPage } from "src/graphql/mutations";
+import { useRoute } from "vue-router";
 
 const form = ref({
   name: "",
@@ -57,7 +85,12 @@ const form = ref({
   date_end: date.formatDate(Date.now(), "YYYY/MM/DD"),
 });
 
+const showQDateStart = ref(false);
+const showQDateEnd = ref(false);
+
 const { mutate: creatingModule } = useMutation(createModule);
+const { mutate: creatingPage } = useMutation(createPage);
+
 const { result: responsibleGroupSubjects } = useQuery(
   getResponsibleGroupSubjects
 );
@@ -89,10 +122,27 @@ const createdModule = async () => {
       },
     });
 
-    console.log(data);
+    await creatingPage({
+      input: {
+        title: data.create_type1.record.name,
+        parent_id: "7077578782196173015",
+        object: {
+          id: data.create_type1.record.id,
+          type_id: data.create_type1.record.type_id,
+        },
+      },
+    });
   } catch (error) {
     console.log(error);
   }
+};
+
+const toggleShowQDateStart = () => {
+  showQDateStart.value = !showQDateStart.value;
+};
+
+const toggleShowQDateEnd = () => {
+  showQDateEnd.value = !showQDateEnd.value;
 };
 
 const optionsFnDateStart = (date) =>

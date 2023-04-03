@@ -4,13 +4,14 @@ import {
   useQuery,
 } from "@vue/apollo-composable";
 import { UserSignIn } from "src/graphql/mutations";
-import { User } from "src/graphql/queries";
+import { User, pages } from "src/graphql/queries";
 import apolloClient from "src/apollo/apollo-client";
 
 provideApolloClient(apolloClient);
 
 const { mutate: userSignIn } = useMutation(UserSignIn);
 const { refetch: refetchUser } = useQuery(User);
+const { refetch: refetchPages } = useQuery(pages);
 
 const signIn = async ({ email, password }) => {
   const { data: signedInf, error: signInError } = await userSignIn({
@@ -30,6 +31,8 @@ const signIn = async ({ email, password }) => {
   const { data: signedUser, error: fetchUserError } = await refetchUser({
     id: signedInf.userSignIn.recordId,
   });
+
+  refetchPages();
 
   if (fetchUserError) throw fetchUserError;
 

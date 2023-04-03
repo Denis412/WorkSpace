@@ -40,6 +40,7 @@ export const pages = gql`
 
         object {
           id
+          type_id
         }
         children {
           data {
@@ -86,17 +87,29 @@ export const getGroupSubjects = gql`
       description
       created_at
       updated_at
+      type_id
       subject {
+        id
+        user_id
         fullname {
           first_name
           last_name
+        }
+        email {
+          email
         }
         group {
           id
           name
         }
-        user_id
-        id
+        property6 {
+          id
+          name
+        }
+        property3 {
+          id
+          name
+        }
       }
     }
   }
@@ -189,6 +202,44 @@ export const getPage = gql`
       updated_at
       object {
         id
+        type_id
+      }
+    }
+  }
+`;
+
+export const getModuleById = gql`
+  query getModuleById($module_id: String!) {
+    get_type1(id: $module_id) {
+      id
+      name
+      property6 {
+        id
+        fullname {
+          first_name
+          last_name
+        }
+      }
+      property7 {
+        date
+        time
+      }
+      property8 {
+        date
+        time
+      }
+      property9 {
+        id
+        name
+        property2
+        property3 {
+          id
+          fullname {
+            first_name
+            last_name
+          }
+        }
+        property4
       }
     }
   }

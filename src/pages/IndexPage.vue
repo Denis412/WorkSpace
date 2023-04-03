@@ -1,7 +1,10 @@
 <template>
   <q-page class="flex flex-center">
     <!-- <q-btn @click="cl">kjshgsdfgjk</q-btn> -->
-    <ModuleCreateForm />
+    <div class="flex justify-between">
+      <ModuleCreateForm />
+      <TaskCreateForm />
+    </div>
   </q-page>
 </template>
 
@@ -9,6 +12,7 @@
 import { useMutation } from "@vue/apollo-composable";
 import { createModule } from "src/graphql/mutations";
 import ModuleCreateForm from "src/components/ModuleCreateForm.vue";
+import TaskCreateForm from "src/components/TaskCreateForm.vue";
 
 const { mutate: inviteGroup } = useMutation(createModule);
 

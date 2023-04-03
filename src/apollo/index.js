@@ -17,8 +17,6 @@ export function getClientOptions() {
     };
   });
 
-  // console.log(authLink);
-
   return Object.assign(
     {
       link: authLink.concat(httpLink),

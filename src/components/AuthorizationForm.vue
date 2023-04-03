@@ -51,6 +51,8 @@ const signIn = async () => {
       password: form.value.password,
     });
 
+    console.log(user);
+
     store.commit("user/SET_CURRENT_USER", user);
 
     router.push({
