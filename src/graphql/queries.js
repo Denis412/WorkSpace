@@ -102,11 +102,11 @@ export const getGroupSubjects = gql`
           id
           name
         }
-        property6 {
+        property4 {
           id
           name
         }
-        property3 {
+        property2 {
           id
           name
         }
@@ -117,7 +117,7 @@ export const getGroupSubjects = gql`
 
 export const getResponsibleGroupSubjects = gql`
   query getGroupSubjects {
-    get_group(id: "5983896088280179804") {
+    get_group(id: "4579859626660313705") {
       id
       author_id
       name
@@ -142,7 +142,7 @@ export const getResponsibleGroupSubjects = gql`
 
 export const getExecutorGroupSubjects = gql`
   query getGroupSubjects {
-    get_group(id: "5631823475896040655") {
+    get_group(id: "7007095239370065289") {
       id
       author_id
       name
@@ -208,38 +208,82 @@ export const getPage = gql`
   }
 `;
 
+export const getModulesAll = gql`
+  query getModules {
+    paginate_type2(page: 1, perPage: 100) {
+      data {
+        id
+        type_id
+        author_id
+        level
+        position
+        created_at
+        updated_at
+        name
+        property4 {
+          id
+          fullname {
+            first_name
+            middle_name
+            last_name
+          }
+        }
+        property5 {
+          date
+          time
+        }
+        property6 {
+          date
+          time
+        }
+        property7 {
+          id
+        }
+      }
+      paginatorInfo {
+        perPage
+        currentPage
+        lastPage
+        total
+        count
+        from
+        to
+        hasMorePages
+      }
+    }
+  }
+`;
+
 export const getModuleById = gql`
   query getModuleById($module_id: String!) {
-    get_type1(id: $module_id) {
+    get_type2(id: $module_id) {
       id
       name
-      property6 {
+      property4 {
         id
         fullname {
           first_name
           last_name
         }
       }
+      property5 {
+        date
+        time
+      }
+      property6 {
+        date
+        time
+      }
       property7 {
-        date
-        time
-      }
-      property8 {
-        date
-        time
-      }
-      property9 {
         id
         name
-        property2
-        property3 {
+        property2 {
           id
           fullname {
             first_name
             last_name
           }
         }
-        property4
       }
     }
   }

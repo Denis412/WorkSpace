@@ -11,6 +11,8 @@
 
       <section class="text-h5">Участники группы</section>
 
+      <!-- <pre>{{ subjects }}</pre> -->
+
       <MainTable
         class="w-100p q-my-md"
         :columnNames="columnNames"

@@ -45,6 +45,6 @@ const { subjects, propertyType, columnLength } = defineProps({
 });
 
 const calculatedPropertyName = () => {
-  return propertyType === "Модули" ? "property6" : "property3";
+  return propertyType === "Модули" ? "property4" : "property2";
 };
 </script>
