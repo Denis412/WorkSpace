@@ -74,13 +74,13 @@ a {
 .children-wrapper-collapsed {
   @extend .children-wrapper;
   max-height: 0;
-  transition: max-height .35s ease-out;
+  transition: max-height .45s ease-out;
 }
 
 .children-wrapper-expanded {
   @extend .children-wrapper;
   max-height: 999px;
-  transition: max-height .67s ease-in;
+  transition: max-height .69s ease-in;
 }
 
 .drop-down-icon {
