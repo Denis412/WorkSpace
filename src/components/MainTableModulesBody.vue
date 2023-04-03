@@ -2,7 +2,7 @@
   <tbody>
     <tr v-for="module in modules" :key="module.id">
       <td class="q-pa-md text-center">
-        {{ module.property5 }}
+        {{ module.name }}
       </td>
 
       <td class="q-pa-md text-center">
