@@ -17,6 +17,12 @@
     :modules="modules"
     />
 
+    <MainTableModuleBody
+    v-if="singleModule"
+    :module="singleModule"
+    />
+
+
     <MainTableSubjectsBody
       v-else-if="subjects"
       :columnLength="columnNames.length"
@@ -30,6 +36,7 @@
 
 <script setup>
 import MainTableModulesBody from "src/components/MainTableModulesBody.vue";
+import MainTableModuleBody from "src/components/MainTableModuleBody.vue";
 import MainTableSubjectsBody from "src/components/MainTableSubjectsBody.vue";
 import MainTableTasksBody from "src/components/MainTableTasksBody.vue";
 
@@ -37,6 +44,7 @@ const { columnNames, subjects, modules, tasks } = defineProps({
   columnNames: Array,
   subjects: Array,
   modules: Array,
+  singleModule: Object,
   tasks: Array,
 });
 </script>
