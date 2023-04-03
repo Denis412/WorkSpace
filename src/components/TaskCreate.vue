@@ -20,6 +20,9 @@ import { useMutation, useQuery } from "@vue/apollo-composable";
 import { getModuleById } from "src/graphql/queries";
 import { createTask } from "src/graphql/mutations";
 import TaskForm from "./TaskForm.vue";
+import { useQuasar } from "quasar";
+
+const $q = useQuasar();
 
 const { moduleId } = defineProps({
   moduleId: String,
@@ -35,7 +38,7 @@ const { refetch: refetchModule } = useQuery(getModuleById, {
 
 const createdTask = async (form) => {
   try {
-    const { data } = await creatingTask({
+    await creatingTask({
       input: {
         name: form.name,
         property1: form.description,
@@ -51,7 +54,10 @@ const createdTask = async (form) => {
 
     refetchModule();
 
-    console.log(data);
+    $q.notify({
+      type: "positive",
+      message: "Задача создана!",
+    });
   } catch (error) {
     console.log(error);
   }
