@@ -99,6 +99,35 @@ export const createTask = gql`
   }
 `;
 
+export const updateTask = gql`
+  mutation ($id: String!, $input: update_type1_input!) {
+    update_type1(id: $id, input: $input) {
+      status
+      recordId
+      record {
+        id
+        type_id
+        author_id
+        level
+        position
+        created_at
+        updated_at
+        name
+        property1
+        property2 {
+          id
+          user_id
+          fullname {
+            first_name
+            last_name
+          }
+        }
+        property3
+      }
+    }
+  }
+`;
+
 export const createPage = gql`
   mutation ($input: PageCreateInput!) {
     pageCreate(input: $input) {

@@ -12,7 +12,7 @@
       </td>
 
       <td>
-        <q-btn label="Редактировать Задачу" color="primary" />
+        <TaskUpdate :module-id="moduleId" :task="task" />
       </td>
     </tr>
   </tbody>
@@ -21,6 +21,7 @@
 <script setup>
 import { useQuery } from "@vue/apollo-composable";
 import { getModuleById } from "src/graphql/queries";
+import TaskUpdate from "./TaskUpdate.vue";
 
 const { moduleId } = defineProps({
   moduleId: String,

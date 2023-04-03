@@ -27,7 +27,7 @@
       <q-btn
         class="w-100p"
         color="primary"
-        :label="formContext === 'create' ? 'Создать' : 'Обновить' + ' задачу'"
+        :label="formContext === 'create' ? 'Создать задачу' : 'Обновить задачу'"
         type="submit"
       />
     </footer>
@@ -39,14 +39,20 @@ import { ref, computed } from "vue";
 import { getExecutorGroupSubjects } from "src/graphql/queries";
 import { useQuery } from "@vue/apollo-composable";
 
-const { formContext } = defineProps({
+const { formContext, task } = defineProps({
   formContext: String,
+  task: Object,
 });
 
 const form = ref({
-  name: "",
-  description: "",
-  executor: "",
+  name: task?.name || "",
+  description: task?.property1 || "",
+  executor: {
+    label: `${task?.property2.fullname.first_name || ""} ${
+      task?.property2.fullname.last_name || ""
+    }`,
+    value: task?.property2.id || "",
+  },
 });
 
 const { result: executorGroupSubjects } = useQuery(getExecutorGroupSubjects);
