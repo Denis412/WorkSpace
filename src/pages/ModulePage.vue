@@ -14,7 +14,7 @@
       />
 
       <div class="flex justify-end">
-        <TaskCreateForm :module-id="resultModule?.get_type2.id" />
+        <TaskCreate :module-id="resultModule?.get_type2.id" />
       </div>
     </main>
   </q-page>
@@ -25,7 +25,7 @@ import MainTable from "src/components/MainTable.vue";
 import { useQuery } from "@vue/apollo-composable";
 import { getModuleById } from "src/graphql/queries";
 import { onMounted } from "vue";
-import TaskCreateForm from "src/components/TaskCreateForm.vue";
+import TaskCreate from "src/components/TaskCreate.vue";
 
 const { page } = defineProps({
   page: Object,
