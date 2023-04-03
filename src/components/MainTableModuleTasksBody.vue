@@ -1,11 +1,20 @@
 <template>
   <tbody>
-    <tr v-for="task in resultModule?.get_type2.property7" :key="task.id">
-      <td class="flex q-pa-md items-center justify-center">
-        {{ task.name }}
+    <tr
+      v-for="task in resultModule?.get_type2.property7"
+      :key="task.id"
+      class="flex justify-between q-mx-md"
+    >
+      <td>
+        <q-item clickable class="rounded-borders items-center justify-center">
+          {{ task.name }}
+        </q-item>
+      </td>
+
+      <td>
+        <q-btn label="Редактировать Задачу" color="primary" />
       </td>
     </tr>
-    <pre>{{ resultModule }}</pre>
   </tbody>
 </template>
 

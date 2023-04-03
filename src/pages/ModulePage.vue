@@ -1,20 +1,21 @@
 <template>
-  <q-page class="q-pa-md">
+  <q-page v-if="loading"> Загрузка... </q-page>
+
+  <q-page v-else class="q-pa-md">
     <header class="text-h3 text-center">
       {{ resultModule?.get_type2.name }}
     </header>
 
-    <!-- <pre>{{ page }}</pre> -->
-    <!-- <pre>{{ resultModule }}</pre> -->
-
-    <pre>{{ resultModule?.get_type2 }}</pre>
-
     <main class="q-mt-md">
       <MainTable
-        class="w-100p"
-        :column-names="['Название', 'Задачи']"
+        class="w-100p q-my-md"
+        :column-names="['Задачи']"
         :module-id="resultModule?.get_type2.id"
       />
+
+      <div class="flex justify-end">
+        <TaskCreateForm :module-id="resultModule?.get_type2.id" />
+      </div>
     </main>
   </q-page>
 </template>
@@ -24,6 +25,7 @@ import MainTable from "src/components/MainTable.vue";
 import { useQuery } from "@vue/apollo-composable";
 import { getModuleById } from "src/graphql/queries";
 import { onMounted } from "vue";
+import TaskCreateForm from "src/components/TaskCreateForm.vue";
 
 const { page } = defineProps({
   page: Object,
@@ -39,8 +41,6 @@ const {
 
 onMounted(() => {
   if (!page) return;
-
-  console.log(page);
 
   refetchModule({
     module_id: page.object.id,

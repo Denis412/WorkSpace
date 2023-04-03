@@ -3,8 +3,8 @@
 
   <q-dialog v-model="showForm">
     <q-card>
-      <q-card-section>
-        <div class="text-h6">Форма добавления участника</div>
+      <q-card-section class="text-h6 text-center">
+        Добавление участника
       </q-card-section>
 
       <q-card-section class="q-pt-none">
