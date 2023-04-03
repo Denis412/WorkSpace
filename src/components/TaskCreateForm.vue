@@ -30,7 +30,7 @@
       <q-select
         v-model="form.module"
         label="Модуль"
-        :options="executorGroupSubjectsNames"
+        :options="allModulesNames"
         placeholder="Выберите модуль"
       />
     </main>
@@ -49,17 +49,19 @@
 <script setup>
 import { computed, ref } from "vue";
 import { useQuery, useMutation } from "@vue/apollo-composable";
-import { getExecutorGroupSubjects } from "src/graphql/queries";
+import { getExecutorGroupSubjects, getModulesAll } from "src/graphql/queries";
 import { createTask } from "src/graphql/mutations";
 
 const form = ref({
   name: "",
   description: "",
   executor: "",
+  module: "",
 });
 
 const { mutate: creatingTask } = useMutation(createTask);
 const { result: executorGroupSubjects } = useQuery(getExecutorGroupSubjects);
+const { result: allModules } = useQuery(getModulesAll);
 
 const executorGroupSubjectsNames = computed(() =>
   executorGroupSubjects.value?.get_group.subject.map((subject) => ({
@@ -68,17 +70,26 @@ const executorGroupSubjectsNames = computed(() =>
   }))
 );
 
+const allModulesNames = computed(() =>
+  allModules.value?.paginate_type2.data.map((module) => ({
+    label: module.name,
+    value: module.id,
+  }))
+);
+
 const createdTask = async () => {
   try {
     const { data } = await creatingTask({
       input: {
         name: form.value.name,
-        property1: form.value.name,
-        property2: form.value.description,
-        property3: {
-          "6227464153175039134": form.value.executor.value,
+        property1: form.value.description,
+        property2: {
+          "2529884860175464566": form.value.executor.value,
         },
-        property4: "4827681319781020453",
+        property3: "4799030204995883472",
+        property7: {
+          "6647062161604721421": form.value.module.value,
+        },
       },
     });
 

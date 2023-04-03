@@ -14,6 +14,8 @@
 
     <MainTableModulesBody v-if="modules" :modules="modules" />
 
+    <MainTableModuleTasksBody v-else-if="moduleId" :moduleId="moduleId" />
+
     <MainTableSubjectsBody
       v-else-if="subjects"
       :columnLength="columnNames.length"
@@ -29,12 +31,14 @@
 import MainTableModulesBody from "src/components/MainTableModulesBody.vue";
 import MainTableSubjectsBody from "src/components/MainTableSubjectsBody.vue";
 import MainTableTasksBody from "src/components/MainTableTasksBody.vue";
+import MainTableModuleTasksBody from "./MainTableModuleTasksBody.vue";
 
-const { columnNames, subjects, modules, tasks } = defineProps({
+const { columnNames, subjects, modules, tasks, moduleId } = defineProps({
   columnNames: Array,
   subjects: Array,
   modules: Array,
   tasks: Array,
+  moduleId: String,
 });
 </script>
 

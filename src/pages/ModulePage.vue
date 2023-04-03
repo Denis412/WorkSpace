@@ -7,13 +7,13 @@
     <!-- <pre>{{ page }}</pre> -->
     <!-- <pre>{{ resultModule }}</pre> -->
 
-    <pre>{{ resultModule?.get_type2.property4.property1 }}</pre>
+    <pre>{{ resultModule?.get_type2 }}</pre>
 
     <main class="q-mt-md">
       <MainTable
         class="w-100p"
         :column-names="['Название', 'Задачи']"
-        :module-tasks="resultModule?.get_type2.property4.property1"
+        :module-id="resultModule?.get_type2.id"
       />
     </main>
   </q-page>

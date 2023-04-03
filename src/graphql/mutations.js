@@ -69,8 +69,8 @@ export const createModule = gql`
 `;
 
 export const createTask = gql`
-  mutation ($input: create_type2_input!) {
-    create_type2(input: $input) {
+  mutation ($input: create_type1_input!) {
+    create_type1(input: $input) {
       status
       recordId
       record {
@@ -83,8 +83,7 @@ export const createTask = gql`
         updated_at
         name
         property1
-        property2
-        property3 {
+        property2 {
           id
           user_id
           fullname {
@@ -92,17 +91,8 @@ export const createTask = gql`
             last_name
           }
         }
-        property4
-        property9 {
+        property7 {
           id
-          name
-          property6 {
-            id
-            fullname {
-              first_name
-              last_name
-            }
-          }
         }
       }
     }
