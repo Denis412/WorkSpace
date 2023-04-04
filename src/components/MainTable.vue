@@ -1,5 +1,5 @@
 <template>
-  <table class="border-black-1 rounded-borders">
+  <table style="width: 100%;" class="border-black-1 rounded-borders">
     <thead class="rounded-borders border-black-1">
       <tr>
         <th
@@ -15,11 +15,6 @@
     <MainTableModulesBody
     v-if="modules"
     :modules="modules"
-    />
-
-    <MainTableModuleBody
-    v-if="singleModule"
-    :module="singleModule"
     />
 
 
@@ -38,7 +33,6 @@
 
 <script setup>
 import MainTableModulesBody from "src/components/MainTableModulesBody.vue";
-import MainTableModuleBody from "src/components/MainTableModuleBody.vue";
 import MainTableSubjectsBody from "src/components/MainTableSubjectsBody.vue";
 import MainTableTasksBody from "src/components/MainTableTasksBody.vue";
 import MainTableModuleTasksBody from "./MainTableModuleTasksBody.vue";
@@ -47,7 +41,6 @@ const { columnNames, subjects, modules, tasks, moduleId } = defineProps({
   columnNames: Array,
   subjects: Array,
   modules: Array,
-  singleModule: Object,
   tasks: Array,
   moduleId: String,
 });

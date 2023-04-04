@@ -224,7 +224,6 @@ export const getModulesAll = gql`
           id
           fullname {
             first_name
-            middle_name
             last_name
           }
         }
@@ -258,12 +257,6 @@ export const getModuleById = gql`
   query getModuleById($module_id: String!) {
     get_type2(id: $module_id) {
       id
-      type_id
-      author_id
-      level
-      position
-      created_at
-      updated_at
       name
       property4 {
         id
