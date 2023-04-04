@@ -294,16 +294,5 @@ export const getModuleById = gql`
         }
       }
     }
-    paginatorInfo {
-      perPage
-      currentPage
-      lastPage
-      total
-      count
-      from
-      to
-      hasMorePages
-    }
   }
-}
 `;

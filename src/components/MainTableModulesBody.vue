@@ -6,26 +6,29 @@
       </td>
 
       <td class="q-pa-md text-center">
-        <router-link :to="{ name: 'subject', params:{ id: module.property6.id }}">
-          {{ module.property6.fullname.first_name}} {{ module.property6.fullname.last_name }}
+        <router-link
+          :to="{ name: 'subject', params: { id: module.property4.id } }"
+        >
+          {{ module.property4.fullname.first_name }}
+          {{ module.property4.fullname.last_name }}
         </router-link>
       </td>
 
       <td class="q-pa-md text-center">
-        C {{ module.property7.date }} {{ module.property7.time }}
+        C {{ module.property5.date }} {{ module.property5.time }}
       </td>
 
       <td class="q-pa-md text-center">
-        До {{ module.property8.date }} {{ module.property8.time }}
+        До {{ module.property6.date }} {{ module.property6.time }}
       </td>
     </tr>
   </tbody>
 </template>
 
 <script setup>
-import { defineProps } from 'vue';
+import { defineProps } from "vue";
 
 const { modules } = defineProps({
-  modules:Array,
+  modules: Array,
 });
 </script>
