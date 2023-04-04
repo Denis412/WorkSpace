@@ -27,7 +27,7 @@
       </td>
 
       <td class="flex justify-between">
-        <q-btn @click="showForm(module)" color="blue" label="Изменить" />
+        <q-btn @click="showForm(module)" color="primary" label="Изменить" />
         <q-btn @click="showForm(module)" color="negative" label="Удалить" />
       </td>
     </tr>

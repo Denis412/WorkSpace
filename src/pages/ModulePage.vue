@@ -17,7 +17,12 @@
 
       <MainTable
         class="w-100p q-my-md"
-        :column-names="['Название', 'Описание', 'Исполнитель', 'Действия']"
+        :column-names="[
+          'Название задачи',
+          'Описание задачи',
+          'Исполнитель',
+          'Действия',
+        ]"
         :module-id="resultModule?.get_type2.id"
       />
     </main>

@@ -5,7 +5,7 @@
     <div class="flex q-mb-md">
       <q-btn
         @click="showCreateForm = true"
-        color="blue"
+        color="primary"
         label="Создать модуль"
         float-right
       />
