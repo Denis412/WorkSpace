@@ -27,7 +27,7 @@ const { result: subject, loading } = useQuery(getSubject, {
 
 const getName = () => {
   const fullname = subject.value?.get_subject?.fullname;
-  console.log(subject.value?.get_subject.group);
+
   return fullname?.first_name + " " + fullname?.last_name;
 };
 </script>
