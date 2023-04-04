@@ -13,11 +13,11 @@ const { mutate: userSignIn } = useMutation(UserSignIn);
 const { refetch: refetchUser } = useQuery(User);
 const { refetch: refetchPages } = useQuery(pages);
 
-const signIn = async ({ email, password }) => {
+const signIn = async (form) => {
   const { data: signedInf, error: signInError } = await userSignIn({
     input: {
-      login: email,
-      password: password,
+      login: form.email,
+      password: form.password,
     },
   });
 

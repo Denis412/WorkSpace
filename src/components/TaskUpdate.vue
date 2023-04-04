@@ -15,7 +15,7 @@
         <TaskForm
           form-context="update"
           :task="task"
-          @submit-form="updatedTask"
+          @submit-form="updateTask"
         />
       </q-card-section>
     </q-card>
@@ -37,7 +37,7 @@ const { moduleId, task } = defineProps({
 
 const showForm = ref(false);
 
-const updatedTask = async (form) => {
+const updateTask = async (form) => {
   try {
     await taskApi.taskUpdate(form, task.id, moduleId);
 

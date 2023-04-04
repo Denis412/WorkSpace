@@ -8,7 +8,7 @@
       </q-card-section>
 
       <q-card-section class="q-pt-none">
-        <TaskForm form-context="create" @submit-form="createdTask" />
+        <TaskForm form-context="create" @submit-form="createTask" />
       </q-card-section>
     </q-card>
   </q-dialog>
@@ -28,7 +28,7 @@ const { moduleId } = defineProps({
 
 const showForm = ref(false);
 
-const createdTask = async (form) => {
+const createTask = async (form) => {
   try {
     await taskApi.taskCreate(form, moduleId);
 

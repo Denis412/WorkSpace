@@ -47,12 +47,10 @@
 </template>
 
 <script setup>
-import { useMutation, useQuery } from "@vue/apollo-composable";
-import { userGroupInviteUser } from "src/graphql/mutations";
-import { getGroupSubjects } from "src/graphql/queries";
 import { useQuasar } from "quasar";
 import { defineProps, ref, computed } from "vue";
 import { useValidators } from "src/use/validators";
+import groupApi from "src/sdk/group";
 
 const props = defineProps({
   pageId: String,
@@ -71,24 +69,11 @@ const form = ref({
 
 const groupId = computed(() => props.groupId);
 
-const { refetch: refetchSubjects } = useQuery(getGroupSubjects, {
-  group_id: groupId,
-});
-
-const { mutate: inviteUser } = useMutation(userGroupInviteUser);
-
 const { required } = useValidators();
 
 const onSubmit = async () => {
   try {
-    const { data } = await inviteUser({
-      input: {
-        name: form.value.first_name,
-        surname: form.value.last_name,
-        email: form.value.email,
-        page_group_id: props.pageId,
-      },
-    });
+    await groupApi.userInvite(form.value, props.pageId, groupId.value);
 
     form.value.first_name = "";
     form.value.last_name = "";
@@ -101,7 +86,6 @@ const onSubmit = async () => {
   } catch (error) {
     console.log(error);
   }
-  refetchSubjects();
 };
 </script>
 
