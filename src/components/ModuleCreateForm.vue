@@ -76,7 +76,6 @@ import { date } from "quasar";
 import { useQuery, useMutation } from "@vue/apollo-composable";
 import { getResponsibleGroupSubjects } from "src/graphql/queries";
 import { createModule, createPage } from "src/graphql/mutations";
-import { useRoute } from "vue-router";
 
 const form = ref({
   name: "",
@@ -107,15 +106,14 @@ const createdModule = async () => {
     const { data } = await creatingModule({
       input: {
         name: form.value.name,
-        property5: form.value.name,
-        property6: {
-          "6227464153175039134": form.value.responsible.value,
+        property4: {
+          "2529884860175464566": form.value.responsible.value,
         },
-        property7: {
+        property5: {
           date: new Date(form.value.date_start).toLocaleDateString(),
           time: "01:00:00",
         },
-        property8: {
+        property6: {
           date: new Date(form.value.date_end).toLocaleDateString(),
           time: "23:58:00",
         },
@@ -124,11 +122,11 @@ const createdModule = async () => {
 
     await creatingPage({
       input: {
-        title: data.create_type1.record.name,
-        parent_id: "7077578782196173015",
+        title: data.create_type2.record.name,
+        parent_id: "1107262131192288825",
         object: {
-          id: data.create_type1.record.id,
-          type_id: data.create_type1.record.type_id,
+          id: data.create_type2.record.id,
+          type_id: data.create_type2.record.type_id,
         },
       },
     });

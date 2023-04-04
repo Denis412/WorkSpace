@@ -3,11 +3,15 @@
     Загрузка...
   </q-page>
 
-  <ModulesPage v-else-if="pageType === 'Модули'" />
-  <ModulePage v-else-if="pageType === 'Модуль'" />
+  <ModulesPage v-else-if="pageType === 'Модули'" :page="page?.page" />
+  <ModulePage v-else-if="pageType === 'Модуль'" :page="page?.page" />
 
-  <TasksPage v-else-if="pageType === 'Мои задачи'" />
-  <TaskPage v-else-if="pageType === 'Задача'" />
+  <TasksPage v-else-if="pageType === 'Мои задачи'" :page="page?.page" />
+  <TaskPage v-else-if="pageType === 'Задача'" :page="page?.page" />
+  <!--
+  <q-page>
+    <pre>{{ page }}</pre>
+  </q-page> -->
 </template>
 
 <script setup>
@@ -34,8 +38,8 @@ const pageTypeUpdate = () => {
   const page_title = page.value?.page.title;
 
   if (page_type_id === null) pageType.value = page_title;
-  else if (page_type_id === "5129465377265531694") pageType.value = "Модуль";
-  else if (page_type_id === "1943895113238629630") pageType.value = "Задача";
+  else if (page_type_id === "6647062161604721421") pageType.value = "Модуль";
+  else if (page_type_id === "4474239268760732705") pageType.value = "Задача";
 };
 
 onMounted(() => {

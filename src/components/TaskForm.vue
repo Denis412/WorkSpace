@@ -1,10 +1,5 @@
 <template>
-  <q-form
-    class="bg-grey-2 q-pa-md rounded-borders shadow-5"
-    style="min-width: 500px"
-  >
-    <header class="text-h4 text-center q-mb-md">Задача</header>
-
+  <q-form style="min-width: 500px" @submit="$emit('submitForm', form)">
     <main>
       <q-input
         v-model="form.name"
@@ -26,39 +21,40 @@
         :options="executorGroupSubjectsNames"
         placeholder="Выберите исполнителя"
       />
-
-      <q-select
-        v-model="form.module"
-        label="Модуль"
-        :options="executorGroupSubjectsNames"
-        placeholder="Выберите модуль"
-      />
     </main>
 
     <footer class="q-mt-md">
       <q-btn
         class="w-100p"
         color="primary"
-        label="Создать задачу"
-        @click="createdTask"
+        :label="task ? 'Обновить задачу' : 'Создать задачу'"
+        type="submit"
       />
     </footer>
   </q-form>
 </template>
 
 <script setup>
-import { computed, ref } from "vue";
-import { useQuery, useMutation } from "@vue/apollo-composable";
+import { ref, computed } from "vue";
 import { getExecutorGroupSubjects } from "src/graphql/queries";
-import { createTask } from "src/graphql/mutations";
+import { useQuery } from "@vue/apollo-composable";
 
-const form = ref({
-  name: "",
-  description: "",
-  executor: "",
+const { formContext, task } = defineProps({
+  formContext: String,
+  task: Object,
 });
 
-const { mutate: creatingTask } = useMutation(createTask);
+const form = ref({
+  name: task?.name || "",
+  description: task?.property1 || "",
+  executor: {
+    label: `${task?.property2.fullname.first_name || ""} ${
+      task?.property2.fullname.last_name || ""
+    }`,
+    value: task?.property2.id || "",
+  },
+});
+
 const { result: executorGroupSubjects } = useQuery(getExecutorGroupSubjects);
 
 const executorGroupSubjectsNames = computed(() =>
@@ -67,24 +63,4 @@ const executorGroupSubjectsNames = computed(() =>
     value: subject.id,
   }))
 );
-
-const createdTask = async () => {
-  try {
-    const { data } = await creatingTask({
-      input: {
-        name: form.value.name,
-        property1: form.value.name,
-        property2: form.value.description,
-        property3: {
-          "6227464153175039134": form.value.executor.value,
-        },
-        property4: "4827681319781020453",
-      },
-    });
-
-    console.log(data);
-  } catch (error) {
-    console.log(error);
-  }
-};
 </script>

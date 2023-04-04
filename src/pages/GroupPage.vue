@@ -18,7 +18,7 @@
       />
 
       <div class="flex justify-end">
-        <GroupTableForm
+        <InviteUserForm
           :page-id="page?.page.id"
           :group-id="page?.page.object.id"
         />
@@ -33,7 +33,7 @@ import { getPage, getGroupSubjects } from "src/graphql/queries";
 import { useQuery } from "@vue/apollo-composable";
 import { useRoute } from "vue-router";
 import MainTable from "src/components/MainTable.vue";
-import GroupTableForm from "src/components/InviteUserForm.vue";
+import InviteUserForm from "src/components/InviteUserForm.vue";
 
 const route = useRoute();
 const id = route.params.id;

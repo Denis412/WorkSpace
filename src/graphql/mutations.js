@@ -24,52 +24,6 @@ export const userGroupInviteUser = gql`
 `;
 
 export const createModule = gql`
-  mutation ($input: create_type1_input!) {
-    create_type1(input: $input) {
-      status
-      recordId
-      record {
-        id
-        type_id
-        author_id
-        level
-        position
-        created_at
-        updated_at
-        name
-        property5
-        property6 {
-          id
-          user_id
-          fullname {
-            first_name
-            last_name
-          }
-        }
-        property7 {
-          date
-          time
-        }
-        property8 {
-          date
-          time
-        }
-        property9 {
-          name
-          property2
-          property3 {
-            fullname {
-              first_name
-              last_name
-            }
-          }
-        }
-      }
-    }
-  }
-`;
-
-export const createTask = gql`
   mutation ($input: create_type2_input!) {
     create_type2(input: $input) {
       status
@@ -83,9 +37,7 @@ export const createTask = gql`
         created_at
         updated_at
         name
-        property1
-        property2
-        property3 {
+        property4 {
           id
           user_id
           fullname {
@@ -93,18 +45,84 @@ export const createTask = gql`
             last_name
           }
         }
-        property4
-        property9 {
-          id
+        property5 {
+          date
+          time
+        }
+        property6 {
+          date
+          time
+        }
+        property7 {
           name
-          property6 {
-            id
+          property1
+          property2 {
             fullname {
               first_name
               last_name
             }
           }
         }
+      }
+    }
+  }
+`;
+
+export const createTask = gql`
+  mutation ($input: create_type1_input!) {
+    create_type1(input: $input) {
+      status
+      recordId
+      record {
+        id
+        type_id
+        author_id
+        level
+        position
+        created_at
+        updated_at
+        name
+        property1
+        property2 {
+          id
+          user_id
+          fullname {
+            first_name
+            last_name
+          }
+        }
+        property7 {
+          id
+        }
+      }
+    }
+  }
+`;
+
+export const updateTask = gql`
+  mutation ($id: String!, $input: update_type1_input!) {
+    update_type1(id: $id, input: $input) {
+      status
+      recordId
+      record {
+        id
+        type_id
+        author_id
+        level
+        position
+        created_at
+        updated_at
+        name
+        property1
+        property2 {
+          id
+          user_id
+          fullname {
+            first_name
+            last_name
+          }
+        }
+        property3
       }
     }
   }
