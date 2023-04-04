@@ -24,56 +24,9 @@
         label="Изменить"/>
     </tr>
   </tbody>
-  <q-dialog
-      v-model="show"
-      full-width
-    >
-      <div class="bg-white q-pa-md">
-        <q-form class="row justify-between" @submit="onSubmit">
-          <q-input v-model="form.module_name"/>
-          <q-select v-model="form.user_name" :options="responsibleGroupSubjectsNames"/>
 
-          <div class="flex column">
-        <q-btn
-          @click="toggleShowQDateStart"
-          color="primary"
-          class="q-mt-md"
-          label="Выбрать дату начала"
-        />
 
-        <q-btn
-          @click="toggleShowQDateEnd"
-          color="primary"
-          class="q-mt-md"
-          label="Выбрать дату окончания"
-        />
-      </div>
 
-      <q-dialog v-model="showQDateStart">
-        <q-date v-model="form.date_start" :options="optionsFnDateStart">
-          <q-btn
-            class="w-100p"
-            color="primary"
-            label="Выбрать"
-            @click="toggleShowQDateStart"
-          />
-        </q-date>
-      </q-dialog>
-
-      <q-dialog v-model="showQDateEnd">
-        <q-date v-model="form.date_end" :options="optionsFnDateEnd">
-          <q-btn
-            class="w-100p"
-            color="primary"
-            label="Выбрать"
-            @click="toggleShowQDateEnd"
-          />
-        </q-date>
-      </q-dialog>
-      <q-btn label="Изменить" type="submit"/>
-      </q-form>
-      </div>
-    </q-dialog>
 </template>
 
 <script setup>
@@ -89,7 +42,7 @@ const { modules } = defineProps({
   modules:Array,
 });
 
-const show = ref(false);
+const showChangeForm = ref(false);
 
 const { result: responsibleGroupSubjects } = useQuery(
   getResponsibleGroupSubjects
@@ -107,13 +60,12 @@ const responsibleGroupSubjectsNames = computed(() =>
 const bufferModule = ref([]);
 
 const changeResponsible = (module)=>{
-  show.value = true;
+  showChangeForm.value = true;
   form.value.module_name = module.name;
   form.value.user_name=`${ module.property4.fullname.first_name} ${ module.property4.fullname.last_name }`;
   form.value.date_start= module.property5.date;
   form.value.date_end= module.property6.date;
 
-  console.log(module.property4.id)
   Object.values(form.value).forEach(el => bufferModule.value.push(el));
   bufferModule.value.push(module.id);
 }
@@ -139,13 +91,12 @@ const onSubmit = async()=>{
   });
   const input = {}
 
-  value.module_name ? input.name=value.module_name : null;
   value.user_name ? input.property4 = { "2529884860175464566" : value.user_name.value } : null;
   value.date_start ? input.property5 = { date: new Date(value.date_start).toLocaleDateString() } : null;
   value.date_end ? input.property6 = { date: new Date(value?.date_end).toLocaleDateString() } : null;
 
-
   if(Object.entries(input).length != 0){
+    input.name = form.value.module_name;
     try {
     const { data } = await updatingModule({
       id: bufferModule.value.at(-1),
