@@ -224,7 +224,6 @@ export const getModulesAll = gql`
           id
           fullname {
             first_name
-            middle_name
             last_name
           }
         }

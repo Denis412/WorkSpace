@@ -38,7 +38,6 @@ const { columnNames, subjects, modules, tasks } = defineProps({
   columnNames: Array,
   subjects: Array,
   modules: Array,
-  singleModule: Object,
   tasks: Array,
 });
 </script>
