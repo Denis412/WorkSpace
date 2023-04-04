@@ -24,11 +24,9 @@
 
 <script setup>
 import { ref } from "vue";
-import { useMutation, useQuery } from "@vue/apollo-composable";
-import { getModuleById } from "src/graphql/queries";
-import { updateTask } from "src/graphql/mutations";
 import TaskForm from "./TaskForm.vue";
 import { useQuasar } from "quasar";
+import taskApi from "src/sdk/task";
 
 const $q = useQuasar();
 
@@ -39,28 +37,9 @@ const { moduleId, task } = defineProps({
 
 const showForm = ref(false);
 
-const { mutate: updatingTask } = useMutation(updateTask);
-
-const { refetch: refetchModule } = useQuery(getModuleById, {
-  module_id: moduleId,
-});
-
 const updatedTask = async (form) => {
-  console.log(form);
   try {
-    await updatingTask({
-      id: task.id,
-      input: {
-        name: form.name,
-        property1: form.description,
-        property2: {
-          "2529884860175464566": form.executor.value,
-        },
-        property3: "4799030204995883472",
-      },
-    });
-
-    refetchModule();
+    await taskApi.taskUpdate(form, task.id, moduleId);
 
     $q.notify({
       type: "positive",
