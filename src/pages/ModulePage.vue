@@ -7,19 +7,19 @@
     </header>
 
     <main class="q-mt-md">
-      <MainTable
-        class="w-100p q-my-md"
-        :column-names="['Задачи']"
-        :module-id="resultModule?.get_type2.id"
-      />
-
-      <div class="flex justify-end">
+      <div class="flex">
         <TaskAction
           :module-id="resultModule?.get_type2.id"
           title="Создание задачи"
           button-label="Создать задачу"
         />
       </div>
+
+      <MainTable
+        class="w-100p q-my-md"
+        :column-names="['Название', 'Описание', 'Исполнитель', 'Действия']"
+        :module-id="resultModule?.get_type2.id"
+      />
     </main>
   </q-page>
 </template>

@@ -9,20 +9,18 @@
         {{ page?.page.title }}
       </section>
 
-      <section class="text-h5">Участники группы</section>
+      <div class="flex">
+        <InviteUserForm
+          :page-id="page?.page.id"
+          :group-id="page?.page.object.id"
+        />
+      </div>
 
       <MainTable
         class="w-100p q-my-md"
         :columnNames="columnNames"
         :subjects="subjects?.get_group?.subject"
       />
-
-      <div class="flex justify-end">
-        <InviteUserForm
-          :page-id="page?.page.id"
-          :group-id="page?.page.object.id"
-        />
-      </div>
     </div>
   </q-page>
 </template>
@@ -59,5 +57,3 @@ const columnNames = computed(() => {
   return names;
 });
 </script>
-
-<style lang="scss" scoped></style>

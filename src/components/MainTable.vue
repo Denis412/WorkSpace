@@ -1,5 +1,5 @@
 <template>
-  <table style="width: 100%;" class="border-black-1 rounded-borders">
+  <table style="width: 100%" class="table">
     <thead class="rounded-borders border-black-1">
       <tr>
         <th
@@ -12,18 +12,14 @@
       </tr>
     </thead>
 
-    <MainTableModulesBody
-    v-if="modules"
-    :modules="modules"
-    />
-
+    <MainTableModulesBody v-if="modules" :modules="modules" />
 
     <MainTableModuleTasksBody v-else-if="moduleId" :moduleId="moduleId" />
 
     <MainTableSubjectsBody
       v-else-if="subjects"
       :columnLength="columnNames.length"
-      :propertyType="columnNames.at(-1)"
+      :propertyType="columnNames.at(-2)"
       :subjects="subjects"
     />
 

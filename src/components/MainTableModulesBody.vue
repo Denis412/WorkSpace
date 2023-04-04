@@ -25,9 +25,14 @@
       <td class="q-pa-md text-center">
         {{ module.property7.name }}
       </td>
-      <q-btn @click="showForm(module)" color="blue" label="Изменить" />
+
+      <td class="flex justify-between">
+        <q-btn @click="showForm(module)" color="blue" label="Изменить" />
+        <q-btn @click="showForm(module)" color="negative" label="Удалить" />
+      </td>
     </tr>
   </tbody>
+
   <q-dialog v-model="show" full-width>
     <div class="bg-white q-pa-md">
       <q-form class="row justify-between" @submit="onSubmit">
@@ -86,7 +91,6 @@
       </q-form>
     </div>
   </q-dialog>
-  <q-dialog> </q-dialog>
 </template>
 
 <script setup>

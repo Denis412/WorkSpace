@@ -1,23 +1,33 @@
 <template>
   <tbody>
-    <tr
-      v-for="task in resultModule?.get_type2.property7"
-      :key="task.id"
-      class="flex justify-between q-mx-md"
-    >
+    <tr v-for="task in resultModule?.get_type2.property7" :key="task.id">
       <td>
-        <q-item clickable class="rounded-borders items-center justify-center">
+        <div class="link">
           {{ task.name }}
-        </q-item>
+        </div>
       </td>
 
       <td>
+        {{ task.property1 }}
+      </td>
+
+      <td>
+        <router-link
+          :to="{ name: 'subject', params: { id: task.property2.id } }"
+        >
+          {{ task.property2.fullname.first_name }}
+        </router-link>
+      </td>
+
+      <td class="flex justify-between">
         <TaskAction
           :module-id="moduleId"
           title="Редактирование задачи"
-          button-label="Редактировать задачу"
+          button-label="Изменить"
           :task="task"
         />
+
+        <q-btn color="negative" label="Удалить" />
       </td>
     </tr>
   </tbody>

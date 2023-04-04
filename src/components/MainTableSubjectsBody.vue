@@ -3,12 +3,7 @@
     <tr v-for="subject in subjects" :key="subject.id">
       <td class="q-pa-md text-center">
         <router-link :to="{ name: 'subject', params: { id: subject.id } }">
-          <q-item
-            clickable
-            class="flex items-center justify-center rounded-borders"
-          >
-            {{ subject.fullname.first_name }}
-          </q-item>
+          {{ subject.fullname.first_name }}
         </router-link>
       </td>
 
@@ -20,18 +15,14 @@
         {{ subject.email?.email }}
       </td>
 
-      <td
-        v-if="columnLength === 4"
-        class="flex wrap q-pa-md justify-center items-center"
-      >
-        <q-item
+      <td v-if="columnLength === 4" class="flex wrap">
+        <div
+          class="q-mr-sm link"
           v-for="propertyObj in subject[calculatedPropertyName()]"
           :key="propertyObj.id"
-          clickable
-          class="flex rounded-borders q-pa-sm items-center"
         >
           {{ propertyObj.name }}
-        </q-item>
+        </div>
       </td>
     </tr>
   </tbody>

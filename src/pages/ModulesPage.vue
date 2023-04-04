@@ -1,12 +1,8 @@
 <template>
   <q-page class="q-pa-md">
     <div class="text-h3 text-center q-pb-md">Модули</div>
-    <MainTable
-      :modules="modules?.paginate_type2?.data"
-      :columnNames="columnNames"
-    />
 
-    <div class="flex justify-end q-mt-lg">
+    <div class="flex q-mb-md">
       <q-btn
         @click="showCreateForm = true"
         color="blue"
@@ -14,6 +10,12 @@
         float-right
       />
     </div>
+
+    <MainTable
+      :modules="modules?.paginate_type2?.data"
+      :columnNames="columnNames"
+    />
+
     <q-dialog v-model="showCreateForm">
       <div>
         <ModuleCreateForm />
@@ -39,5 +41,6 @@ const columnNames = [
   "Дата и время начала",
   "Дата и время окончания",
   "Задачи",
+  "Действия",
 ];
 </script>
