@@ -134,3 +134,22 @@ export const createPage = gql`
     }
   }
 `;
+
+export const updateModule = gql`
+mutation ($input: update_type2_input!,$id: String!) {
+  update_type2 (id: $id, input: $input) {
+    status
+    recordId
+    record {
+        id
+        type_id
+        author_id
+        level
+        position
+        created_at
+        updated_at
+        name
+    }
+  }
+}
+`

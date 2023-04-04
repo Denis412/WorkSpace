@@ -17,11 +17,6 @@
     :modules="modules"
     />
 
-    <MainTableModuleBody
-    v-if="singleModule"
-    :module="singleModule"
-    />
-
 
     <MainTableSubjectsBody
       v-else-if="subjects"
@@ -36,7 +31,6 @@
 
 <script setup>
 import MainTableModulesBody from "src/components/MainTableModulesBody.vue";
-import MainTableModuleBody from "src/components/MainTableModuleBody.vue";
 import MainTableSubjectsBody from "src/components/MainTableSubjectsBody.vue";
 import MainTableTasksBody from "src/components/MainTableTasksBody.vue";
 
