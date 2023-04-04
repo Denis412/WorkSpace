@@ -6,10 +6,14 @@
     <MainTable
     :modules="modules?.paginate_type2?.data"
     :columnNames="columnNames"/>
-    <q-btn
-    @click="showCreateForm=true"
-    color="blue"
-    label="Создать модуль"/>
+
+    <div class="flex justify-end q-mt-lg">
+      <q-btn
+      @click="showCreateForm=true"
+      color="blue"
+      label="Создать модуль"
+      float-right/>
+    </div>
     <q-dialog
     v-model="showCreateForm"
     >
@@ -31,6 +35,6 @@ const showCreateForm = ref(false);
 
 const {result: modules} = useQuery(getModulesAll);
 console.log(modules.value?.paginate_type2.data);
-const columnNames = ["Название","Ответственный","Дата и время начала","Дата и время окончания"]
+const columnNames = ["Название","Ответственный","Дата и время начала","Дата и время окончания","Задачи"]
 
 </script>

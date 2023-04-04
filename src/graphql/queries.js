@@ -277,6 +277,7 @@ export const getModuleById = gql`
       }
       property7 {
         id
+        name
       }
     }
   }

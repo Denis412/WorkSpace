@@ -18,35 +18,92 @@
       <td class="q-pa-md text-center">
         До {{ module.property6.date }} {{ module.property6.time }}
       </td>
+
+      <td class="q-pa-md text-center">
+        {{ module.property7.name }}
+      </td>
         <q-btn
-        @click="changeResponsible(module)"
+        @click="showForm(module)"
         color="blue"
-        label="Изменить"/>
+        label="Изменить"
+        />
     </tr>
   </tbody>
+  <q-dialog
+      v-model="show"
+      full-width
+    >
+      <div class="bg-white q-pa-md">
+        <q-form class="row justify-between" @submit="onSubmit">
 
+          <q-input class="col-3" v-model="form.module_name"/>
 
+          <q-select class="col-3" v-model="form.user_name" :options="responsibleGroupSubjectsNames"/>
 
+        <q-btn
+          @click="toggleShowQDateStart"
+          color="primary"
+          class="q-mt-md col-3"
+          label="Выбрать дату начала"
+        />
+
+        <q-btn
+          @click="toggleShowQDateEnd"
+          color="primary"
+          class="q-mt-md col-3"
+          label="Выбрать дату окончания"
+        />
+
+      <q-dialog v-model="showQDateStart">
+        <q-date v-model="form.date_start" :options="optionsFnDateStart">
+          <q-btn
+            class="w-100p"
+            color="primary"
+            label="Выбрать"
+            @click="toggleShowQDateStart"
+          />
+        </q-date>
+      </q-dialog>
+
+      <q-dialog v-model="showQDateEnd">
+        <q-date v-model="form.date_end" :options="optionsFnDateEnd">
+          <q-btn
+            class="w-100p"
+            color="primary"
+            label="Выбрать"
+            @click="toggleShowQDateEnd"
+
+          />
+        </q-date>
+      </q-dialog>
+      <div class="col-12 q-mt-md">
+        <q-btn class="block" style="margin: 0 auto;width: 20%;" label="Изменить" type="submit" v-close-popup/>
+      </div>
+      </q-form>
+      </div>
+    </q-dialog>
+    <q-dialog>
+
+    </q-dialog>
 </template>
 
 <script setup>
 import { defineProps,ref,computed } from 'vue';
 import { useQuery, useMutation } from "@vue/apollo-composable";
-import { getResponsibleGroupSubjects } from "src/graphql/queries";
+import { getResponsibleGroupSubjects, getModulesAll } from "src/graphql/queries";
 import { updateModule } from 'src/graphql/mutations';
 import { date } from "quasar";
-
-
 
 const { modules } = defineProps({
   modules:Array,
 });
 
-const showChangeForm = ref(false);
+const show = ref(false);
 
 const { result: responsibleGroupSubjects } = useQuery(
   getResponsibleGroupSubjects
 );
+const { refetch: refetchModules } = useQuery(getModulesAll);
 const { mutate: updatingModule } = useMutation(updateModule);
 
 
@@ -59,8 +116,8 @@ const responsibleGroupSubjectsNames = computed(() =>
 
 const bufferModule = ref([]);
 
-const changeResponsible = (module)=>{
-  showChangeForm.value = true;
+const showForm = (module)=>{
+  show.value = true;
   form.value.module_name = module.name;
   form.value.user_name=`${ module.property4.fullname.first_name} ${ module.property4.fullname.last_name }`;
   form.value.date_start= module.property5.date;
@@ -81,19 +138,20 @@ const form = ref({
 })
 
 const onSubmit = async()=>{
-  const value = {};
+  const filtredValue = {};
 
   Object.values(form.value).forEach((el,index) => {
     let keyName = Object.keys(form.value)[index]
 
     if(el!=bufferModule.value[index])
-      value[keyName]=el;
+      filtredValue[keyName]=el;
   });
   const input = {}
 
-  value.user_name ? input.property4 = { "2529884860175464566" : value.user_name.value } : null;
-  value.date_start ? input.property5 = { date: new Date(value.date_start).toLocaleDateString() } : null;
-  value.date_end ? input.property6 = { date: new Date(value?.date_end).toLocaleDateString() } : null;
+  filtredValue.module_name ? input.name=filtredValue.module_name : null;
+  filtredValue.user_name ? input.property4 = { "2529884860175464566" : filtredValue.user_name.value } : null;
+  filtredValue.date_start ? input.property5 = { date: new Date(filtredValue.date_start).toLocaleDateString() } : null;
+  filtredValue.date_end ? input.property6 = { date: new Date(filtredValue?.date_end).toLocaleDateString() } : null;
 
   if(Object.entries(input).length != 0){
     input.name = form.value.module_name;
@@ -102,11 +160,11 @@ const onSubmit = async()=>{
       id: bufferModule.value.at(-1),
       input: input
     });
+    refetchModules();
   }catch (error) {
     console.log(error);
   }
   }
-  console.log(input)
 
 }
 

@@ -1,5 +1,5 @@
 <template>
-  <table class="border-black-1 rounded-borders">
+  <table style="width: 100%;" class="border-black-1 rounded-borders">
     <thead class="rounded-borders border-black-1">
       <tr>
         <th
