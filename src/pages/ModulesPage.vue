@@ -32,19 +32,12 @@ import ModuleCreateForm from "src/components/ModuleCreateForm.vue";
 const showCreateForm = ref(false);
 
 const { result: modules } = useQuery(getModulesAll);
+
 const columnNames = [
   "Название",
   "Ответственный",
   "Дата и время начала",
   "Дата и время окончания",
   "Задачи",
-];
-
-const { result: modules } = useQuery(getModulesAll);
-const columnNames = [
-  "Название",
-  "Ответственный",
-  "Дата и время начала",
-  "Дата и время окончания",
 ];
 </script>
