@@ -14,7 +14,11 @@
       />
 
       <div class="flex justify-end">
-        <TaskCreate :module-id="resultModule?.get_type2.id" />
+        <TaskAction
+          :module-id="resultModule?.get_type2.id"
+          title="Создание задачи"
+          button-label="Создать задачу"
+        />
       </div>
     </main>
   </q-page>
@@ -25,7 +29,7 @@ import MainTable from "src/components/MainTable.vue";
 import { useQuery } from "@vue/apollo-composable";
 import { getModuleById } from "src/graphql/queries";
 import { onMounted } from "vue";
-import TaskCreate from "src/components/TaskCreate.vue";
+import TaskAction from "src/components/TaskAction.vue";
 
 const { page } = defineProps({
   page: Object,

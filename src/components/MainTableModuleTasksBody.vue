@@ -12,7 +12,12 @@
       </td>
 
       <td>
-        <TaskUpdate :module-id="moduleId" :task="task" />
+        <TaskAction
+          :module-id="moduleId"
+          title="Редактирование задачи"
+          button-label="Редактировать задачу"
+          :task="task"
+        />
       </td>
     </tr>
   </tbody>
@@ -21,13 +26,13 @@
 <script setup>
 import { useQuery } from "@vue/apollo-composable";
 import { getModuleById } from "src/graphql/queries";
-import TaskUpdate from "./TaskUpdate.vue";
+import TaskAction from "./TaskAction.vue";
 
 const { moduleId } = defineProps({
   moduleId: String,
 });
 
-const { result: resultModule, loading } = useQuery(getModuleById, {
+const { result: resultModule } = useQuery(getModuleById, {
   module_id: moduleId,
 });
 </script>

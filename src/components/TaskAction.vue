@@ -1,14 +1,18 @@
 <template>
-  <q-btn color="primary" @click="showForm = true" label="Создать задачу" />
+  <q-btn color="primary" @click="showForm = true" :label="buttonLabel" />
 
   <q-dialog v-model="showForm">
     <q-card>
       <q-card-section class="text-h4 text-center">
-        Создание задачи
+        {{ title }}
       </q-card-section>
 
       <q-card-section class="q-pt-none">
-        <TaskForm form-context="create" @submit-form="createTask" />
+        <TaskForm
+          form-context="create"
+          :task="task"
+          @submit-form="actionTask"
+        />
       </q-card-section>
     </q-card>
   </q-dialog>
@@ -22,19 +26,24 @@ import taskApi from "src/sdk/task";
 
 const $q = useQuasar();
 
-const { moduleId } = defineProps({
+const { moduleId, title, buttonLabel, task } = defineProps({
   moduleId: String,
+  title: String,
+  task: Object,
+  buttonLabel: String,
 });
 
 const showForm = ref(false);
 
-const createTask = async (form) => {
+const actionTask = async (form) => {
   try {
-    await taskApi.taskCreate(form, moduleId);
+    task
+      ? await taskApi.taskUpdate(form, task.id, moduleId)
+      : await taskApi.taskCreate(form, moduleId);
 
     $q.notify({
       type: "positive",
-      message: "Задача создана!",
+      message: task ? "Задача обновлена!" : "Задача создана",
     });
   } catch (error) {
     console.log(error);

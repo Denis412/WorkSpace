@@ -76,7 +76,6 @@ import { date } from "quasar";
 import { useQuery, useMutation } from "@vue/apollo-composable";
 import { getResponsibleGroupSubjects } from "src/graphql/queries";
 import { createModule, createPage } from "src/graphql/mutations";
-import { useRoute } from "vue-router";
 
 const form = ref({
   name: "",

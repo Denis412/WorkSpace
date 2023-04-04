@@ -27,7 +27,7 @@
       <q-btn
         class="w-100p"
         color="primary"
-        :label="formContext === 'create' ? 'Создать задачу' : 'Обновить задачу'"
+        :label="task ? 'Обновить задачу' : 'Создать задачу'"
         type="submit"
       />
     </footer>
