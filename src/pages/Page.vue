@@ -36,10 +36,14 @@ const pageTypeUpdate = () => {
   if (page_type_id === null) pageType.value = page_title;
   else if (page_type_id === "6647062161604721421") pageType.value = "Модуль";
   else if (page_type_id === "4474239268760732705") pageType.value = "Задача";
+
+  console.log("value", pageType.value);
 };
 
 onMounted(() => {
   if (pageType.value) return;
+
+  console.log("mounted");
 
   pageTypeUpdate();
 });

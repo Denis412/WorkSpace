@@ -1,4 +1,7 @@
 import gql from "graphql-tag";
+import Cookies from "js-cookie";
+
+const currentUserId = Cookies.get("user_id");
 
 export const User = gql`
   query User($id: String!) {
@@ -277,6 +280,43 @@ export const getTasksAll = gql`
         property3
         property7 {
           id
+        }
+      }
+      paginatorInfo {
+        perPage
+        currentPage
+        lastPage
+        total
+        count
+        from
+        to
+        hasMorePages
+      }
+    }
+  }
+`;
+
+export const getUserTasks = gql`
+  query getUserTasks {
+    paginate_subject(
+      page: 1
+      perPage: 100
+      where: { column: "user_id", operator: EQ, value: ${currentUserId} }
+    ) {
+      data {
+        id
+        type_id
+        author_id
+        level
+        position
+        created_at
+        updated_at
+        user_id
+        property2 {
+          id
+          name
+          property1
+          property3
         }
       }
       paginatorInfo {

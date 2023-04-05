@@ -21,7 +21,9 @@
           v-for="propertyObj in subject[calculatedPropertyName()]"
           :key="propertyObj.id"
         >
-          {{ propertyObj.name }}
+          <router-link :to="{ name: 'page', params: { id: propertyObj.id } }">
+            {{ propertyObj.name }}
+          </router-link>
         </div>
       </td>
     </tr>
