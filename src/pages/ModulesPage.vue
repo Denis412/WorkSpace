@@ -5,20 +5,9 @@
       :modules="modules?.paginate_type2?.data"
       :columnNames="columnNames"
     />
-
-    <div class="flex justify-end q-mt-lg">
-      <q-btn
-        @click="showCreateForm = true"
-        color="blue"
-        label="Создать модуль"
-        float-right
-      />
+    <div class="q-mt-lg flex justify-end">
+    <ModuleAction />
     </div>
-    <q-dialog v-model="showCreateForm">
-      <div>
-        <ModuleCreateForm />
-      </div>
-    </q-dialog>
   </q-page>
 </template>
 
@@ -27,7 +16,7 @@ import MainTable from "src/components/MainTable.vue";
 import { useQuery } from "@vue/apollo-composable";
 import { getModulesAll } from "src/graphql/queries";
 import { ref } from "vue";
-import ModuleCreateForm from "src/components/ModuleCreateForm.vue";
+import ModuleAction from "src/components/ModuleAction.vue";
 
 const showCreateForm = ref(false);
 
