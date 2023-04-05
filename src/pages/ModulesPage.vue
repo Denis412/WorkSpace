@@ -1,5 +1,9 @@
 <template>
-  <q-page class="q-pa-md">
+  <q-page v-if="loading" class="flex justify-center items-center text-h4">
+    Загрузка...
+  </q-page>
+
+  <q-page v-else class="q-pa-md">
     <div class="text-h3 text-center q-pb-md">Модули</div>
 
     <div class="flex q-mb-md">
@@ -33,7 +37,7 @@ import ModuleCreateForm from "src/components/ModuleCreateForm.vue";
 
 const showCreateForm = ref(false);
 
-const { result: modules } = useQuery(getModulesAll);
+const { result: modules, loading } = useQuery(getModulesAll);
 
 const columnNames = [
   "Название",

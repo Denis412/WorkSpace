@@ -1,5 +1,7 @@
 <template>
-  <q-page v-if="loading"> Загрузка... </q-page>
+  <q-page v-if="loading" class="flex items-center justify-center text-h4">
+    Загрузка...
+  </q-page>
 
   <q-page v-else class="q-pa-md">
     <header class="text-h3 text-center">

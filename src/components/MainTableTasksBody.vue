@@ -2,4 +2,8 @@
   <tbody></tbody>
 </template>
 
-<script setup></script>
+<script setup>
+const { tasks } = defineProps({
+  tasks: Array,
+});
+</script>

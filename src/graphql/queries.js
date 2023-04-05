@@ -253,6 +253,45 @@ export const getModulesAll = gql`
   }
 `;
 
+export const getTasksAll = gql`
+  query getTasks {
+    paginate_type1(page: 1, perPage: 100) {
+      data {
+        id
+        type_id
+        author_id
+        level
+        position
+        created_at
+        updated_at
+        name
+        property1
+        property2 {
+          id
+          fullname {
+            first_name
+            middle_name
+            last_name
+          }
+        }
+        property7 {
+          id
+        }
+      }
+      paginatorInfo {
+        perPage
+        currentPage
+        lastPage
+        total
+        count
+        from
+        to
+        hasMorePages
+      }
+    }
+  }
+`;
+
 export const getModuleById = gql`
   query getModuleById($module_id: String!) {
     get_type2(id: $module_id) {
