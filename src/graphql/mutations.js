@@ -155,11 +155,11 @@ export const createPage = gql`
 `;
 
 export const updateModule = gql`
-mutation ($input: update_type2_input!,$id: String!) {
-  update_type2 (id: $id, input: $input) {
-    status
-    recordId
-    record {
+  mutation ($input: update_type2_input!, $id: String!) {
+    update_type2(id: $id, input: $input) {
+      status
+      recordId
+      record {
         id
         type_id
         author_id
@@ -168,7 +168,31 @@ mutation ($input: update_type2_input!,$id: String!) {
         created_at
         updated_at
         name
+      }
     }
   }
-}
-`
+`;
+
+export const deleteModule = gql`
+  mutation deleteModule($module_id: String!) {
+    delete_type2(id: $module_id) {
+      recordId
+    }
+  }
+`;
+
+export const deleteTask = gql`
+  mutation deleteTask($task_id: String!) {
+    delete_type1(id: $task_id) {
+      recordId
+    }
+  }
+`;
+
+export const deletePage = gql`
+  mutation deletePage($page_id: String!) {
+    pageDelete(id: $page_id) {
+      recordId
+    }
+  }
+`;

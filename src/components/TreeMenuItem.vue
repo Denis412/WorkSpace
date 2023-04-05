@@ -16,6 +16,7 @@
           <q-icon v-else class="text-h6" />
 
           <q-icon v-if="page.icon" :name="page.icon" class="text-h6" />
+          <q-icon v-else class="text-h6" name="assignment" />
 
           <div class="flex items-center q-ml-sm">
             {{ page.title }}

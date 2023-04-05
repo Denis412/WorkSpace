@@ -1,11 +1,18 @@
 import { provideApolloClient, useMutation } from "@vue/apollo-composable";
 import apolloClient from "src/apollo/apollo-client";
-import { createModule, createPage } from "src/graphql/mutations";
+import {
+  createModule,
+  createPage,
+  deleteModule,
+  deletePage,
+} from "src/graphql/mutations";
 
 provideApolloClient(apolloClient);
 
 const { mutate: creatingModule } = useMutation(createModule);
 const { mutate: creatingPage } = useMutation(createPage);
+const { mutate: deletingModule } = useMutation(deleteModule);
+const { mutate: deletingPage } = useMutation(deletePage);
 
 const moduleCreate = async (form) => {
   const { data: createdModule } = await creatingModule({
@@ -41,6 +48,18 @@ const moduleCreate = async (form) => {
 
 const moduleUpdate = () => {};
 
-const moduleApi = { moduleCreate, moduleUpdate };
+const moduleDelete = async (moduleId, pageId) => {
+  const { data: delM } = await deletingModule({
+    module_id: moduleId,
+  });
+
+  const { data: delP } = await deletingPage({
+    page_id: pageId,
+  });
+
+  console.log(delM, delP);
+};
+
+const moduleApi = { moduleCreate, moduleUpdate, moduleDelete };
 
 export default moduleApi;

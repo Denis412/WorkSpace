@@ -1,5 +1,5 @@
 <template>
-  <q-page class="flex justify-center items-center">
+  <q-page class="flex q-pa-md justify-center items-center">
     <AuthorizationForm />
   </q-page>
 </template>

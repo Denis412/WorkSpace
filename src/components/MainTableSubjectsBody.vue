@@ -1,7 +1,7 @@
 <template>
   <tbody>
     <tr v-for="subject in subjects" :key="subject.id">
-      <td class="q-pa-md text-center">
+      <td class="q-pa-md hover-item link">
         <router-link :to="{ name: 'subject', params: { id: subject.id } }">
           {{ subject.fullname.first_name }}
         </router-link>
@@ -17,7 +17,7 @@
 
       <td v-if="columnLength === 4" class="flex wrap">
         <div
-          class="q-mr-sm link"
+          class="q-pa-sm link hover-item rounded-borders"
           v-for="propertyObj in subject[calculatedPropertyName()]"
           :key="propertyObj.id"
         >

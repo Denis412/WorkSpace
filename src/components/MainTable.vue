@@ -14,12 +14,16 @@
 
     <MainTableModulesBody v-if="modules" :modules="modules" />
 
-    <MainTableModuleTasksBody v-else-if="moduleId" :moduleId="moduleId" />
+    <MainTableModuleTasksBody
+      v-else-if="moduleId"
+      :moduleId="moduleId"
+      :pageId="pageId"
+    />
 
     <MainTableSubjectsBody
       v-else-if="subjects"
       :columnLength="columnNames.length"
-      :propertyType="columnNames.at(-2)"
+      :propertyType="columnNames.at(-1)"
       :subjects="subjects"
     />
 
@@ -33,13 +37,16 @@ import MainTableSubjectsBody from "src/components/MainTableSubjectsBody.vue";
 import MainTableTasksBody from "src/components/MainTableTasksBody.vue";
 import MainTableModuleTasksBody from "./MainTableModuleTasksBody.vue";
 
-const { columnNames, subjects, modules, tasks, moduleId } = defineProps({
-  columnNames: Array,
-  subjects: Array,
-  modules: Array,
-  tasks: Array,
-  moduleId: String,
-});
+const { columnNames, subjects, modules, tasks, moduleId, pageId } = defineProps(
+  {
+    columnNames: Array,
+    subjects: Array,
+    modules: Array,
+    tasks: Array,
+    moduleId: String,
+    pageId: String,
+  }
+);
 </script>
 
 <style>

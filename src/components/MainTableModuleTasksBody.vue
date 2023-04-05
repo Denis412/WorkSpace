@@ -27,7 +27,7 @@
           :task="task"
         />
 
-        <q-btn color="negative" label="Удалить" />
+        <q-btn @click="deleteTask(task.id)" color="negative" label="Удалить" />
       </td>
     </tr>
   </tbody>
@@ -37,10 +37,27 @@
 import { useQuery } from "@vue/apollo-composable";
 import { getModuleById } from "src/graphql/queries";
 import TaskAction from "./TaskAction.vue";
+import taskApi from "src/sdk/task";
+import { useQuasar } from "quasar";
 
-const { moduleId } = defineProps({
+const $q = useQuasar();
+
+const { moduleId, pageId } = defineProps({
   moduleId: String,
 });
+
+const deleteTask = async (taskId) => {
+  try {
+    await taskApi.taskDelete(taskId, moduleId, 0);
+
+    $q.notify({
+      type: "positive",
+      message: "Задача удалена!",
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
 
 const { result: resultModule } = useQuery(getModuleById, {
   module_id: moduleId,

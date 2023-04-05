@@ -3,7 +3,12 @@ import {
   useMutation,
   useQuery,
 } from "@vue/apollo-composable";
-import { createTask, updateTask } from "src/graphql/mutations";
+import {
+  createTask,
+  updateTask,
+  deleteTask,
+  deletePage,
+} from "src/graphql/mutations";
 import { getModuleById } from "src/graphql/queries";
 import apolloClient from "src/apollo/apollo-client";
 
@@ -11,6 +16,8 @@ provideApolloClient(apolloClient);
 
 const { mutate: creatingTask } = useMutation(createTask);
 const { mutate: updatingTask } = useMutation(updateTask);
+const { mutate: deletingTask } = useMutation(deleteTask);
+const { mutate: deletingPage } = useMutation(deletePage);
 
 const { refetch: refetchModule } = useQuery(getModuleById, {
   module_id: "1",
@@ -58,6 +65,18 @@ const taskUpdate = async (form, taskId, moduleId) => {
   return data;
 };
 
-const taskApi = { taskCreate, taskUpdate };
+const taskDelete = async (taskId, moduleId, pageId) => {
+  const { data } = await deletingTask({
+    task_id: taskId,
+  });
+
+  await refetchModule({
+    module_id: moduleId,
+  });
+
+  return data;
+};
+
+const taskApi = { taskCreate, taskUpdate, taskDelete };
 
 export default taskApi;
