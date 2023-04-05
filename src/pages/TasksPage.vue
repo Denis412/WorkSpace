@@ -5,13 +5,26 @@
 
   <q-page v-else class="q-pa-md">
     <header class="text-center text-h3 q-mb-md">{{ page.title }}</header>
-    <pre>{{ page }}</pre>
+
+    <main>
+      <!-- <pre>{{ allTasks }}</pre> -->
+      <MainTable
+        :column-names="[
+          'Название задачи',
+          'Описание задачи',
+          'Статус',
+          'Действия',
+        ]"
+        :tasks="allTasks.paginate_type1.data"
+      />
+    </main>
   </q-page>
 </template>
 
 <script setup>
 import { useQuery } from "@vue/apollo-composable";
 import { getTasksAll } from "src/graphql/queries";
+import MainTable from "src/components/MainTable.vue";
 
 const { page } = defineProps({
   page: Object,

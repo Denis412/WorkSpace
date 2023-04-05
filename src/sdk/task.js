@@ -29,11 +29,11 @@ const taskCreate = async (form, moduleId) => {
       name: form.name,
       property1: form.description,
       property2: {
-        "2529884860175464566": form.executor.value,
+        [process.env.SUBJECT_ID]: form.executor.value,
       },
-      property3: "4799030204995883472",
+      property3: process.env.APPOINTED_ID,
       property7: {
-        "6647062161604721421": moduleId,
+        [process.env.MODULE_ID]: moduleId,
       },
     },
   });
@@ -52,9 +52,9 @@ const taskUpdate = async (form, taskId, moduleId) => {
       name: form.name,
       property1: form.description,
       property2: {
-        "2529884860175464566": form.executor.value,
+        [process.env.SUBJECT_ID]: form.executor.value,
       },
-      property3: "4799030204995883472",
+      property3: process.env.APPOINTED_ID,
     },
   });
 

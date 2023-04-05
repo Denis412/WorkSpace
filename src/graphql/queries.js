@@ -274,6 +274,7 @@ export const getTasksAll = gql`
             last_name
           }
         }
+        property3
         property7 {
           id
         }

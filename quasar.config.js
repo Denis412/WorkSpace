@@ -48,6 +48,14 @@ module.exports = configure(function (/* ctx */) {
         GRAPHQL_URI: "https://app.stud.druid.1t.ru/graphiql",
         FILE_STORAGE_URI: "https://cdn.stud.druid.1t.ru",
         RABBITMQ_WEBSTOMP_URI: "wss://stud.druid.1t.ru/ws",
+
+        SUBJECT_ID: "2529884860175464566",
+        MODULE_ID: "6647062161604721421",
+        MODULE_PAGE_ID: "1107262131192288825",
+
+        APPOINTED_ID: "4799030204995883472",
+        COMPLETED_ID: "4526730325823526303",
+        FINISHED_ID: "2146013030427836869",
       },
 
       vueRouterMode: "hash", // available values: 'hash', 'history'

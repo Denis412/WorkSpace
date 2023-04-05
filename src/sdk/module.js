@@ -29,7 +29,7 @@ const moduleCreate = async (form) => {
     input: {
       name: form.name,
       property4: {
-        "2529884860175464566": form.responsible.value,
+        [process.env.SUBJECT_ID]: form.responsible.value,
       },
       property5: {
         date: new Date(form.date_start).toLocaleDateString(),
@@ -45,7 +45,7 @@ const moduleCreate = async (form) => {
   const { data: createdPage } = await creatingPage({
     input: {
       title: createdModule.create_type2.record.name,
-      parent_id: "1107262131192288825",
+      parent_id: process.env.MODULE_PAGE_ID,
       object: {
         id: createdModule.create_type2.record.id,
         type_id: createdModule.create_type2.record.type_id,
@@ -69,7 +69,7 @@ const moduleUpdate = async (Moduleform, bufferModule) => {
   filtredValue.name ? (input.name = filtredValue.name) : null;
   filtredValue.responsible
     ? (input.property4 = {
-        "2529884860175464566": filtredValue.responsible.value,
+        [process.env.SUBJECT_ID]: filtredValue.responsible.value,
       })
     : null;
   filtredValue.date_start
