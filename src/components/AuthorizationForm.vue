@@ -46,10 +46,9 @@ const form = ref({
 
 const signIn = async () => {
   try {
-    const user = await userApi.signIn({
-      email: form.value.email,
-      password: form.value.password,
-    });
+    const user = await userApi.signIn(form.value);
+
+    console.log(user);
 
     store.commit("user/SET_CURRENT_USER", user);
 

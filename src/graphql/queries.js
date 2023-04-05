@@ -40,6 +40,7 @@ export const pages = gql`
 
         object {
           id
+          type_id
         }
         children {
           data {
@@ -86,24 +87,37 @@ export const getGroupSubjects = gql`
       description
       created_at
       updated_at
+      type_id
       subject {
+        id
         user_id
-        group {
-          name
-        }
         fullname {
           first_name
-          middle_name
           last_name
+        }
+        email {
+          email
+        }
+        group {
+          id
+          name
+        }
+        property4 {
+          id
+          name
+        }
+        property2 {
+          id
+          name
         }
       }
     }
   }
 `;
 
-export const testQuery = gql`
-  query {
-    get_group(id: "1984073356751936997") {
+export const getResponsibleGroupSubjects = gql`
+  query getGroupSubjects {
+    get_group(id: "4579859626660313705") {
       id
       author_id
       name
@@ -111,14 +125,205 @@ export const testQuery = gql`
       created_at
       updated_at
       subject {
-        user_id
+        fullname {
+          first_name
+          last_name
+        }
         group {
+          id
           name
         }
+        user_id
+        id
+      }
+    }
+  }
+`;
+
+export const getExecutorGroupSubjects = gql`
+  query getGroupSubjects {
+    get_group(id: "7007095239370065289") {
+      id
+      author_id
+      name
+      description
+      created_at
+      updated_at
+      subject {
+        fullname {
+          first_name
+          last_name
+        }
+        group {
+          id
+          name
+        }
+        user_id
+        id
+      }
+    }
+  }
+`;
+
+export const getSubject = gql`
+  query getSubject($id: String!) {
+    get_subject(id: $id) {
+      email {
+        email
+      }
+      group {
+        name
+        id
+      }
+      fullname {
+        first_name
+        middle_name
+        last_name
+      }
+    }
+  }
+`;
+
+export const getPage = gql`
+  query getPage($id: String!) {
+    page(id: $id) {
+      id
+      parent_id
+      page_type
+      title
+      content
+      icon
+      level
+      is_public
+      position
+      config
+      is_block
+      created_at
+      updated_at
+      object {
+        id
+        type_id
+      }
+    }
+  }
+`;
+
+export const getModulesAll = gql`
+  query getModules {
+    paginate_type2(page: 1, perPage: 100) {
+      data {
+        id
+        type_id
+        author_id
+        level
+        position
+        created_at
+        updated_at
+        name
+        property4 {
+          id
+          fullname {
+            first_name
+            last_name
+          }
+        }
+        property5 {
+          date
+          time
+        }
+        property6 {
+          date
+          time
+        }
+        property7 {
+          id
+        }
+      }
+      paginatorInfo {
+        perPage
+        currentPage
+        lastPage
+        total
+        count
+        from
+        to
+        hasMorePages
+      }
+    }
+  }
+`;
+
+export const getTasksAll = gql`
+  query getTasks {
+    paginate_type1(page: 1, perPage: 100) {
+      data {
+        id
+        type_id
+        author_id
+        level
+        position
+        created_at
+        updated_at
+        name
+        property1
+        property2 {
+          id
+          fullname {
+            first_name
+            middle_name
+            last_name
+          }
+        }
+        property3
+        property7 {
+          id
+        }
+      }
+      paginatorInfo {
+        perPage
+        currentPage
+        lastPage
+        total
+        count
+        from
+        to
+        hasMorePages
+      }
+    }
+  }
+`;
+
+export const getModuleById = gql`
+  query getModuleById($module_id: String!) {
+    get_type2(id: $module_id) {
+      id
+      name
+      property4 {
+        id
         fullname {
           first_name
           middle_name
           last_name
+        }
+      }
+      property5 {
+        date
+        time
+      }
+      property6 {
+        date
+        time
+      }
+      property7 {
+        id
+        name
+        property1
+        property2 {
+          id
+          fullname {
+            first_name
+            last_name
+          }
         }
       }
     }

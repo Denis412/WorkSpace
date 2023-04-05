@@ -3,7 +3,7 @@ import { setContext } from "@apollo/client/link/context";
 
 export function getClientOptions() {
   const httpLink = createHttpLink({
-    uri: process.env.GRAPHQL_URI || "https://app.dev.druid.1t.ru/graphql",
+    uri: process.env.GRAPHQL_URI || "https://app.stud.druid.1t.ru/graphql",
   });
 
   const authLink = setContext((_, { headers }) => {
@@ -16,8 +16,6 @@ export function getClientOptions() {
       },
     };
   });
-
-  // console.log(authLink);
 
   return Object.assign(
     {
