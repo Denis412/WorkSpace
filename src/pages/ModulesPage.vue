@@ -5,13 +5,15 @@
 
   <q-page v-else class="q-pa-md">
     <div class="text-h3 text-center q-pb-md">Модули</div>
+
+    <div class="q-my-md flex">
+      <ModuleAction />
+    </div>
+
     <MainTable
       :modules="modules?.paginate_type2?.data"
       :columnNames="columnNames"
     />
-    <div class="q-mt-lg flex justify-end">
-      <ModuleAction />
-    </div>
   </q-page>
 </template>
 
