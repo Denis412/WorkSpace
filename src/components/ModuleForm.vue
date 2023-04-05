@@ -1,9 +1,8 @@
 <template>
-  <q-form
-    class="bg-grey-2 q-pa-md rounded-borders shadow-5"
-    style="min-width: 500px"
-  >
-    <header class="text-h4 text-center q-mb-md">Модуль</header>
+  <div class="bg-white q-pa-md rounded-borders">
+      <q-form
+    style="min-width: 500px" @submit="onSubmit">
+        <header class="text-h4 text-center q-mb-md">{{ moduleName }}</header>
 
     <main>
       <q-input
@@ -58,34 +57,61 @@
         </q-date>
       </q-dialog>
     </main>
-
-    <footer class="q-mt-md">
-      <q-btn
-        class="w-100p"
-        color="primary"
-        label="Создать модуль"
-        @click="createdModule"
-      />
+    <footer>
+        <div class="col-12 q-mt-md">
+          <q-btn
+            class="block"
+            style="margin: 0 auto; width: 20%"
+            :label="btnName"
+            type="submit"
+            v-close-popup
+          />
+        </div>
     </footer>
-  </q-form>
+      </q-form>
+    </div>
 </template>
 
 <script setup>
-import { computed, ref } from "vue";
-import { date } from "quasar";
+import { defineEmits, ref, defineProps, computed } from 'vue';
 import { useQuery } from "@vue/apollo-composable";
 import { getResponsibleGroupSubjects } from "src/graphql/queries";
-import moduleApi from "src/sdk/module";
+import { date } from "quasar";
+
+const emit = defineEmits(['onSubmit']);
+const { moduleName,module, btnName } = defineProps({
+  moduleName: String,
+  module: Object,
+  btnName: String
+})
 
 const form = ref({
-  name: "",
-  responsible: "",
-  date_start: date.formatDate(Date.now(), "YYYY/MM/DD"),
-  date_end: date.formatDate(Date.now(), "YYYY/MM/DD"),
+  name: module?.name||"",
+  responsible: `${module?.property4?.fullname?.first_name||""} ${module?.property4?.fullname?.last_name||""}`.trim(),
+  date_start: module?.property5?.date||date.formatDate(Date.now(), "YYYY/MM/DD"),
+  date_end: module?.property6?.date||date.formatDate(Date.now(), "YYYY/MM/DD"),
 });
+
+const onSubmit = () => {
+  emit('onSubmit', form.value);
+}
+
+const toggleShowQDateStart = () => {
+  showQDateStart.value = !showQDateStart.value;
+};
+
+const toggleShowQDateEnd = () => {
+  showQDateEnd.value = !showQDateEnd.value;
+};
+
 
 const showQDateStart = ref(false);
 const showQDateEnd = ref(false);
+
+const optionsFnDateStart = (date) =>
+  new Date(date).getTime() > Date.now() - 86_400_000;
+const optionsFnDateEnd = (date) =>
+  new Date(form.value.date_start).getTime() <= new Date(date).getTime();
 
 const { result: responsibleGroupSubjects } = useQuery(
   getResponsibleGroupSubjects
@@ -98,24 +124,6 @@ const responsibleGroupSubjectsNames = computed(() =>
   }))
 );
 
-const createdModule = async () => {
-  try {
-    await moduleApi.moduleCreate(form.value);
-  } catch (error) {
-    console.log(error);
-  }
-};
-
-const toggleShowQDateStart = () => {
-  showQDateStart.value = !showQDateStart.value;
-};
-
-const toggleShowQDateEnd = () => {
-  showQDateEnd.value = !showQDateEnd.value;
-};
-
-const optionsFnDateStart = (date) =>
-  new Date(date).getTime() > Date.now() - 86_400_000;
-const optionsFnDateEnd = (date) =>
-  new Date(form.value.date_start).getTime() <= new Date(date).getTime();
 </script>
+
+<style lang="scss" scoped></style>

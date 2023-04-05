@@ -1,18 +1,28 @@
-import { provideApolloClient, useMutation } from "@vue/apollo-composable";
+import {
+  provideApolloClient,
+  useMutation,
+  useQuery,
+} from "@vue/apollo-composable";
 import apolloClient from "src/apollo/apollo-client";
 import {
   createModule,
+  updateModule,
   createPage,
   deleteModule,
   deletePage,
 } from "src/graphql/mutations";
+import { getModulesAll } from "src/graphql/queries";
 
 provideApolloClient(apolloClient);
 
 const { mutate: creatingModule } = useMutation(createModule);
 const { mutate: creatingPage } = useMutation(createPage);
+
 const { mutate: deletingModule } = useMutation(deleteModule);
 const { mutate: deletingPage } = useMutation(deletePage);
+
+const { refetch: refetchModules } = useQuery(getModulesAll);
+const { mutate: updatingModule } = useMutation(updateModule);
 
 const moduleCreate = async (form) => {
   const { data: createdModule } = await creatingModule({
@@ -46,7 +56,46 @@ const moduleCreate = async (form) => {
   return { createdModule, createdPage };
 };
 
-const moduleUpdate = () => {};
+const moduleUpdate = async (Moduleform, bufferModule) => {
+  const filtredValue = {};
+
+  Object.values(Moduleform).forEach((el, index) => {
+    let keyName = Object.keys(Moduleform)[index];
+
+    if (el != bufferModule[index]) filtredValue[keyName] = el;
+  });
+  const input = {};
+
+  filtredValue.name ? (input.name = filtredValue.name) : null;
+  filtredValue.responsible
+    ? (input.property4 = {
+        "2529884860175464566": filtredValue.responsible.value,
+      })
+    : null;
+  filtredValue.date_start
+    ? (input.property5 = {
+        date: new Date(filtredValue.date_start).toLocaleDateString(),
+      })
+    : null;
+  filtredValue.date_end
+    ? (input.property6 = {
+        date: new Date(filtredValue?.date_end).toLocaleDateString(),
+      })
+    : null;
+
+  if (Object.entries(input).length != 0) {
+    input.name = Moduleform.name;
+    try {
+      const { data } = await updatingModule({
+        id: bufferModule.at(-1),
+        input: input,
+      });
+      refetchModules();
+    } catch (error) {
+      console.log(error);
+    }
+  }
+};
 
 const moduleDelete = async (moduleId, pageId) => {
   const { data: delM } = await deletingModule({
