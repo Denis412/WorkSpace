@@ -237,6 +237,7 @@ export const getModulesAll = gql`
         }
         property7 {
           id
+          name
         }
       }
       paginatorInfo {
@@ -288,4 +289,60 @@ export const getModuleById = gql`
       }
     }
   }
+`;
+
+export const getTasksAll = gql`
+  query getTasks {
+    paginate_type1(page: 1, perPage: 100) {
+      data {
+        id
+        type_id
+        author_id
+        level
+        position
+        created_at
+        updated_at
+        name
+        property1
+        property3
+        property2 {
+          id
+          fullname {
+            first_name
+            last_name
+          }
+        }
+        property7 {
+          id
+          name
+        }
+      }
+      paginatorInfo {
+        perPage
+        currentPage
+        lastPage
+        total
+        count
+        from
+        to
+        hasMorePages
+      }
+    }
+  }
+`;
+
+export const getTaskById = gql`
+query getTaskById( $id: String! ){
+  get_type1 (id: $id) {
+    id
+    type_id
+    author_id
+    level
+    position
+    created_at
+    updated_at
+    name
+    property3
+  }
+}
 `;

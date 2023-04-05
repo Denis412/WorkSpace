@@ -23,20 +23,49 @@
       </td>
 
       <td class="q-pa-md text-center">
-        {{ module.property7.name }}
+        Назначено: {{ reduceTasks(module, 0) }}
+        Выполнено: {{ reduceTasks(module, 1) }}
+        Завершено: {{ reduceTasks(module, 2) }}
       </td>
-      <!-- <q-btn @click="showForm(module)" color="blue" label="Изменить" /> -->
       <ModuleAction :module="module"/>
     </tr>
   </tbody>
 </template>
 
 <script setup>
-import { defineProps } from "vue";
+import { defineProps, computed, watch } from "vue";
+import { useQuery } from "@vue/apollo-composable";
+import { getTasksAll } from "src/graphql/queries";
 import ModuleAction from "./ModuleAction.vue";
 const { modules } = defineProps({
   modules: Array,
 });
 
+const { result: getTask } = useQuery(getTasksAll);
+const task = computed(() => getTask.value?.paginate_type1.data);
+
+const reduceTasks = (module, status) => {
+  if (!module.property7.length)
+    return 0;
+  else {
+    let sum = 0;
+    if (status === 0) {
+      task.value?.filter(item => item.property7.id === module.id)?.forEach(elem => {
+        elem.property3 === "4799030204995883472" ? sum++ : null;
+      });
+      return sum;
+    } else if (status === 1) {
+      task.value?.filter(item => item.property7.id === module.id)?.forEach(elem => {
+        elem.property3 === "4526730325823526303" ? sum++ : null;
+      });
+      return sum;
+    } else {
+      task.value?.filter(item => item.property7.id === module.id)?.forEach(elem => {
+        elem.property3 === "2146013030427836869" ? sum++ : null;
+      });
+      return sum;
+    }
+  }
+}
 
 </script>
