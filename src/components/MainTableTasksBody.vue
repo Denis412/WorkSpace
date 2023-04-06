@@ -3,9 +3,10 @@
     <tr
       v-for="task in tasks.property2"
       :key="task.id"
-      :style="{ 'background-color': colorStr }"
+      :style="{ 'background-color': calculatedCurrentStatus(task.property3) }"
     >
       <td>
+        {{ task.id }}
         {{ task.name }}
       </td>
 
@@ -14,7 +15,7 @@
       </td>
 
       <td>
-        <pre>{{ currentStatusObject(task.property3)?.label }}</pre>
+        {{ taskLabel }}
       </td>
 
       <td>
@@ -35,17 +36,17 @@ const { tasks } = defineProps({
 
 const { result: listProperties, loading } = useQuery(getListProperty);
 
-const colorStr = ref("white");
+const taskLabel = ref("white");
 
-const currentStatusObject = (taskProperty) => {
+const calculatedCurrentStatus = (taskProperty) => {
   const obj = listProperties.value?.property.meta.options.find(
     (status) => status.id === taskProperty
   );
 
   console.log(obj);
 
-  colorStr.value = obj?.color;
+  taskLabel.value = obj?.label;
 
-  return obj;
+  return obj?.color;
 };
 </script>

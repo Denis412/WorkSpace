@@ -42,6 +42,8 @@ const task = computed(() => modules?.property4[0].property7);
 const reduceTasks = (status) => {
   if (!task.value?.length) return 0;
 
+  console.log(task.value);
+
   let sum = 0;
 
   if (status === 0) {
