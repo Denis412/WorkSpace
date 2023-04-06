@@ -290,6 +290,16 @@ export const getTasksAll = gql`
         property3
         property7 {
           id
+          name
+          property1
+          property2 {
+            id
+            fullname {
+              first_name
+              last_name
+            }
+          }
+          property3
         }
       }
       paginatorInfo {
@@ -305,6 +315,8 @@ export const getTasksAll = gql`
     }
   }
 `;
+
+
 
 export const getUserModules = gql`
   query getUserModules {
@@ -435,4 +447,4 @@ export const getUserTasks = gql`
       }
     }
   }
-`;
+}
