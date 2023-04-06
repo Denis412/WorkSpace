@@ -148,7 +148,12 @@ const moduleUpdate = async (Moduleform, bufferModule) => {
   }
 };
 
-const moduleDelete = async (moduleId, pageId) => {
+const moduleDelete = async (moduleId) => {
+
+  const pageId = allpages.value.pages.data.find(
+    el=>el.object.id===moduleId
+  )?.id;
+
   const { data: delM } = await deletingModule({
     module_id: moduleId,
   });
@@ -157,7 +162,8 @@ const moduleDelete = async (moduleId, pageId) => {
     page_id: pageId,
   });
 
-  console.log(delM, delP);
+  refetchModules();
+  pagesRefetch();
 };
 
 const moduleApi = { moduleCreate, moduleUpdate, moduleDelete };
