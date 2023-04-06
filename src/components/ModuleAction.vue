@@ -5,12 +5,18 @@
     color="primary"
     label="Изменить"
   />
-  <q-btn v-else @click="show = true" color="primary" label="Создать модуль" />
+  <q-btn  
+  
+  
+  v-else @click="show = true" color="primary" label="Создать модуль" />
 
-  <q-dialog v-model="show">
+  <q-dialog 
+ 
+  v-model="show">
     <ModuleForm
       v-if="module"
       @onSubmit="onSubmit"
+      class="w-100p"
       :moduleName="'Редактирование модуля'"
       :module="module"
       :btnName="'Изменить'"
@@ -18,6 +24,7 @@
 
     <ModuleForm
       v-else
+       class="w-100p"
       @onSubmit="onSubmit"
       :moduleName="'Модуль'"
       :btnName="'Создать'"

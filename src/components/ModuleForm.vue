@@ -1,8 +1,15 @@
 <template>
-  <div class="bg-white q-pa-md rounded-borders">
-      <q-form
-    style="min-width: 500px" @submit="onSubmit">
-        <header class="text-h4 text-center q-mb-md">{{ moduleName }}</header>
+  <div
+  
+  class="bg-white q-pa-md rounded-borders "
+  >
+      <q-form 
+     
+     @submit="onSubmit">
+        <header 
+        class="text-h4 text-center q-mb-md"
+        
+        >{{ moduleName }}</header>
 
     <main>
       <q-input
@@ -61,7 +68,7 @@
         <div class="col-12 q-mt-md">
           <q-btn
             class="block"
-            style="margin: 0 auto; width: 20%"
+            style="margin: 0 auto; "
             :label="btnName"
             type="submit"
             v-close-popup

@@ -19,15 +19,16 @@
         </router-link>
       </td>
 
-      <td class="flex justify-between">
-        <TaskAction
+      <td class="flex justify-between " >
+        <TaskAction 
           :module-id="moduleId"
           title="Редактирование задачи"
           button-label="Изменить"
           :task="task"
         />
 
-        <q-btn @click="deleteTask(task.id)" color="negative" label="Удалить" />
+        <q-btn  
+        @click="deleteTask(task.id)" color="negative" label="Удалить" />
       </td>
     </tr>
   </tbody>

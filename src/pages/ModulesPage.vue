@@ -10,12 +10,16 @@
       <ModuleAction />
     </div>
 
-    <!-- <pre>{{ modules }}</pre> -->
-
-    <MainTable
+   
+       <MainTable 
+       
       :modules="modules?.paginate_type2?.data"
       :columnNames="columnNames"
     />
+  
+    <!-- <pre>{{ modules }}</pre> -->
+
+   
   </q-page>
 </template>
 
