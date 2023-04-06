@@ -316,8 +316,6 @@ export const getTasksAll = gql`
   }
 `;
 
-
-
 export const getUserModules = gql`
   query getUserModules {
     paginate_subject(page: 1, perPage: 100, where: { column: "user_id", operator: EQ, value: ${currentUserId} }) {
@@ -447,4 +445,4 @@ export const getUserTasks = gql`
       }
     }
   }
-}
+`;

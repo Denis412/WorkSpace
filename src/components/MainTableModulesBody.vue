@@ -21,8 +21,8 @@
       </td>
 
       <td class="q-pa-md text-center">
-        Назначено: {{ reduceTasks(module, 0) }} Выполнено:
-        {{ reduceTasks(module, 1) }} Завершено: {{ reduceTasks(module, 2) }}
+        Назначено: {{ reduceTasks(0) }} Выполнено:
+        {{ reduceTasks(1) }} Завершено: {{ reduceTasks(2) }}
       </td>
       <ModuleAction :module="module" />
     </tr>
@@ -30,43 +30,37 @@
 </template>
 
 <script setup>
-import { defineProps, computed, watch } from "vue";
+import { defineProps, computed } from "vue";
 import { useQuery } from "@vue/apollo-composable";
-import { getTasksAll } from "src/graphql/queries";
+import { getUserTasks } from "src/graphql/queries";
 import ModuleAction from "./ModuleAction.vue";
 const { modules } = defineProps({
   modules: Object,
 });
 
-const { result: getTask } = useQuery(getTasksAll);
-const task = computed(() => getTask.value?.paginate_type1.data);
+const { result: getTask } = useQuery(getUserTasks);
+const task = computed(() => getTask.value?.paginate_subject.data[0].property2);
 
-const reduceTasks = (module, status) => {
-  if (!module.property7.length) return 0;
-  else {
-    let sum = 0;
-    if (status === 0) {
-      task.value
-        ?.filter((item) => item.property7.id === module.id)
-        ?.forEach((elem) => {
-          elem.property3 === "4799030204995883472" ? sum++ : null;
-        });
-      return sum;
-    } else if (status === 1) {
-      task.value
-        ?.filter((item) => item.property7.id === module.id)
-        ?.forEach((elem) => {
-          elem.property3 === "4526730325823526303" ? sum++ : null;
-        });
-      return sum;
-    } else {
-      task.value
-        ?.filter((item) => item.property7.id === module.id)
-        ?.forEach((elem) => {
-          elem.property3 === "2146013030427836869" ? sum++ : null;
-        });
-      return sum;
-    }
+const reduceTasks = (status) => {
+  if (!task.value?.length) return 0;
+
+  let sum = 0;
+
+  if (status === 0) {
+    task.value?.forEach((elem) => {
+      elem.property3 === process.env.APPOINTED_ID ? sum++ : null;
+    });
+    return sum;
+  } else if (status === 1) {
+    task.value?.forEach((elem) => {
+      elem.property3 === process.env.COMPLETED_ID ? sum++ : null;
+    });
+    return sum;
+  } else {
+    task.value?.forEach((elem) => {
+      elem.property3 === process.env.FINISHED_ID ? sum++ : null;
+    });
+    return sum;
   }
 };
 </script>
