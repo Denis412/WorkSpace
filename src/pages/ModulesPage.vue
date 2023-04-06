@@ -10,10 +10,8 @@
       <ModuleAction />
     </div>
 
-    <pre>mod{{}}</pre>
-
     <MainTable
-      :modules="modules?.paginate_subject.data"
+      :modules="modules?.paginate_subject.data[0]"
       :columnNames="columnNames"
     />
   </q-page>
@@ -38,7 +36,6 @@ const { result: modules, loading } = useQuery(getUserModules);
 
 const columnNames = [
   "Название",
-  "Ответственный",
   "Дата и время начала",
   "Дата и время окончания",
   "Задачи",

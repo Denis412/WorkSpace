@@ -7,7 +7,6 @@
     <header class="text-center text-h3 q-mb-md">{{ page.title }}</header>
 
     <main>
-      <pre>{{ allTasks }}</pre>
       <MainTable
         :column-names="[
           'Название задачи',
@@ -15,7 +14,7 @@
           'Статус',
           'Действия',
         ]"
-        :tasks="allTasks?.paginate_type1?.data"
+        :tasks="allTasks?.paginate_subject?.data[0]"
       />
     </main>
   </q-page>

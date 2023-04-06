@@ -402,11 +402,7 @@ export const getModuleById = gql`
 
 export const getUserTasks = gql`
   query getUserTasks {
-    paginate_subject(
-      page: 1
-      perPage: 100
-      where: { column: "user_id", operator: EQ, value: ${currentUserId} }
-    ) {
+    paginate_subject(page: 1, perPage: 100, where: { column: "user_id", operator: EQ, value: ${currentUserId} }) {
       data {
         id
         type_id
@@ -416,6 +412,10 @@ export const getUserTasks = gql`
         created_at
         updated_at
         user_id
+        fullname {
+          first_name
+          last_name
+        }
         property2 {
           id
           name

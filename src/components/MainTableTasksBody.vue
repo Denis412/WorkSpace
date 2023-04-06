@@ -1,6 +1,6 @@
 <template>
   <tbody>
-    <tr v-for="task in tasks" :key="task.id">
+    <tr v-for="task in tasks.property2" :key="task.id">
       <td>
         {{ task.name }}
       </td>
@@ -22,6 +22,6 @@
 
 <script setup>
 const { tasks } = defineProps({
-  tasks: Array,
+  tasks: Object,
 });
 </script>

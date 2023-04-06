@@ -1,16 +1,16 @@
 <template>
   <tbody>
-    <tr v-for="module in modules[0].property4" :key="module.id">
+    <tr v-for="module in modules.property4" :key="module.id">
       <td class="q-pa-md text-center">
         {{ module.name }}
       </td>
 
-      <td class="q-pa-md text-center">
+      <!-- <td class="q-pa-md text-center">
         <router-link :to="{ name: 'subject', params: { id: module.id } }">
-          {{ modules[0].fullname.first_name }}
-          {{ modules[0].fullname.last_name }}
+          {{ module.property4.fullname.first_name }}
+          {{ module.property4.fullname.last_name }}
         </router-link>
-      </td>
+      </td> -->
 
       <td class="q-pa-md text-center">
         C {{ module.property5.date }} {{ module.property5.time }}
@@ -32,6 +32,6 @@
 import { defineProps, inject } from "vue";
 import ModuleAction from "./ModuleAction.vue";
 const { modules } = defineProps({
-  modules: Array,
+  modules: Object,
 });
 </script>
