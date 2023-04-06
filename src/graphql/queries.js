@@ -446,3 +446,33 @@ export const getUserTasks = gql`
     }
   }
 `;
+
+export const getListProperty = gql`
+  query getProperty {
+    property(id: "1842204611759571053") {
+      id
+      type_id
+      author_id
+      property_group_id
+      data_type
+      name
+      hint
+      description
+      label
+      order
+      required
+      system
+      unique
+      multiple {
+        status
+        max_number
+        button_text
+      }
+      guarded
+      default
+      meta
+      created_at
+      updated_at
+    }
+  }
+`;

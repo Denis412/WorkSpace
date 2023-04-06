@@ -21,8 +21,9 @@
       </td>
 
       <td class="q-pa-md text-center">
-        Назначено: {{ reduceTasks(0) }} Выполнено:
-        {{ reduceTasks(1) }} Завершено: {{ reduceTasks(2) }}
+        <div>Назначено: {{ reduceTasks(0) }}</div>
+        <div>Выполнено: {{ reduceTasks(1) }}</div>
+        <div>Завершено: {{ reduceTasks(2) }}</div>
       </td>
       <ModuleAction :module="module" />
     </tr>
@@ -31,15 +32,12 @@
 
 <script setup>
 import { defineProps, computed } from "vue";
-import { useQuery } from "@vue/apollo-composable";
-import { getUserTasks } from "src/graphql/queries";
 import ModuleAction from "./ModuleAction.vue";
 const { modules } = defineProps({
   modules: Object,
 });
 
-const { result: getTask } = useQuery(getUserTasks);
-const task = computed(() => getTask.value?.paginate_subject.data[0].property2);
+const task = computed(() => modules?.property4[0].property7);
 
 const reduceTasks = (status) => {
   if (!task.value?.length) return 0;
