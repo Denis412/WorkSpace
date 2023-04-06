@@ -19,7 +19,13 @@
       </td>
 
       <td>
-        <q-btn color="primary" label="Изменить статус" />
+        <TaskAction
+          :module-id="task.property7?.id"
+          title="Редактирование задачи"
+          button-label="Изменить"
+          :task="task"
+          :executor-edit="true"
+        />
       </td>
     </tr>
   </tbody>
@@ -29,6 +35,8 @@
 import { ref } from "vue";
 import { useQuery } from "@vue/apollo-composable";
 import { getListProperty } from "src/graphql/queries";
+import TaskAction from "./TaskAction.vue";
+import { getTaskStatus } from "src/utils/getTaskStatus";
 
 const { tasks } = defineProps({
   tasks: Object,

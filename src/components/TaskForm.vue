@@ -2,6 +2,7 @@
   <q-form style="min-width: 500px" @submit="$emit('submitForm', form)">
     <main>
       <q-input
+        :disable="executorEdit"
         v-model="form.name"
         type="text"
         label="Название"
@@ -9,6 +10,7 @@
       />
 
       <q-input
+        :disable="executorEdit"
         v-model="form.description"
         type="text"
         label="Описание"
@@ -18,13 +20,14 @@
       <q-select
         v-if="task"
         v-model="form.status"
-        :disable="!(form.status.label === 'Выполнена')"
+        :disable="isDisabledSelectStatus"
         label="Статус"
-        :options="[options.at(-1)]"
+        :options="[executorEdit ? options.at(1) : options.at(-1)]"
         placeholder="Выберите статус"
       />
 
       <q-select
+        :disable="executorEdit"
         v-model="form.executor"
         label="Исполнитель"
         :options="executorGroupSubjectsNames"
@@ -52,9 +55,10 @@ import {
   getAllStatusesForSelect,
 } from "src/utils/getTaskStatus";
 
-const { formContext, task } = defineProps({
+const { formContext, task, executorEdit } = defineProps({
   formContext: String,
   task: Object,
+  executorEdit: Boolean,
 });
 
 const options = getAllStatusesForSelect();
@@ -71,6 +75,12 @@ const form = ref({
   },
 });
 
+const isDisabledSelectStatus = computed(() =>
+  executorEdit
+    ? form.value.status.label !== "Назначена"
+    : form.value.status.label !== "Выполнена"
+);
+
 const { result: executorGroupSubjects } = useQuery(getExecutorGroupSubjects);
 
 const executorGroupSubjectsNames = computed(() =>
@@ -81,14 +91,7 @@ const executorGroupSubjectsNames = computed(() =>
 );
 
 const calculatedStatus = (property) => {
-  getTaskStatus(property)
-    .then((status) => {
-      form.value.status = {
-        label: status.label,
-        value: status.id,
-      };
-    })
-    .catch((error) => console.log(error));
+  form.value.status = getTaskStatus(property);
 };
 
 onMounted(async () => {

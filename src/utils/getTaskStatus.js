@@ -12,8 +12,8 @@ export const getAllStatusesForSelect = () => {
   }));
 };
 
-export const getTaskStatus = async (status_id) => {
-  await refetch();
+export const getTaskStatus = (status_id) => {
+  refetch().then((res) => res);
 
   return listProperties.value?.property.meta.options.find(
     (status) => status.id === status_id

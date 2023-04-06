@@ -62,7 +62,6 @@ const taskCreate = async (form, moduleId) => {
 };
 
 const taskUpdate = async (form, taskId, moduleId) => {
-  console.log(form);
   const { data } = await updatingTask({
     id: taskId,
     input: {
