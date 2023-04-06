@@ -30,38 +30,27 @@ const moduleCreate = async (form) => {
   const { data: createdModule } = await creatingModule({
     input: {
       name: form.name,
-      property1: {
+      property4: {
         [process.env.SUBJECT_ID]: form.responsible.value,
       },
-      property2: {
+      property5: {
         date: new Date(form.date_start).toLocaleDateString(),
         time: "01:00:00",
       },
-      property3: {
+      property6: {
         date: new Date(form.date_end).toLocaleDateString(),
         time: "23:55:00",
       },
     },
   });
 
-  const inp = {
-    input: {
-      title: createdModule.create_type1.record.name,
-      parent_id: process.env.MODULE_PAGE_ID,
-      object: {
-        id: createdModule.create_type1.recordId,
-        type_id: createdModule.create_type1.record.type_id,
-      },
-    },
-  };
-
   const { data: createdPage } = await creatingPage({
     input: {
-      title: createdModule.create_type1.record.name,
+      title: createdModule.create_type2.record.name,
       parent_id: process.env.MODULE_PAGE_ID,
       object: {
-        id: createdModule.create_type1.recordId,
-        type_id: createdModule.create_type1.record.type_id,
+        id: createdModule.create_type2.recordId,
+        type_id: createdModule.create_type2.record.type_id,
       },
     },
   });
@@ -84,14 +73,14 @@ const moduleCreate = async (form) => {
     await creatingPermissionRule({
       input: {
         model_type: "object",
-        model_id: createdModule.create_type1.recordId,
+        model_id: createdModule.create_type2.recordId,
         owner_type: "subject",
         owner_id: form.responsible.value,
         level: 5,
       },
     });
 
-  // console.log(createdPermissionRuleForModuleObject);
+  console.log(createdPermissionRuleForModuleObject);
 
   return {
     createdModule,

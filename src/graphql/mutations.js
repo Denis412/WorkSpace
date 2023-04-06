@@ -24,8 +24,8 @@ export const userGroupInviteUser = gql`
 `;
 
 export const createModule = gql`
-  mutation ($input: create_type1_input!) {
-    create_type1(input: $input) {
+  mutation ($input: create_type2_input!) {
+    create_type2(input: $input) {
       status
       recordId
       record {
@@ -37,7 +37,7 @@ export const createModule = gql`
         created_at
         updated_at
         name
-        property1 {
+        property4 {
           id
           user_id
           fullname {
@@ -45,11 +45,11 @@ export const createModule = gql`
             last_name
           }
         }
-        property2 {
+        property5 {
           date
           time
         }
-        property3 {
+        property6 {
           date
           time
         }
