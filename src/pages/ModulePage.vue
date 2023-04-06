@@ -1,25 +1,34 @@
 <template>
-  <q-page v-if="loading"> Загрузка... </q-page>
+  <q-page v-if="loading" class="flex items-center justify-center text-h4">
+    Загрузка...
+  </q-page>
 
   <q-page v-else class="q-pa-md">
+    <!-- <pre>{{ page }}</pre> -->
+    <!-- <pre>re{{ resultModule }}</pre> -->
     <header class="text-h3 text-center">
       {{ resultModule?.get_type2.name }}
     </header>
 
     <main class="q-mt-md">
-      <MainTable
-        class="w-100p q-my-md"
-        :column-names="['Задачи']"
-        :module-id="resultModule?.get_type2.id"
-      />
-
-      <div class="flex justify-end">
+      <div class="flex">
         <TaskAction
           :module-id="resultModule?.get_type2.id"
           title="Создание задачи"
           button-label="Создать задачу"
         />
       </div>
+
+      <MainTable
+        class="w-100p q-my-md"
+        :column-names="[
+          'Название задачи',
+          'Описание задачи',
+          'Исполнитель',
+          'Действия',
+        ]"
+        :module-id="resultModule?.get_type2.id"
+      />
     </main>
   </q-page>
 </template>

@@ -5,27 +5,28 @@
         clickable
         class="cursor-pointer rounded-borders q-pa-sm flex items-center"
       >
-        <div>
+        <div class="flex">
           <q-icon
             @click.prevent="toggleShowChildren"
             :class="dropDownIconClass"
-            v-if="isSubjects || isChildrens"
+            v-if="isChildrens"
             name="keyboard_arrow_right"
           />
 
-          <q-icon v-if="page.icon" :name="page.icon" />
+          <q-icon v-else class="text-h6" />
 
-          {{ page.title }}
+          <q-icon v-if="page.icon" :name="page.icon" class="text-h6" />
+          <q-icon v-else class="text-h6" name="assignment" />
+
+          <div class="flex items-center q-ml-sm">
+            {{ page.title }}
+          </div>
         </div>
       </q-item>
     </router-link>
 
     <q-item-section :class="childrenItemsClass">
       <div>
-        <SubjectsList
-          v-show="isSubjects"
-          :subjects="subjects?.get_group.subject"
-        />
         <TreeMenu v-show="isChildrens" :pages="page.children?.data" />
       </div>
     </q-item-section>
@@ -37,7 +38,6 @@ import { computed, ref } from "vue";
 import { useQuery } from "@vue/apollo-composable";
 import { getGroupSubjects } from "src/graphql/queries";
 import TreeMenu from "./TreeMenu.vue";
-import SubjectsList from "./SubjectsList.vue";
 
 const { page } = defineProps({
   page: Object,
@@ -49,16 +49,15 @@ const { result: subjects } = useQuery(getGroupSubjects, {
 
 const showChildren = ref(false);
 
-const isSubjects = computed(() => subjects.value?.get_group.subject.length);
 const isChildrens = computed(() => page.children?.data.length);
 
 const dropDownIconClass = computed(() =>
-  (isSubjects.value || isChildrens.value) && showChildren.value
+  isChildrens.value && showChildren.value
     ? "icon text-h6 drop-down-icon-rotated"
     : "icon text-h6 drop-down-icon"
 );
 const childrenItemsClass = computed(() =>
-  (isSubjects.value || isChildrens.value) && showChildren.value
+  isChildrens.value && showChildren.value
     ? "ml-md children-wrapper-expanded"
     : "ml-md children-wrapper-collapsed"
 );

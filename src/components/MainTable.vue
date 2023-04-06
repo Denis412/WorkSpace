@@ -1,5 +1,5 @@
 <template>
-  <table style="width: 100%;" class="border-black-1 rounded-borders">
+  <table style="width: 100%" class="table">
     <thead class="rounded-borders border-black-1">
       <tr>
         <th
@@ -12,13 +12,13 @@
       </tr>
     </thead>
 
-    <MainTableModulesBody
-    v-if="modules"
-    :modules="modules"
+    <MainTableModulesBody v-if="modules" :modules="modules" />
+
+    <MainTableModuleTasksBody
+      v-else-if="moduleId"
+      :moduleId="moduleId"
+      :pageId="pageId"
     />
-
-
-    <MainTableModuleTasksBody v-else-if="moduleId" :moduleId="moduleId" />
 
     <MainTableSubjectsBody
       v-else-if="subjects"
@@ -37,13 +37,16 @@ import MainTableSubjectsBody from "src/components/MainTableSubjectsBody.vue";
 import MainTableTasksBody from "src/components/MainTableTasksBody.vue";
 import MainTableModuleTasksBody from "./MainTableModuleTasksBody.vue";
 
-const { columnNames, subjects, modules, tasks, moduleId } = defineProps({
-  columnNames: Array,
-  subjects: Array,
-  modules: Array,
-  tasks: Array,
-  moduleId: String,
-});
+const { columnNames, subjects, modules, tasks, moduleId, pageId } = defineProps(
+  {
+    columnNames: Array,
+    subjects: Array,
+    modules: Array,
+    tasks: Array,
+    moduleId: String,
+    pageId: String,
+  }
+);
 </script>
 
 <style>

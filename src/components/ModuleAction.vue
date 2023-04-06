@@ -1,36 +1,40 @@
 <template>
-
-  <q-btn v-if="module" @click="showForm(module)" color="blue" label="Изменить" />
-  <q-btn v-else @click="show=true" color="blue" label="Создать модуль" />
+  <q-btn
+    v-if="module"
+    @click="showForm(module)"
+    color="primary"
+    label="Изменить"
+  />
+  <q-btn v-else @click="show = true" color="primary" label="Создать модуль" />
 
   <q-dialog v-model="show">
     <ModuleForm
-    v-if="module"
-    @onSubmit="onSubmit"
-    :moduleName="'Редактирование модуля'"
-    :module="module"
-    :btnName="'Изменить'"/>
+      v-if="module"
+      @onSubmit="onSubmit"
+      :moduleName="'Редактирование модуля'"
+      :module="module"
+      :btnName="'Изменить'"
+    />
 
     <ModuleForm
-    v-else
-    @onSubmit="onSubmit"
-    :moduleName="'Модуль'"
-    :btnName="'Создать'"/>
+      v-else
+      @onSubmit="onSubmit"
+      :moduleName="'Модуль'"
+      :btnName="'Создать'"
+    />
   </q-dialog>
-
 </template>
 
 <script setup>
-import { defineProps, ref, computed } from "vue";
-import ModuleForm from './ModuleForm.vue';
+import { defineProps, ref } from "vue";
+import ModuleForm from "./ModuleForm.vue";
 import moduleApi from "src/sdk/module";
 
 const { module } = defineProps({
-  module:Object,
-})
+  module: Object,
+});
 
 const show = ref(false);
-
 
 const bufferModule = [];
 
@@ -45,20 +49,17 @@ const showForm = (module) => {
   bufferModule.push(module.id);
 };
 
-
 const form = ref({});
 
 const onSubmit = async (moduleForm) => {
-  try{
+  try {
     module
-      ? await moduleApi.moduleUpdate(moduleForm,bufferModule)
+      ? await moduleApi.moduleUpdate(moduleForm, bufferModule)
       : await moduleApi.moduleCreate(moduleForm);
-  }catch(error){
+  } catch (error) {
     console.log(error);
   }
 };
 </script>
 
-<style lang="scss" scoped>
-
-</style>
+<style lang="scss" scoped></style>

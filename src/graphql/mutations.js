@@ -53,16 +53,6 @@ export const createModule = gql`
           date
           time
         }
-        property7 {
-          name
-          property1
-          property2 {
-            fullname {
-              first_name
-              last_name
-            }
-          }
-        }
       }
     }
   }
@@ -94,6 +84,27 @@ export const createTask = gql`
         property7 {
           id
         }
+      }
+    }
+  }
+`;
+
+export const createPermissionRule = gql`
+  mutation permissionRuleCreate($input: PermissionRuleCreateInput!) {
+    permissionRuleCreate(input: $input) {
+      recordId
+      status
+      record {
+        id
+        author_id
+        level
+        model_type
+        model_id
+        config
+        owner_id
+        owner_type
+        created_at
+        updated_at
       }
     }
   }
@@ -155,11 +166,11 @@ export const createPage = gql`
 `;
 
 export const updateModule = gql`
-mutation ($input: update_type2_input!,$id: String!) {
-  update_type2 (id: $id, input: $input) {
-    status
-    recordId
-    record {
+  mutation ($input: update_type2_input!, $id: String!) {
+    update_type2(id: $id, input: $input) {
+      status
+      recordId
+      record {
         id
         type_id
         author_id
@@ -168,7 +179,31 @@ mutation ($input: update_type2_input!,$id: String!) {
         created_at
         updated_at
         name
+      }
     }
   }
-}
-`
+`;
+
+export const deleteModule = gql`
+  mutation deleteModule($module_id: String!) {
+    delete_type2(id: $module_id) {
+      recordId
+    }
+  }
+`;
+
+export const deleteTask = gql`
+  mutation deleteTask($task_id: String!) {
+    delete_type1(id: $task_id) {
+      recordId
+    }
+  }
+`;
+
+export const deletePage = gql`
+  mutation deletePage($page_id: String!) {
+    pageDelete(id: $page_id) {
+      recordId
+    }
+  }
+`;
