@@ -1,6 +1,7 @@
 <template>
   <tbody>
     <tr v-for="subject in subjects" :key="subject.id">
+      <pre>{{ subject }}</pre>
       <td class="q-pa-md hover-item link">
         <router-link :to="{ name: 'subject', params: { id: subject.id } }">
           {{ subject.fullname.first_name }}

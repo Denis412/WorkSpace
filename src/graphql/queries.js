@@ -333,6 +333,42 @@ export const getUserTasks = gql`
   }
 `;
 
+export const getUserModules = gql`
+query getUserModules {
+  paginate_subject(
+    page: 1
+    perPage: 100
+    where: { column: "user_id", operator: EQ, value: ${currentUserId} }
+  ) {
+    data {
+      id
+      type_id
+      author_id
+      level
+      position
+      created_at
+      updated_at
+      user_id
+      property2 {
+        id
+        name
+        property1
+        property3
+      }
+    }
+    paginatorInfo {
+      perPage
+      currentPage
+      lastPage
+      total
+      count
+      from
+      to
+      hasMorePages
+    }
+  }
+}`;
+
 export const getModuleById = gql`
   query getModuleById($module_id: String!) {
     get_type2(id: $module_id) {

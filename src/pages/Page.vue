@@ -8,6 +8,10 @@
 
   <TasksPage v-else-if="pageType === 'Мои задачи'" :page="page?.page" />
   <TaskPage v-else-if="pageType === 'Задача'" :page="page?.page" />
+  <!--
+  <q-page>
+    <pre>{{ page }}</pre>
+  </q-page> -->
 </template>
 
 <script setup>

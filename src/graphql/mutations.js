@@ -99,6 +99,27 @@ export const createTask = gql`
   }
 `;
 
+export const createPermissionRule = gql`
+  mutation permissionRuleCreate($input: PermissionRuleCreateInput!) {
+    permissionRuleCreate(input: $input) {
+      recordId
+      status
+      record {
+        id
+        author_id
+        level
+        model_type
+        model_id
+        config
+        owner_id
+        owner_type
+        created_at
+        updated_at
+      }
+    }
+  }
+`;
+
 export const updateTask = gql`
   mutation ($id: String!, $input: update_type1_input!) {
     update_type1(id: $id, input: $input) {
