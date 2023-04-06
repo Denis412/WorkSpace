@@ -55,8 +55,6 @@ const moduleCreate = async (form) => {
     },
   });
 
-  console.log(createdPage);
-
   const { data: createdPermissionRuleForPage } = await creatingPermissionRule({
     input: {
       model_type: "page",
@@ -66,8 +64,6 @@ const moduleCreate = async (form) => {
       level: 5,
     },
   });
-
-  console.log(createdPermissionRuleForPage);
 
   const { data: createdPermissionRuleForModuleObject } =
     await creatingPermissionRule({
@@ -79,8 +75,6 @@ const moduleCreate = async (form) => {
         level: 5,
       },
     });
-
-  console.log(createdPermissionRuleForModuleObject);
 
   return {
     createdModule,

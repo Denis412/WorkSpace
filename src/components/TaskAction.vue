@@ -36,7 +36,6 @@ const { moduleId, title, buttonLabel, task } = defineProps({
 const showForm = ref(false);
 
 const actionTask = async (form) => {
-  console.log("form", form);
   try {
     task
       ? await taskApi.taskUpdate(form, task.id, moduleId)
