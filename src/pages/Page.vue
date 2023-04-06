@@ -8,8 +8,9 @@
 
   <TasksPage v-else-if="pageType === 'Мои задачи'" :page="page?.page" />
   <TaskPage v-else-if="pageType === 'Задача'" :page="page?.page" />
-  <!--
-  <q-page>
+
+  <!-- <q-page>
+    page
     <pre>{{ page }}</pre>
   </q-page> -->
 </template>
@@ -34,11 +35,13 @@ const { result: page, loading } = useQuery(getPage, {
 const pageType = ref("");
 
 const pageTypeUpdate = () => {
+  console.log("page", page.value?.page);
+
   const page_type_id = page.value?.page.object.type_id;
   const page_title = page.value?.page.title;
 
   if (page_type_id === null) pageType.value = page_title;
-  else if (page_type_id === "6647062161604721421") pageType.value = "Модуль";
+  else if (page_type_id === "7257711564957497306") pageType.value = "Модуль";
   else if (page_type_id === "4474239268760732705") pageType.value = "Задача";
 
   console.log("value", pageType.value);
@@ -47,7 +50,7 @@ const pageTypeUpdate = () => {
 onMounted(() => {
   if (pageType.value) return;
 
-  console.log("mounted");
+  //console.log("mounted", page);
 
   pageTypeUpdate();
 });

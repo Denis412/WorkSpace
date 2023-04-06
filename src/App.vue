@@ -7,44 +7,37 @@
 </template>
 
 <script setup>
-import stompClient from "src/lib/stompClient";
+// import stompClient from "src/lib/stompClient";
 
-console.log(stompClient);
+// let queue =
+//   "user.5571026735801383150.notifications.1ef93875-adc7-4663-a6bc-3ae4126a2740";
 
-let headers = {
-  login: "d.a.malyshev22@gmail.com",
-  passcode: "@3P^Lgdab)sv",
-};
+// let onConnect = async () => {
+//   console.log("connected");
 
-let queue =
-  "user.5571026735801383150.notifications.1ef93875-adc7-4663-a6bc-3ae4126a2740";
+//   let onMessage = (message) => {
+//     console.log("Receive message:", JSON.parse(message.body));
 
-let onConnect = async () => {
-  console.log("connected");
+//     message.ack();
+//   };
 
-  let onMessage = (message) => {
-    console.log("Receive message:", JSON.parse(message.body));
+//   stompClient.subscribe(`/queue/${queue}`, onMessage, { ack: "client" });
+// };
 
-    message.ack();
-  };
+// let onError = (msg) => {
+//   console.log("Error", msg);
+// };
 
-  stompClient.subscribe(`/queue/${queue}`, onMessage, { ack: "client" });
-};
+// let onClose = (msg) => {
+//   console.log("Close", msg);
+// };
 
-let onError = (msg) => {
-  console.log("Error", msg);
-};
-
-let onClose = (msg) => {
-  console.log("Close", msg);
-};
-
-stompClient.connect(
-  "readonly",
-  "@3P^Lgdab)sv",
-  onConnect,
-  onError,
-  "/",
-  onClose
-);
+// stompClient.connect(
+//   "readonly",
+//   "@3P^Lgdab)sv",
+//   onConnect,
+//   onError,
+//   "/",
+//   onClose
+// );
 </script>

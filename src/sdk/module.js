@@ -30,30 +30,43 @@ const moduleCreate = async (form) => {
   const { data: createdModule } = await creatingModule({
     input: {
       name: form.name,
-      property4: {
+      property1: {
         [process.env.SUBJECT_ID]: form.responsible.value,
       },
-      property5: {
+      property2: {
         date: new Date(form.date_start).toLocaleDateString(),
         time: "01:00:00",
       },
-      property6: {
+      property3: {
         date: new Date(form.date_end).toLocaleDateString(),
-        time: "23:58:00",
+        time: "23:55:00",
       },
     },
   });
 
-  const { data: createdPage } = await creatingPage({
+  const inp = {
     input: {
-      title: createdModule.create_type2.record.name,
+      title: createdModule.create_type1.record.name,
       parent_id: process.env.MODULE_PAGE_ID,
       object: {
-        id: createdModule.create_type2.record.id,
-        type_id: createdModule.create_type2.record.type_id,
+        id: createdModule.create_type1.recordId,
+        type_id: createdModule.create_type1.record.type_id,
+      },
+    },
+  };
+
+  const { data: createdPage } = await creatingPage({
+    input: {
+      title: createdModule.create_type1.record.name,
+      parent_id: process.env.MODULE_PAGE_ID,
+      object: {
+        id: createdModule.create_type1.recordId,
+        type_id: createdModule.create_type1.record.type_id,
       },
     },
   });
+
+  console.log(createdPage);
 
   const { data: createdPermissionRuleForPage } = await creatingPermissionRule({
     input: {
@@ -65,16 +78,20 @@ const moduleCreate = async (form) => {
     },
   });
 
+  console.log(createdPermissionRuleForPage);
+
   const { data: createdPermissionRuleForModuleObject } =
     await creatingPermissionRule({
       input: {
         model_type: "object",
-        model_id: createdModule.create_type2.recordId,
+        model_id: createdModule.create_type1.recordId,
         owner_type: "subject",
         owner_id: form.responsible.value,
         level: 5,
       },
     });
+
+  // console.log(createdPermissionRuleForModuleObject);
 
   return {
     createdModule,

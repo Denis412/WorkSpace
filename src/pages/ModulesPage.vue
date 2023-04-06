@@ -10,6 +10,8 @@
       <ModuleAction />
     </div>
 
+    <!-- <pre>{{ modules }}</pre> -->
+
     <MainTable
       :modules="modules?.paginate_type2?.data"
       :columnNames="columnNames"

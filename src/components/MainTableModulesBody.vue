@@ -25,7 +25,7 @@
       <td class="q-pa-md text-center">
         {{ module.property7.name }}
       </td>
-      <!-- <q-btn @click="showForm(module)" color="blue" label="Изменить" /> -->
+      <q-btn @click="showForm(module)" color="blue" label="Изменить" />
       <ModuleAction :module="module" />
     </tr>
   </tbody>

@@ -240,6 +240,16 @@ export const getModulesAll = gql`
         }
         property7 {
           id
+          name
+          property1
+          property2 {
+            id
+            fullname {
+              first_name
+              last_name
+            }
+          }
+          property3
         }
       }
       paginatorInfo {
@@ -296,43 +306,6 @@ export const getTasksAll = gql`
   }
 `;
 
-export const getUserTasks = gql`
-  query getUserTasks {
-    paginate_subject(
-      page: 1
-      perPage: 100
-      where: { column: "user_id", operator: EQ, value: ${currentUserId} }
-    ) {
-      data {
-        id
-        type_id
-        author_id
-        level
-        position
-        created_at
-        updated_at
-        user_id
-        property2 {
-          id
-          name
-          property1
-          property3
-        }
-      }
-      paginatorInfo {
-        perPage
-        currentPage
-        lastPage
-        total
-        count
-        from
-        to
-        hasMorePages
-      }
-    }
-  }
-`;
-
 export const getUserModules = gql`
 query getUserModules {
   paginate_subject(
@@ -349,7 +322,7 @@ query getUserModules {
       created_at
       updated_at
       user_id
-      property2 {
+      property1 {
         id
         name
         property1
@@ -401,6 +374,7 @@ export const getModuleById = gql`
             last_name
           }
         }
+        property3
       }
     }
   }
