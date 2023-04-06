@@ -1,63 +1,63 @@
 <template>
   <div class="bg-white q-pa-md rounded-borders">
-      <q-form
-    style="min-width: 500px" @submit="onSubmit">
-        <header class="text-h4 text-center q-mb-md">{{ moduleName }}</header>
+    <q-form @submit="onSubmit">
+      <header class="text-h4 text-center q-mb-md">{{ moduleName }}</header>
 
-    <main>
-      <q-input
-        v-model="form.name"
-        type="text"
-        label="Название"
-        placeholder="Введите название модуля"
-      />
-
-      <q-select
-        v-model="form.responsible"
-        label="Ответственный"
-        :options="responsibleGroupSubjectsNames"
-        placeholder="Выберите ответственного"
-      />
-
-      <div class="flex column">
-        <q-btn
-          @click="toggleShowQDateStart"
-          color="primary"
-          class="q-mt-md"
-          label="Выбрать дату начала"
+      <main>
+        <q-input
+          v-model="form.name"
+          type="text"
+          label="Название"
+          placeholder="Введите название модуля"
         />
 
-        <q-btn
-          @click="toggleShowQDateEnd"
-          color="primary"
-          class="q-mt-md"
-          label="Выбрать дату окончания"
+        <q-select
+          v-model="form.responsible"
+          label="Ответственный"
+          :options="responsibleGroupSubjectsNames"
+          placeholder="Выберите ответственного"
         />
-      </div>
 
-      <q-dialog v-model="showQDateStart">
-        <q-date v-model="form.date_start" :options="optionsFnDateStart">
+        <div class="flex column">
           <q-btn
-            class="w-100p"
-            color="primary"
-            label="Выбрать"
             @click="toggleShowQDateStart"
-          />
-        </q-date>
-      </q-dialog>
-
-      <q-dialog v-model="showQDateEnd">
-        <q-date v-model="form.date_end" :options="optionsFnDateEnd">
-          <q-btn
-            class="w-100p"
             color="primary"
-            label="Выбрать"
-            @click="toggleShowQDateEnd"
+            class="q-mt-md"
+            label="Выбрать дату начала"
           />
-        </q-date>
-      </q-dialog>
-    </main>
-    <footer>
+
+          <q-btn
+            @click="toggleShowQDateEnd"
+            color="primary"
+            class="q-mt-md"
+            label="Выбрать дату окончания"
+          />
+        </div>
+
+        <q-dialog v-model="showQDateStart">
+          <q-date v-model="form.date_start" :options="optionsFnDateStart">
+            <q-btn
+              class="w-100p"
+              color="primary"
+              label="Выбрать"
+              @click="toggleShowQDateStart"
+            />
+          </q-date>
+        </q-dialog>
+
+        <q-dialog v-model="showQDateEnd">
+          <q-date v-model="form.date_end" :options="optionsFnDateEnd">
+            <q-btn
+              class="w-100p"
+              color="primary"
+              label="Выбрать"
+              @click="toggleShowQDateEnd"
+            />
+          </q-date>
+        </q-dialog>
+      </main>
+
+      <footer>
         <div class="col-12 q-mt-md">
           <q-btn
             class="block"
@@ -67,34 +67,38 @@
             v-close-popup
           />
         </div>
-    </footer>
-      </q-form>
-    </div>
+      </footer>
+    </q-form>
+  </div>
 </template>
 
 <script setup>
-import { defineEmits, ref, defineProps, computed } from 'vue';
+import { defineEmits, ref, defineProps, computed } from "vue";
 import { useQuery } from "@vue/apollo-composable";
 import { getResponsibleGroupSubjects } from "src/graphql/queries";
 import { date } from "quasar";
 
-const emit = defineEmits(['onSubmit']);
-const { moduleName,module, btnName } = defineProps({
+const emit = defineEmits(["onSubmit"]);
+const { moduleName, module, btnName } = defineProps({
   moduleName: String,
   module: Object,
-  btnName: String
-})
+  btnName: String,
+});
 
 const form = ref({
-  name: module?.name||"",
-  responsible: `${module?.property4?.fullname?.first_name||""} ${module?.property4?.fullname?.last_name||""}`.trim(),
-  date_start: module?.property5?.date||date.formatDate(Date.now(), "YYYY/MM/DD"),
-  date_end: module?.property6?.date||date.formatDate(Date.now(), "YYYY/MM/DD"),
+  name: module?.name || "",
+  responsible: `${module?.property4?.fullname?.first_name || ""} ${
+    module?.property4?.fullname?.last_name || ""
+  }`.trim(),
+  date_start:
+    module?.property5?.date || date.formatDate(Date.now(), "YYYY/MM/DD"),
+  date_end:
+    module?.property6?.date || date.formatDate(Date.now(), "YYYY/MM/DD"),
 });
 
 const onSubmit = () => {
-  emit('onSubmit', form.value);
-}
+  emit("onSubmit", form.value);
+};
 
 const toggleShowQDateStart = () => {
   showQDateStart.value = !showQDateStart.value;
@@ -103,7 +107,6 @@ const toggleShowQDateStart = () => {
 const toggleShowQDateEnd = () => {
   showQDateEnd.value = !showQDateEnd.value;
 };
-
 
 const showQDateStart = ref(false);
 const showQDateEnd = ref(false);
@@ -123,7 +126,6 @@ const responsibleGroupSubjectsNames = computed(() =>
     value: subject.id,
   }))
 );
-
 </script>
 
 <style lang="scss" scoped></style>

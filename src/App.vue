@@ -7,37 +7,50 @@
 </template>
 
 <script setup>
-// import stompClient from "src/lib/stompClient";
+import { Cookies } from "quasar";
+import { onMounted } from "vue";
+import { useRouter } from "vue-router";
 
-// let queue =
-//   "user.5571026735801383150.notifications.1ef93875-adc7-4663-a6bc-3ae4126a2740";
+// const router = useRouter();
 
-// let onConnect = async () => {
-//   console.log("connected");
+// onMounted(() => {
+//   if (Cookies.get("user_id")) return;
 
-//   let onMessage = (message) => {
-//     console.log("Receive message:", JSON.parse(message.body));
+//   router.push({
+//     name: "auth",
+//   });
+// });
+import stompClient from "src/lib/stompClient";
 
-//     message.ack();
-//   };
+let queue =
+  "user.5571026735801383150.notifications.1ef93875-adc7-4663-a6bc-3ae4126a2740";
 
-//   stompClient.subscribe(`/queue/${queue}`, onMessage, { ack: "client" });
-// };
+let onConnect = async () => {
+  console.log("connected");
 
-// let onError = (msg) => {
-//   console.log("Error", msg);
-// };
+  let onMessage = (message) => {
+    console.log("Receive message:", JSON.parse(message.body));
 
-// let onClose = (msg) => {
-//   console.log("Close", msg);
-// };
+    message.ack();
+  };
 
-// stompClient.connect(
-//   "readonly",
-//   "@3P^Lgdab)sv",
-//   onConnect,
-//   onError,
-//   "/",
-//   onClose
-// );
+  stompClient.subscribe(`/queue/${queue}`, onMessage, { ack: "client" });
+};
+
+let onError = (msg) => {
+  console.log("Error", msg);
+};
+
+let onClose = (msg) => {
+  console.log("Close", msg);
+};
+
+stompClient.connect(
+  "readonly",
+  "@3P^Lgdab)sv",
+  onConnect,
+  onError,
+  "/",
+  onClose
+);
 </script>

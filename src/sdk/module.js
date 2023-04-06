@@ -55,32 +55,32 @@ const moduleCreate = async (form) => {
     },
   });
 
-  const { data: createdPermissionRuleForPage } = await creatingPermissionRule({
-    input: {
-      model_type: "page",
-      model_id: createdPage.pageCreate.recordId,
-      owner_type: "subject",
-      owner_id: form.responsible.value,
-      level: 5,
-    },
-  });
+  // const { data: createdPermissionRuleForPage } = await creatingPermissionRule({
+  //   input: {
+  //     model_type: "page",
+  //     model_id: createdPage.pageCreate.recordId,
+  //     owner_type: "subject",
+  //     owner_id: form.responsible.value,
+  //     level: 5,
+  //   },
+  // });
 
-  const { data: createdPermissionRuleForModuleObject } =
-    await creatingPermissionRule({
-      input: {
-        model_type: "object",
-        model_id: createdModule.create_type2.recordId,
-        owner_type: "subject",
-        owner_id: form.responsible.value,
-        level: 5,
-      },
-    });
+  // const { data: createdPermissionRuleForModuleObject } =
+  //   await creatingPermissionRule({
+  //     input: {
+  //       model_type: "object",
+  //       model_id: createdModule.create_type2.recordId,
+  //       owner_type: "subject",
+  //       owner_id: form.responsible.value,
+  //       level: 5,
+  //     },
+  //   });
 
   return {
     createdModule,
     createdPage,
-    createdPermissionRuleForPage,
-    createdPermissionRuleForModuleObject,
+    // createdPermissionRuleForPage,
+    // createdPermissionRuleForModuleObject,
   };
 };
 

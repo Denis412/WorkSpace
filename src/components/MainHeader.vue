@@ -14,14 +14,21 @@
         <q-toolbar-title>{{ title }}</q-toolbar-title>
       </div>
 
-      <router-link :to="{ name: 'auth' }" class="link text-white">
+      <router-link :to="{ name: 'auth' }" class="flex link text-white">
         <q-btn label="Войти" />
       </router-link>
+
+      <!-- <UserAvatarButton v-else /> -->
     </q-toolbar>
   </q-header>
 </template>
 
 <script setup>
+import { Cookies } from "quasar";
+import UserAvatarButton from "./UserAvatarButton.vue";
+
+const currentUser = Cookies.get("user_id");
+
 const { toggleLeftDrawer, title } = defineProps({
   toggleLeftDrawer: Function,
   title: String,

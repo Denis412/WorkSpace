@@ -1,5 +1,6 @@
 import { createHttpLink, InMemoryCache } from "@apollo/client/core";
 import { setContext } from "@apollo/client/link/context";
+import Cookies from "js-cookie";
 
 export function getClientOptions() {
   const httpLink = createHttpLink({
@@ -7,7 +8,7 @@ export function getClientOptions() {
   });
 
   const authLink = setContext((_, { headers }) => {
-    const token = sessionStorage.getItem("token");
+    const token = Cookies.get("token");
 
     return {
       headers: {

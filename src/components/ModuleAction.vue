@@ -10,6 +10,7 @@
   <q-dialog v-model="show">
     <ModuleForm
       v-if="module"
+      class="w-100p"
       @onSubmit="onSubmit"
       :moduleName="'Редактирование модуля'"
       :module="module"
@@ -18,6 +19,7 @@
 
     <ModuleForm
       v-else
+      class="w-100p"
       @onSubmit="onSubmit"
       :moduleName="'Модуль'"
       :btnName="'Создать'"

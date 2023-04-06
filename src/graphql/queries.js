@@ -307,40 +307,60 @@ export const getTasksAll = gql`
 `;
 
 export const getUserModules = gql`
-query getUserModules {
-  paginate_subject(
-    page: 1
-    perPage: 100
-    where: { column: "user_id", operator: EQ, value: ${currentUserId} }
-  ) {
-    data {
-      id
-      type_id
-      author_id
-      level
-      position
-      created_at
-      updated_at
-      user_id
-      property1 {
+  query getUserModules {
+    paginate_subject(page: 1, perPage: 100, where: { column: "user_id", operator: EQ, value: ${currentUserId} }) {
+      data {
         id
-        name
-        property1
-        property3
+        type_id
+        author_id
+        level
+        position
+        created_at
+        updated_at
+        user_id
+        fullname {
+          first_name
+          last_name
+        }
+        property4 {
+          id
+          name
+
+          property4 {
+            id
+            fullname {
+              first_name
+              last_name
+            }
+          }
+
+          property5 {
+            date
+            time
+          }
+          property6 {
+            date
+            time
+          }
+          property7 {
+            id
+            property3
+          }
+        }
+      }
+      paginatorInfo {
+        perPage
+        currentPage
+        lastPage
+        total
+        count
+        from
+        to
+        hasMorePages
       }
     }
-    paginatorInfo {
-      perPage
-      currentPage
-      lastPage
-      total
-      count
-      from
-      to
-      hasMorePages
-    }
   }
-}`;
+`;
 
 export const getModuleById = gql`
   query getModuleById($module_id: String!) {
@@ -375,6 +395,43 @@ export const getModuleById = gql`
           }
         }
         property3
+      }
+    }
+  }
+`;
+
+export const getUserTasks = gql`
+  query getUserTasks {
+    paginate_subject(
+      page: 1
+      perPage: 100
+      where: { column: "user_id", operator: EQ, value: ${currentUserId} }
+    ) {
+      data {
+        id
+        type_id
+        author_id
+        level
+        position
+        created_at
+        updated_at
+        user_id
+        property2 {
+          id
+          name
+          property1
+          property3
+        }
+      }
+      paginatorInfo {
+        perPage
+        currentPage
+        lastPage
+        total
+        count
+        from
+        to
+        hasMorePages
       }
     }
   }
