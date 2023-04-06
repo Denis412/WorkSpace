@@ -16,6 +16,15 @@
       />
 
       <q-select
+        v-if="task"
+        v-model="form.status"
+        :disable="!(form.status.label === 'Выполнена')"
+        label="Статус"
+        :options="[options.at(-1)]"
+        placeholder="Выберите статус"
+      />
+
+      <q-select
         v-model="form.executor"
         label="Исполнитель"
         :options="executorGroupSubjectsNames"
@@ -35,18 +44,25 @@
 </template>
 
 <script setup>
-import { ref, computed } from "vue";
+import { ref, computed, onMounted } from "vue";
 import { getExecutorGroupSubjects } from "src/graphql/queries";
 import { useQuery } from "@vue/apollo-composable";
+import {
+  getTaskStatus,
+  getAllStatusesForSelect,
+} from "src/utils/getTaskStatus";
 
 const { formContext, task } = defineProps({
   formContext: String,
   task: Object,
 });
 
+const options = getAllStatusesForSelect();
+
 const form = ref({
   name: task?.name || "",
   description: task?.property1 || "",
+  status: "",
   executor: {
     label: `${task?.property2.fullname.first_name || ""} ${
       task?.property2.fullname.last_name || ""
@@ -63,4 +79,19 @@ const executorGroupSubjectsNames = computed(() =>
     value: subject.id,
   }))
 );
+
+const calculatedStatus = (property) => {
+  getTaskStatus(property)
+    .then((status) => {
+      form.value.status = {
+        label: status.label,
+        value: status.id,
+      };
+    })
+    .catch((error) => console.log(error));
+};
+
+onMounted(async () => {
+  calculatedStatus(task?.property3);
+});
 </script>

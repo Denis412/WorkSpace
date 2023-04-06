@@ -62,6 +62,7 @@ const taskCreate = async (form, moduleId) => {
 };
 
 const taskUpdate = async (form, taskId, moduleId) => {
+  console.log(form);
   const { data } = await updatingTask({
     id: taskId,
     input: {
@@ -70,7 +71,7 @@ const taskUpdate = async (form, taskId, moduleId) => {
       property2: {
         [process.env.SUBJECT_ID]: form.executor.value,
       },
-      property3: process.env.APPOINTED_ID,
+      property3: form.status.value,
     },
   });
 

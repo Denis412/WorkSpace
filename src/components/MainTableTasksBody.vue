@@ -43,8 +43,6 @@ const calculatedCurrentStatus = (taskProperty) => {
     (status) => status.id === taskProperty
   );
 
-  console.log(obj);
-
   taskLabel.value = obj?.label;
 
   return obj?.color;
