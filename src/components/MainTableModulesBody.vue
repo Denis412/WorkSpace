@@ -1,6 +1,6 @@
 <template>
   <tbody>
-    <tr v-for="module in modules.property4" :key="module.id">
+    <tr v-for="module in SortModules" :key="module.id">
       <td class="q-pa-md text-center">
         {{ module.name }}
       </td>
@@ -28,11 +28,28 @@
 </template>
 
 <script setup>
-import { defineProps } from "vue";
+import { defineProps,computed,watch} from "vue";
 import ModuleAction from "./ModuleAction.vue";
-const { modules } = defineProps({
+import sortApi from "src/utils/sort.js";
+const { modules, sortBy } = defineProps({
   modules: Object,
+  sortBy: String
 });
+
+const SortModules = computed(()=>{
+
+  if(sortBy==='Сначала новые')
+    return sortApi.sortDESCByCreate( modules.property4 );
+  else if(sortBy==='Сначала старые')
+    return sortApi.sortASCByCreate( modules.property4 );
+  else if(sortBy === 'По названию')
+    return sortApi.sortByModuleName( modules.property4 );
+  else
+    return modules.property4;
+
+})
+
+
 
 const reduceTasks = (tasks, status) => {
   if (!tasks.length) return 0;
