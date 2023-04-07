@@ -1,5 +1,6 @@
 <template>
-  <table style="width: 100%" class="table">
+  <div style="min-width: 300px; overflow-x: auto;">
+    <table style="width: 100%"  class="table">
     <thead class="rounded-borders border-black-1">
       <tr>
         <th
@@ -29,6 +30,8 @@
 
     <MainTableTasksBody v-else-if="tasks" :tasks="tasks" />
   </table>
+  </div>
+  
 </template>
 
 <script setup>
@@ -41,8 +44,8 @@ const { columnNames, subjects, modules, tasks, moduleId, pageId } = defineProps(
   {
     columnNames: Array,
     subjects: Array,
-    modules: Array,
-    tasks: Array,
+    modules: Object,
+    tasks: Object,
     moduleId: String,
     pageId: String,
   }

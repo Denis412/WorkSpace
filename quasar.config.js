@@ -50,12 +50,12 @@ module.exports = configure(function (/* ctx */) {
         RABBITMQ_WEBSTOMP_URI: "wss://stud.druid.1t.ru/ws",
 
         SUBJECT_ID: "2529884860175464566",
-        MODULE_ID: "6647062161604721421",
-        MODULE_PAGE_ID: "1107262131192288825",
+        MODULE_ID: "7257711564957497306",
+        MODULE_PAGE_ID: "2196357089691369512",
 
-        APPOINTED_ID: "4799030204995883472",
-        COMPLETED_ID: "4526730325823526303",
-        FINISHED_ID: "2146013030427836869",
+        APPOINTED_ID: "5008436242887479508",
+        COMPLETED_ID: "876630288677854240",
+        FINISHED_ID: "2623801275564549881",
       },
 
       vueRouterMode: "hash", // available values: 'hash', 'history'

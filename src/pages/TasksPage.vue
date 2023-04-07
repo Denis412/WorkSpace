@@ -7,7 +7,6 @@
     <header class="text-center text-h3 q-mb-md">{{ page.title }}</header>
 
     <main>
-      <!-- <pre>{{ allTasks }}</pre> -->
       <MainTable
         :column-names="[
           'Название задачи',
@@ -15,7 +14,7 @@
           'Статус',
           'Действия',
         ]"
-        :tasks="allTasks.paginate_type1.data"
+        :tasks="allTasks?.paginate_subject?.data[0]"
       />
     </main>
   </q-page>
@@ -23,12 +22,12 @@
 
 <script setup>
 import { useQuery } from "@vue/apollo-composable";
-import { getTasksAll } from "src/graphql/queries";
+import { getUserTasks } from "src/graphql/queries";
 import MainTable from "src/components/MainTable.vue";
 
 const { page } = defineProps({
   page: Object,
 });
 
-const { result: allTasks, loading } = useQuery(getTasksAll);
+const { result: allTasks, loading } = useQuery(getUserTasks);
 </script>

@@ -10,19 +10,26 @@ import {
   createPage,
   deleteModule,
   deletePage,
+  createPermissionRule,
+  updatePage,
 } from "src/graphql/mutations";
-import { getModulesAll } from "src/graphql/queries";
+import { getUserModules, pagesAll, pages } from "src/graphql/queries";
 
 provideApolloClient(apolloClient);
 
 const { mutate: creatingModule } = useMutation(createModule);
 const { mutate: creatingPage } = useMutation(createPage);
+const { mutate: creatingPermissionRule } = useMutation(createPermissionRule);
 
 const { mutate: deletingModule } = useMutation(deleteModule);
 const { mutate: deletingPage } = useMutation(deletePage);
 
-const { refetch: refetchModules } = useQuery(getModulesAll);
+const { refetch: refetchModules } = useQuery(getUserModules);
 const { mutate: updatingModule } = useMutation(updateModule);
+const { result: allpages, refetch: allPagesRefetch } = useQuery(pagesAll);
+const { mutate: pageUpdate } = useMutation(updatePage);
+
+const { refetch: pagesRefetch } = useQuery(pages);
 
 const moduleCreate = async (form) => {
   const { data: createdModule } = await creatingModule({
@@ -37,7 +44,7 @@ const moduleCreate = async (form) => {
       },
       property6: {
         date: new Date(form.date_end).toLocaleDateString(),
-        time: "23:58:00",
+        time: "23:55:00",
       },
     },
   });
@@ -47,13 +54,43 @@ const moduleCreate = async (form) => {
       title: createdModule.create_type2.record.name,
       parent_id: process.env.MODULE_PAGE_ID,
       object: {
-        id: createdModule.create_type2.record.id,
+        id: createdModule.create_type2.recordId,
         type_id: createdModule.create_type2.record.type_id,
       },
     },
   });
 
-  return { createdModule, createdPage };
+  const { data: createdPermissionRuleForPage } = await creatingPermissionRule({
+    input: {
+      model_type: "page",
+      model_id: createdPage.pageCreate.recordId,
+      owner_type: "subject",
+      owner_id: form.responsible.value,
+      level: 5,
+    },
+  });
+
+  const { data: createdPermissionRuleForModuleObject } =
+    await creatingPermissionRule({
+      input: {
+        model_type: "object",
+        model_id: createdModule.create_type2.recordId,
+        owner_type: "subject",
+        owner_id: form.responsible.value,
+        level: 5,
+      },
+    });
+
+  await refetchModules();
+  await pagesRefetch();
+  await allPagesRefetch();
+
+  return {
+    createdModule,
+    createdPage,
+    createdPermissionRuleForPage,
+    createdPermissionRuleForModuleObject,
+  };
 };
 
 const moduleUpdate = async (Moduleform, bufferModule) => {
@@ -85,19 +122,37 @@ const moduleUpdate = async (Moduleform, bufferModule) => {
 
   if (Object.entries(input).length != 0) {
     input.name = Moduleform.name;
+
     try {
-      const { data } = await updatingModule({
+      const { data: moduleData } = await updatingModule({
         id: bufferModule.at(-1),
         input: input,
       });
-      refetchModules();
+
+      if (filtredValue.name) {
+        const pageId = allpages.value.pages.data.find(
+          (el) => el.object.id === bufferModule.at(-1)
+        ).id;
+        const { data: pageData } = await pageUpdate({
+          id: pageId,
+          input: {
+            title: input.name,
+          },
+        });
+      }
+      await refetchModules();
+      await pagesRefetch();
     } catch (error) {
       console.log(error);
     }
   }
 };
 
-const moduleDelete = async (moduleId, pageId) => {
+const moduleDelete = async (moduleId) => {
+  const pageId = allpages.value.pages.data.find(
+    (el) => el.object.id === moduleId
+  )?.id;
+
   const { data: delM } = await deletingModule({
     module_id: moduleId,
   });
@@ -106,7 +161,9 @@ const moduleDelete = async (moduleId, pageId) => {
     page_id: pageId,
   });
 
-  console.log(delM, delP);
+  await refetchModules();
+  await pagesRefetch();
+  await allPagesRefetch();
 };
 
 const moduleApi = { moduleCreate, moduleUpdate, moduleDelete };

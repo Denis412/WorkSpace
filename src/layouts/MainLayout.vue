@@ -4,11 +4,12 @@
 
     <MainDrawer v-model="leftDrawerOpen" side="left" title="Список">
       <template #list>
-        <TreeMenu :pages="currentSpacePages?.rootPages?.data" />
+        <TreeMenu :pages="currentSpacePages?.rootPages.data" />
       </template>
     </MainDrawer>
 
     <q-page-container>
+      <pre>{{ error }}</pre>
       <router-view v-slot="{ Component }">
         <keep-alive :key="$route.fullPath">
           <component :is="Component" />
@@ -21,7 +22,7 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
 import MainHeader from "src/components/MainHeader.vue";
 import MainDrawer from "src/components/MainDrawer.vue";
 import MainFooter from "src/components/MainFooter.vue";
@@ -34,7 +35,7 @@ provideApolloClient(apolloClient);
 
 const leftDrawerOpen = ref(false);
 
-const { result: currentSpacePages } = useQuery(pages);
+const { result: currentSpacePages, error } = useQuery(pages);
 
 const toggleLeftDrawer = () => {
   leftDrawerOpen.value = !leftDrawerOpen.value;

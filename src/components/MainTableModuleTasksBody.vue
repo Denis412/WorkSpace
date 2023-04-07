@@ -1,6 +1,10 @@
 <template>
   <tbody>
-    <tr v-for="task in resultModule?.get_type2.property7" :key="task.id">
+    <tr
+      v-for="task in resultModule?.get_type2.property7"
+      :key="task.id"
+      :style="{ 'background-color': calculatedCurrentStatus(task?.property3) }"
+    >
       <td>
         <div class="link">
           {{ task.name }}
@@ -19,23 +23,25 @@
         </router-link>
       </td>
 
-      <td class="flex justify-between">
-        <TaskAction
+      <td class="flex justify-between " >
+        <TaskAction 
           :module-id="moduleId"
           title="Редактирование задачи"
           button-label="Изменить"
           :task="task"
         />
 
-        <q-btn @click="deleteTask(task.id)" color="negative" label="Удалить" />
+        <q-btn  
+        @click="deleteTask(task.id)" color="negative" label="Удалить" />
       </td>
     </tr>
   </tbody>
 </template>
 
 <script setup>
+import { ref } from "vue";
 import { useQuery } from "@vue/apollo-composable";
-import { getModuleById } from "src/graphql/queries";
+import { getModuleById, getListProperty } from "src/graphql/queries";
 import TaskAction from "./TaskAction.vue";
 import taskApi from "src/sdk/task";
 import { useQuasar } from "quasar";
@@ -44,6 +50,14 @@ const $q = useQuasar();
 
 const { moduleId, pageId } = defineProps({
   moduleId: String,
+});
+
+const calculatedStatus = ref({});
+
+const { result: listProperties } = useQuery(getListProperty);
+
+const { result: resultModule } = useQuery(getModuleById, {
+  module_id: moduleId,
 });
 
 const deleteTask = async (taskId) => {
@@ -59,7 +73,13 @@ const deleteTask = async (taskId) => {
   }
 };
 
-const { result: resultModule } = useQuery(getModuleById, {
-  module_id: moduleId,
-});
+const calculatedCurrentStatus = (taskProperty) => {
+  const obj = listProperties.value?.property.meta.options.find(
+    (status) => status.id === taskProperty
+  );
+
+  calculatedStatus.value = obj;
+
+  return obj?.color;
+};
 </script>

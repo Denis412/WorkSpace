@@ -11,6 +11,7 @@
         <TaskForm
           form-context="create"
           :task="task"
+          :executorEdit="executorEdit"
           @submit-form="actionTask"
         />
       </q-card-section>
@@ -26,11 +27,12 @@ import taskApi from "src/sdk/task";
 
 const $q = useQuasar();
 
-const { moduleId, title, buttonLabel, task } = defineProps({
+const { moduleId, title, buttonLabel, task, executorEdit } = defineProps({
   moduleId: String,
   title: String,
   task: Object,
   buttonLabel: String,
+  executorEdit: Boolean,
 });
 
 const showForm = ref(false);

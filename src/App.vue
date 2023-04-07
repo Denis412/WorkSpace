@@ -7,14 +7,20 @@
 </template>
 
 <script setup>
+import { Cookies } from "quasar";
+import { onMounted } from "vue";
+import { useRouter } from "vue-router";
+
+// const router = useRouter();
+
+// onMounted(() => {
+//   if (Cookies.get("user_id")) return;
+
+//   router.push({
+//     name: "auth",
+//   });
+// });
 import stompClient from "src/lib/stompClient";
-
-console.log(stompClient);
-
-let headers = {
-  login: "d.a.malyshev22@gmail.com",
-  passcode: "@3P^Lgdab)sv",
-};
 
 let queue =
   "user.5571026735801383150.notifications.1ef93875-adc7-4663-a6bc-3ae4126a2740";

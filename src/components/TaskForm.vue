@@ -1,7 +1,8 @@
 <template>
-  <q-form style="min-width: 500px" @submit="$emit('submitForm', form)">
-    <main>
+  <q-form @submit="$emit('submitForm', form)">
+    <main class="text-h4 text-center q-mb-md justify-between form-width">
       <q-input
+        :disable="executorEdit"
         v-model="form.name"
         type="text"
         label="Название"
@@ -9,6 +10,7 @@
       />
 
       <q-input
+        :disable="executorEdit"
         v-model="form.description"
         type="text"
         label="Описание"
@@ -16,6 +18,16 @@
       />
 
       <q-select
+        v-if="task"
+        v-model="form.status"
+        :disable="isDisabledSelectStatus"
+        label="Статус"
+        :options="[executorEdit ? options.at(1) : options.at(-1)]"
+        placeholder="Выберите статус"
+      />
+
+      <q-select
+        :disable="executorEdit"
         v-model="form.executor"
         label="Исполнитель"
         :options="executorGroupSubjectsNames"
@@ -35,18 +47,26 @@
 </template>
 
 <script setup>
-import { ref, computed } from "vue";
+import { ref, computed, onMounted } from "vue";
 import { getExecutorGroupSubjects } from "src/graphql/queries";
 import { useQuery } from "@vue/apollo-composable";
+import {
+  getTaskStatus,
+  getAllStatusesForSelect,
+} from "src/utils/getTaskStatus";
 
-const { formContext, task } = defineProps({
+const { formContext, task, executorEdit } = defineProps({
   formContext: String,
   task: Object,
+  executorEdit: Boolean,
 });
+
+const options = getAllStatusesForSelect();
 
 const form = ref({
   name: task?.name || "",
   description: task?.property1 || "",
+  status: "",
   executor: {
     label: `${task?.property2.fullname.first_name || ""} ${
       task?.property2.fullname.last_name || ""
@@ -54,6 +74,12 @@ const form = ref({
     value: task?.property2.id || "",
   },
 });
+
+const isDisabledSelectStatus = computed(() =>
+  executorEdit
+    ? form.value.status.label !== "Назначена"
+    : form.value.status.label !== "Выполнена"
+);
 
 const { result: executorGroupSubjects } = useQuery(getExecutorGroupSubjects);
 
@@ -63,4 +89,12 @@ const executorGroupSubjectsNames = computed(() =>
     value: subject.id,
   }))
 );
+
+const calculatedStatus = (property) => {
+  form.value.status = getTaskStatus(property);
+};
+
+onMounted(async () => {
+  calculatedStatus(task?.property3);
+});
 </script>

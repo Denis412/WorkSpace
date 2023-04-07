@@ -4,6 +4,8 @@
   </q-page>
 
   <q-page v-else class="q-pa-md">
+    <!-- <pre>{{ page }}</pre> -->
+    <!-- <pre>re{{ resultModule }}</pre> -->
     <header class="text-h3 text-center">
       {{ resultModule?.get_type2.name }}
     </header>

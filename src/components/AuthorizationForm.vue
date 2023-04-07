@@ -35,6 +35,7 @@ import { ref } from "vue";
 import { useRouter } from "vue-router";
 import userApi from "src/sdk/user";
 import { useStore } from "vuex";
+import { Cookies } from "quasar";
 
 const router = useRouter();
 const store = useStore();
@@ -51,6 +52,12 @@ const signIn = async () => {
     console.log(user);
 
     store.commit("user/SET_CURRENT_USER", user);
+
+    Cookies.set("user_id", user.id);
+    Cookies.set("user_name", user.name);
+    Cookies.set("user_surname", user.surname);
+    Cookies.set("user_email", user.email);
+    Cookies.set("user_avatar", user.avatar);
 
     router.push({
       name: "home",

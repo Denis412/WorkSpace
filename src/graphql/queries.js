@@ -1,4 +1,7 @@
 import gql from "graphql-tag";
+import Cookies from "js-cookie";
+
+const currentUserId = Cookies.get("user_id");
 
 export const User = gql`
   query User($id: String!) {
@@ -18,6 +21,42 @@ export const User = gql`
       deleted_at
     }
   }
+`;
+
+export const pagesAll = gql`
+query pagesAll{
+  pages{
+    data {
+        id
+        parent_id
+        page_type
+        title
+        content
+        icon
+        level
+        is_public
+				is_block
+        position
+        config
+        created_at
+        updated_at
+      	object{
+          id
+          type_id
+        }
+    }
+    paginatorInfo {
+        perPage
+        count
+        total
+        currentPage
+        from
+        to
+        lastPage
+        hasMorePages
+    }
+  }
+}
 `;
 
 export const pages = gql`
@@ -237,6 +276,16 @@ export const getModulesAll = gql`
         }
         property7 {
           id
+          name
+          property1
+          property2 {
+            id
+            fullname {
+              first_name
+              last_name
+            }
+          }
+          property3
         }
       }
       paginatorInfo {
@@ -270,13 +319,78 @@ export const getTasksAll = gql`
           id
           fullname {
             first_name
-            middle_name
             last_name
           }
         }
         property3
         property7 {
           id
+          name
+          property1
+          property2 {
+            id
+            fullname {
+              first_name
+              last_name
+            }
+          }
+          property3
+        }
+      }
+      paginatorInfo {
+        perPage
+        currentPage
+        lastPage
+        total
+        count
+        from
+        to
+        hasMorePages
+      }
+    }
+  }
+`;
+
+export const getUserModules = gql`
+  query getUserModules {
+    paginate_subject(page: 1, perPage: 100, where: { column: "user_id", operator: EQ, value: ${currentUserId} }) {
+      data {
+        id
+        type_id
+        author_id
+        level
+        position
+        created_at
+        updated_at
+        user_id
+        fullname {
+          first_name
+          last_name
+        }
+        property4 {
+          id
+          name
+
+          property4 {
+            id
+            fullname {
+              first_name
+              last_name
+            }
+          }
+
+          property5 {
+            date
+            time
+          }
+          property6 {
+            date
+            time
+          }
+          property7 {
+            id
+            property3
+          }
         }
       }
       paginatorInfo {
@@ -325,7 +439,85 @@ export const getModuleById = gql`
             last_name
           }
         }
+        property3
       }
+    }
+  }
+`;
+
+export const getUserTasks = gql`
+  query getUserTasks {
+    paginate_subject(page: 1, perPage: 100, where: { column: "user_id", operator: EQ, value: ${currentUserId} }) {
+      data {
+        id
+        type_id
+        author_id
+        level
+        position
+        created_at
+        updated_at
+        user_id
+        fullname {
+          first_name
+          last_name
+        }
+        property2 {
+          id
+          name
+          property1
+          property2 {
+            id
+            fullname {
+              first_name
+              last_name
+            }
+          }
+          property3
+          property7 {
+            id
+          }
+        }
+      }
+      paginatorInfo {
+        perPage
+        currentPage
+        lastPage
+        total
+        count
+        from
+        to
+        hasMorePages
+      }
+    }
+  }
+`;
+
+export const getListProperty = gql`
+  query getProperty {
+    property(id: "1842204611759571053") {
+      id
+      type_id
+      author_id
+      property_group_id
+      data_type
+      name
+      hint
+      description
+      label
+      order
+      required
+      system
+      unique
+      multiple {
+        status
+        max_number
+        button_text
+      }
+      guarded
+      default
+      meta
+      created_at
+      updated_at
     }
   }
 `;

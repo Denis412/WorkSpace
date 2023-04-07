@@ -11,7 +11,7 @@
     </div>
 
     <MainTable
-      :modules="modules?.paginate_type2?.data"
+      :modules="modules?.paginate_subject.data[0]"
       :columnNames="columnNames"
     />
   </q-page>
@@ -20,17 +20,22 @@
 <script setup>
 import MainTable from "src/components/MainTable.vue";
 import { useQuery } from "@vue/apollo-composable";
-import { getModulesAll } from "src/graphql/queries";
-import { ref } from "vue";
+import { getUserModules } from "src/graphql/queries";
+import { provide, ref } from "vue";
 import ModuleAction from "src/components/ModuleAction.vue";
+
+const { page } = defineProps({
+  page: Object,
+});
+
+provide("page", page);
 
 const showCreateForm = ref(false);
 
-const { result: modules, loading } = useQuery(getModulesAll);
+const { result: modules, loading } = useQuery(getUserModules);
 
 const columnNames = [
   "Название",
-  "Ответственный",
   "Дата и время начала",
   "Дата и время окончания",
   "Задачи",

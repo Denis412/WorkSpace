@@ -8,6 +8,7 @@ import {
   updateTask,
   deleteTask,
   deletePage,
+  createPermissionRule,
 } from "src/graphql/mutations";
 import { getModuleById } from "src/graphql/queries";
 import apolloClient from "src/apollo/apollo-client";
@@ -17,14 +18,16 @@ provideApolloClient(apolloClient);
 const { mutate: creatingTask } = useMutation(createTask);
 const { mutate: updatingTask } = useMutation(updateTask);
 const { mutate: deletingTask } = useMutation(deleteTask);
-const { mutate: deletingPage } = useMutation(deletePage);
+const { mutate: creatingPermissionRule } = useMutation(createPermissionRule);
 
 const { refetch: refetchModule } = useQuery(getModuleById, {
   module_id: "1",
 });
 
 const taskCreate = async (form, moduleId) => {
-  const { data } = await creatingTask({
+  console.log(form, process.env.MODULE_ID);
+
+  const { data: createdTask } = await creatingTask({
     input: {
       name: form.name,
       property1: form.description,
@@ -38,11 +41,24 @@ const taskCreate = async (form, moduleId) => {
     },
   });
 
+  const { data: createdPermissionRule } = await creatingPermissionRule({
+    input: {
+      model_type: "object",
+      model_id: createdTask.create_type1.recordId,
+      owner_type: "subject",
+      owner_id: form.executor.value,
+      level: 5,
+    },
+  });
+
   await refetchModule({
     module_id: moduleId,
   });
 
-  return data;
+  return {
+    createdTask,
+    createdPermissionRule,
+  };
 };
 
 const taskUpdate = async (form, taskId, moduleId) => {
@@ -54,7 +70,7 @@ const taskUpdate = async (form, taskId, moduleId) => {
       property2: {
         [process.env.SUBJECT_ID]: form.executor.value,
       },
-      property3: process.env.APPOINTED_ID,
+      property3: form.status.value,
     },
   });
 

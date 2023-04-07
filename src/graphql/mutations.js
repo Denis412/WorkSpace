@@ -53,16 +53,6 @@ export const createModule = gql`
           date
           time
         }
-        property7 {
-          name
-          property1
-          property2 {
-            fullname {
-              first_name
-              last_name
-            }
-          }
-        }
       }
     }
   }
@@ -99,6 +89,27 @@ export const createTask = gql`
   }
 `;
 
+export const createPermissionRule = gql`
+  mutation permissionRuleCreate($input: PermissionRuleCreateInput!) {
+    permissionRuleCreate(input: $input) {
+      recordId
+      status
+      record {
+        id
+        author_id
+        level
+        model_type
+        model_id
+        config
+        owner_id
+        owner_type
+        created_at
+        updated_at
+      }
+    }
+  }
+`;
+
 export const updateTask = gql`
   mutation ($id: String!, $input: update_type1_input!) {
     update_type1(id: $id, input: $input) {
@@ -126,6 +137,29 @@ export const updateTask = gql`
       }
     }
   }
+`;
+
+export const updatePage = gql`
+mutation updatePage($id: String!, $input: PageUpdateInput!) {
+  pageUpdate(id: $id, input: $input) {
+      recordId
+      record {
+        parent_id
+        page_type
+        title
+        content
+        icon
+        level
+        is_public
+				is_block
+        position
+        config
+        created_at
+        updated_at
+      }
+      status
+  }
+}
 `;
 
 export const createPage = gql`
