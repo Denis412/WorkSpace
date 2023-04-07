@@ -6,7 +6,6 @@
       :style="{ 'background-color': calculatedCurrentStatus(task.property3) }"
     >
       <td>
-        {{ task.id }}
         {{ task.name }}
       </td>
 
@@ -36,13 +35,12 @@ import { ref } from "vue";
 import { useQuery } from "@vue/apollo-composable";
 import { getListProperty } from "src/graphql/queries";
 import TaskAction from "./TaskAction.vue";
-import { getTaskStatus } from "src/utils/getTaskStatus";
 
 const { tasks } = defineProps({
   tasks: Object,
 });
 
-const { result: listProperties, loading } = useQuery(getListProperty);
+const { result: listProperties } = useQuery(getListProperty);
 
 const taskLabel = ref("white");
 
