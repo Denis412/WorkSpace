@@ -21,7 +21,6 @@
       v-if="module"
       class="w-100p"
       @onSubmit="onSubmit"
-      class="w-100p"
       :moduleName="'Редактирование модуля'"
       :module="module"
       :btnName="'Изменить'"

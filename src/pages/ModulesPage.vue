@@ -14,8 +14,6 @@
       :modules="modules?.paginate_subject.data[0]"
       :columnNames="columnNames"
     />
-
-    <!-- <pre>{{ modules }}</pre> -->
   </q-page>
 </template>
 
