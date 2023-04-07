@@ -318,25 +318,13 @@ export const getTasksAll = gql`
         property1
         property2 {
           id
+          user_id
           fullname {
             first_name
             last_name
           }
         }
         property3
-        property7 {
-          id
-          name
-          property1
-          property2 {
-            id
-            fullname {
-              first_name
-              last_name
-            }
-          }
-          property3
-        }
       }
       paginatorInfo {
         perPage

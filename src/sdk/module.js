@@ -14,6 +14,7 @@ import {
   updatePage,
 } from "src/graphql/mutations";
 import { getUserModules, pagesAll, pages } from "src/graphql/queries";
+import stompClient from "src/lib/stompClient";
 
 provideApolloClient(apolloClient);
 
@@ -84,6 +85,12 @@ const moduleCreate = async (form) => {
   await refetchModules();
   await pagesRefetch();
   await allPagesRefetch();
+
+  stompClient.send(
+    `/exchange/notifier/user.${form.responsible.user_id}`,
+    {},
+    JSON.stringify(createdModule.create_type2)
+  );
 
   return {
     createdModule,

@@ -7,6 +7,7 @@
     <header class="text-center text-h3 q-mb-md">{{ page.title }}</header>
 
     <main>
+      <!-- <pre>dll{{ allTasks }}</pre> -->
       <MainTable
         :column-names="[
           'Название задачи',
@@ -22,7 +23,7 @@
 
 <script setup>
 import { useQuery } from "@vue/apollo-composable";
-import { getUserTasks } from "src/graphql/queries";
+import { getUserTasks, getTasksAll } from "src/graphql/queries";
 import MainTable from "src/components/MainTable.vue";
 
 const { page } = defineProps({

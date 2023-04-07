@@ -124,6 +124,7 @@ const responsibleGroupSubjectsNames = computed(() =>
   responsibleGroupSubjects.value?.get_group.subject.map((subject) => ({
     label: `${subject.fullname.first_name} ${subject.fullname.last_name}`,
     value: subject.id,
+    user_id: subject.user_id,
   }))
 );
 </script>
