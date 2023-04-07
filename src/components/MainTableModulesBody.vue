@@ -40,7 +40,7 @@ const { modules } = defineProps({
   modules: Object,
 });
 
-const task = computed(() => modules?.property4[0].property7);
+const task = computed(() => modules?.property4[0]?.property7);
 
 const reduceTasks = (status) => {
   if (!task.value?.length) return 0;

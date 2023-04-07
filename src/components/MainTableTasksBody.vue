@@ -3,7 +3,7 @@
     <tr
       v-for="task in tasks.property2"
       :key="task.id"
-      :style="{ 'background-color': calculatedCurrentStatus(task.property3) }"
+      :style="{ 'background-color': calculatedCurrentStatus(task?.property3) }"
     >
       <td>
         {{ task.name }}
@@ -14,7 +14,7 @@
       </td>
 
       <td>
-        {{ taskLabel }}
+        {{ calculatedStatus?.label }}
       </td>
 
       <td>
@@ -31,10 +31,11 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
 import { useQuery } from "@vue/apollo-composable";
 import { getListProperty } from "src/graphql/queries";
 import TaskAction from "./TaskAction.vue";
+import TaskPageVue from "src/pages/TaskPage.vue";
 
 const { tasks } = defineProps({
   tasks: Object,
@@ -42,14 +43,14 @@ const { tasks } = defineProps({
 
 const { result: listProperties } = useQuery(getListProperty);
 
-const taskLabel = ref("white");
+const calculatedStatus = ref({});
 
 const calculatedCurrentStatus = (taskProperty) => {
   const obj = listProperties.value?.property.meta.options.find(
     (status) => status.id === taskProperty
   );
 
-  taskLabel.value = obj?.label;
+  calculatedStatus.value = obj;
 
   return obj?.color;
 };

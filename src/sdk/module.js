@@ -26,7 +26,7 @@ const { mutate: deletingPage } = useMutation(deletePage);
 
 const { refetch: refetchModules } = useQuery(getUserModules);
 const { mutate: updatingModule } = useMutation(updateModule);
-const { result: allpages } = useQuery(pagesAll);
+const { result: allpages, refetch: allPagesRefetch } = useQuery(pagesAll);
 const { mutate: pageUpdate } = useMutation(updatePage);
 
 const { refetch: pagesRefetch } = useQuery(pages);
@@ -82,12 +82,14 @@ const moduleCreate = async (form) => {
     });
 
   await refetchModules();
+  await pagesRefetch();
+  await allPagesRefetch();
 
   return {
     createdModule,
     createdPage,
-    // createdPermissionRuleForPage,
-    // createdPermissionRuleForModuleObject,
+    createdPermissionRuleForPage,
+    createdPermissionRuleForModuleObject,
   };
 };
 
@@ -161,6 +163,7 @@ const moduleDelete = async (moduleId) => {
 
   await refetchModules();
   await pagesRefetch();
+  await allPagesRefetch();
 };
 
 const moduleApi = { moduleCreate, moduleUpdate, moduleDelete };
