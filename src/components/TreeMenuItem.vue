@@ -1,5 +1,5 @@
 <template>
-  <q-item class="q-pa-none column">
+  <q-item class="q-pa-none column" :key="modules" v-show="subjectModules||page.object.type_id!=modulesType_id">
     <router-link :to="{ name: routeName(), params: { id: page.id } }">
       <q-item
         clickable
@@ -27,7 +27,7 @@
 
     <q-item-section :class="childrenItemsClass">
       <div>
-        <TreeMenu v-show="isChildrens" :pages="page.children?.data" />
+        <TreeMenu v-show="isChildrens" :modules="modules" :pages="page.children?.data" />
       </div>
     </q-item-section>
   </q-item>
@@ -39,13 +39,29 @@ import { useQuery } from "@vue/apollo-composable";
 import { getGroupSubjects } from "src/graphql/queries";
 import TreeMenu from "./TreeMenu.vue";
 
-const { page } = defineProps({
+const { page, modules } = defineProps({
   page: Object,
+  modules: Array
 });
 
 const { result: subjects } = useQuery(getGroupSubjects, {
   group_id: page?.object?.id,
 });
+
+const modulesType_id = ref(process.env.MODULE_ID);
+
+const subjectModules = computed(()=> {
+
+  if(page.object.type_id===modulesType_id.value&&modules?.find(el => el.id===page.object.id)!=undefined){
+    const current_module = modules.find(el => el.id===page.object.id);
+    if(current_module.property4.id==="2214601131591635513")
+      return true
+    else
+      return false
+  }
+  else
+      return false
+})
 
 const showChildren = ref(false);
 
