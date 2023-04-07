@@ -2,7 +2,7 @@
   <q-item
     class="q-pa-none column"
     :key="modules"
-    v-if="subjectModules || page.object.type_id != modulesType_id"
+    v-if="subjectModules || page.object.type_id != modulesType_id || isOwner"
   >
     <router-link :to="{ name: routeName(), params: { id: page.id } }">
       <q-item
@@ -58,6 +58,7 @@ const { result: subjects } = useQuery(getGroupSubjects, {
 });
 
 const modulesType_id = ref(process.env.MODULE_ID);
+const isOwner = ref(Cookies.get("user_id") === process.env.OWNER_ID);
 
 const subjectModules = computed(() => {
   const module = modules?.find((el) => el.id === page.object.id);

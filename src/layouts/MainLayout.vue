@@ -9,7 +9,6 @@
     </MainDrawer>
 
     <q-page-container>
-      <pre>{{ error }}</pre>
       <router-view v-slot="{ Component }">
         <keep-alive :key="$route.fullPath">
           <component :is="Component" />
@@ -22,22 +21,28 @@
 </template>
 
 <script setup>
-import { ref, watch } from "vue";
+import { ref } from "vue";
 import MainHeader from "src/components/MainHeader.vue";
 import MainDrawer from "src/components/MainDrawer.vue";
 import MainFooter from "src/components/MainFooter.vue";
 import TreeMenu from "src/components/TreeMenu.vue";
 import { provideApolloClient, useQuery } from "@vue/apollo-composable";
-import { pages, getModulesAll } from "src/graphql/queries";
+import { pages } from "src/graphql/queries";
 import apolloClient from "src/apollo/apollo-client";
+import { onMounted } from "vue";
+import stompApi from "src/sdk/stomp";
 
 provideApolloClient(apolloClient);
 
 const leftDrawerOpen = ref(false);
 
-const { result: currentSpacePages, error } = useQuery(pages);
+const { result: currentSpacePages } = useQuery(pages);
 
 const toggleLeftDrawer = () => {
   leftDrawerOpen.value = !leftDrawerOpen.value;
 };
+
+onMounted(() => {
+  stompApi.stompConnect();
+});
 </script>

@@ -140,8 +140,8 @@ export const updateTask = gql`
 `;
 
 export const updatePage = gql`
-mutation updatePage($id: String!, $input: PageUpdateInput!) {
-  pageUpdate(id: $id, input: $input) {
+  mutation updatePage($id: String!, $input: PageUpdateInput!) {
+    pageUpdate(id: $id, input: $input) {
       recordId
       record {
         parent_id
@@ -151,15 +151,15 @@ mutation updatePage($id: String!, $input: PageUpdateInput!) {
         icon
         level
         is_public
-				is_block
+        is_block
         position
         config
         created_at
         updated_at
       }
       status
+    }
   }
-}
 `;
 
 export const createPage = gql`
@@ -227,6 +227,14 @@ export const deletePage = gql`
   mutation deletePage($page_id: String!) {
     pageDelete(id: $page_id) {
       recordId
+    }
+  }
+`;
+
+export const createQueue = gql`
+  mutation {
+    notificationSubscribe {
+      hash
     }
   }
 `;
