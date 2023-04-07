@@ -371,7 +371,7 @@ export const getUserModules = gql`
         property4 {
           id
           name
-
+          created_at
           property4 {
             id
             fullname {

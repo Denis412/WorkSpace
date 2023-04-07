@@ -1,5 +1,13 @@
 <template>
   <div style="min-width: 300px; overflow-x: auto;">
+    <q-select
+          filled
+          v-model="sortBy"
+          :options="['Сначала новые','Сначала старые']"
+          use-chips
+          stack-label
+          label="Single selection"
+        />
     <table style="width: 100%"  class="table">
     <thead class="rounded-borders border-black-1">
       <tr>
@@ -13,7 +21,11 @@
       </tr>
     </thead>
 
-    <MainTableModulesBody v-if="modules" :modules="modules" />
+    <MainTableModulesBody
+    v-if="modules"
+    :key="sortBy"
+    :modules="modules"
+    :sortBy="sortBy"/>
 
     <MainTableModuleTasksBody
       v-else-if="moduleId"
@@ -31,7 +43,7 @@
     <MainTableTasksBody v-else-if="tasks" :tasks="tasks" />
   </table>
   </div>
-  
+
 </template>
 
 <script setup>
@@ -39,6 +51,7 @@ import MainTableModulesBody from "src/components/MainTableModulesBody.vue";
 import MainTableSubjectsBody from "src/components/MainTableSubjectsBody.vue";
 import MainTableTasksBody from "src/components/MainTableTasksBody.vue";
 import MainTableModuleTasksBody from "./MainTableModuleTasksBody.vue";
+import { ref,computed } from "vue";
 
 const { columnNames, subjects, modules, tasks, moduleId, pageId } = defineProps(
   {
@@ -50,6 +63,8 @@ const { columnNames, subjects, modules, tasks, moduleId, pageId } = defineProps(
     pageId: String,
   }
 );
+
+const sortBy = ref(null);
 </script>
 
 <style>
