@@ -2,7 +2,7 @@
   <q-item
     class="q-pa-none column"
     :key="modules"
-    v-show="subjectModules || page.object.type_id != modulesType_id"
+    v-if="subjectModules || page.object.type_id != modulesType_id"
   >
     <router-link :to="{ name: routeName(), params: { id: page.id } }">
       <q-item
@@ -62,7 +62,7 @@ const modulesType_id = ref(process.env.MODULE_ID);
 const subjectModules = computed(() => {
   const module = modules?.find((el) => el.id === page.object.id);
 
-  if (!module || page.object.type_id !== process.env.MODULE_ID) return false;
+  if (!module) return false;
 
   return module.property4.user_id === parseFloat(Cookies.get("user_id"));
 });
