@@ -61,7 +61,7 @@
         <div class="col-12 q-mt-md">
           <q-btn
             class="block"
-            style="margin: 0 auto; width: 20%"
+            style="margin: 0 auto"
             :label="btnName"
             type="submit"
             v-close-popup

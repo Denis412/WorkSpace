@@ -1,8 +1,7 @@
 <template>
-  <q-form style="min-width: 500px" @submit="$emit('submitForm', form)">
-    <main>
+  <q-form @submit="$emit('submitForm', form)">
+    <main class="text-h4 text-center q-mb-md justify-between form-width">
       <q-input
-        :disable="executorEdit"
         v-model="form.name"
         type="text"
         label="Название"
