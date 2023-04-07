@@ -413,6 +413,7 @@ export const getModuleById = gql`
     get_type2(id: $module_id) {
       id
       name
+      created_at
       property4 {
         id
         fullname {
@@ -432,6 +433,7 @@ export const getModuleById = gql`
       property7 {
         id
         name
+        created_at
         property1
         property2 {
           id

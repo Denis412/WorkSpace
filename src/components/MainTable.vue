@@ -6,7 +6,7 @@
           :options="['Сначала новые','Сначала старые','По названию']"
           use-chips
           stack-label
-          label="Single selection"
+          label="Сортировка"
         />
     <table style="width: 100%"  class="table">
     <thead class="rounded-borders border-black-1">
@@ -25,12 +25,15 @@
     v-if="modules"
     :key="sortBy"
     :modules="modules"
-    :sortBy="sortBy"/>
+    :sortBy="sortBy"
+    />
 
     <MainTableModuleTasksBody
-      v-else-if="moduleId"
+      v-if="moduleId"
       :moduleId="moduleId"
+      :key="sortBy"
       :pageId="pageId"
+      :sortBy="sortBy"
     />
 
     <MainTableSubjectsBody
