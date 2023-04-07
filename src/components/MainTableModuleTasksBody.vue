@@ -90,7 +90,6 @@ const calculatedCurrentStatus = (taskProperty) => {
 };
 
 const sortTasks = computed(()=>{
-  console.log(sortBy)
   if(sortBy==='Сначала новые')
     return sortApi.sortDESCByCreate( resultModule.value?.get_type2.property7 );
   else if(sortBy==='Сначала старые')

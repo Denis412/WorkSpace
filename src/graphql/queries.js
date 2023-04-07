@@ -468,6 +468,7 @@ export const getUserTasks = gql`
           id
           name
           property1
+          created_at
           property2 {
             id
             fullname {

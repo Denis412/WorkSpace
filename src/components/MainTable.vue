@@ -43,7 +43,12 @@
       :subjects="subjects"
     />
 
-    <MainTableTasksBody v-else-if="tasks" :tasks="tasks" />
+    <MainTableTasksBody
+    v-if="tasks"
+    :key="sortBy"
+    :tasks="tasks"
+    :sortBy="sortBy"
+    />
   </table>
   </div>
 
