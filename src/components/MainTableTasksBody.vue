@@ -40,8 +40,7 @@ import sortApi from "src/utils/sort";
 
 const { tasks, sortBy } = defineProps({
   tasks: Object,
-  sortBy: String
-
+  sortBy: String,
 });
 
 const { result: listProperties } = useQuery(getListProperty);
@@ -58,14 +57,13 @@ const calculatedCurrentStatus = (taskProperty) => {
   return obj?.color;
 };
 
-const tasksSort = computed(()=>{
-  if(sortBy==='Сначала новые')
-    return sortApi.sortDESCByCreate( tasks.property2 );
-  else if(sortBy==='Сначала старые')
-    return sortApi.sortASCByCreate( tasks.property2 );
-  else if(sortBy === 'По названию')
-    return sortApi.sortByModuleName( tasks.property2 );
-  else
-    return tasks.property2;
-})
+const tasksSort = computed(() => {
+  if (sortBy === "Сначала новые")
+    return sortApi.sortDESCByCreate(tasks.property2);
+  else if (sortBy === "Сначала старые")
+    return sortApi.sortASCByCreate(tasks.property2);
+  else if (sortBy === "По названию")
+    return sortApi.sortByModuleName(tasks.property2);
+  else return tasks.property2;
+});
 </script>

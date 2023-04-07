@@ -55,7 +55,7 @@ const $q = useQuasar();
 
 const { moduleId, pageId, sortBy } = defineProps({
   moduleId: String,
-  sortBy: String
+  sortBy: String,
 });
 
 const calculatedStatus = ref({});
@@ -89,14 +89,13 @@ const calculatedCurrentStatus = (taskProperty) => {
   return obj?.color;
 };
 
-const sortTasks = computed(()=>{
-  if(sortBy==='Сначала новые')
-    return sortApi.sortDESCByCreate( resultModule.value?.get_type2.property7 );
-  else if(sortBy==='Сначала старые')
-    return sortApi.sortASCByCreate( resultModule.value?.get_type2.property7 );
-  else if(sortBy === 'По названию')
-    return sortApi.sortByModuleName( resultModule.value?.get_type2.property7 );
-  else
-    return resultModule.value?.get_type2.property7;
-})
+const sortTasks = computed(() => {
+  if (sortBy === "Сначала новые")
+    return sortApi.sortDESCByCreate(resultModule.value?.get_type2.property7);
+  else if (sortBy === "Сначала старые")
+    return sortApi.sortASCByCreate(resultModule.value?.get_type2.property7);
+  else if (sortBy === "По названию")
+    return sortApi.sortByModuleName(resultModule.value?.get_type2.property7);
+  else return resultModule.value?.get_type2.property7;
+});
 </script>

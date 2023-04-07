@@ -28,28 +28,23 @@
 </template>
 
 <script setup>
-import { defineProps,computed,watch} from "vue";
+import { defineProps, computed, watch } from "vue";
 import ModuleAction from "./ModuleAction.vue";
 import sortApi from "src/utils/sort.js";
 const { modules, sortBy } = defineProps({
   modules: Object,
-  sortBy: String
+  sortBy: String,
 });
 
-const SortModules = computed(()=>{
-
-  if(sortBy==='Сначала новые')
-    return sortApi.sortDESCByCreate( modules.property4 );
-  else if(sortBy==='Сначала старые')
-    return sortApi.sortASCByCreate( modules.property4 );
-  else if(sortBy === 'По названию')
-    return sortApi.sortByModuleName( modules.property4 );
-  else
-    return modules.property4;
-
-})
-
-
+const SortModules = computed(() => {
+  if (sortBy === "Сначала новые")
+    return sortApi.sortDESCByCreate(modules.property4);
+  else if (sortBy === "Сначала старые")
+    return sortApi.sortASCByCreate(modules.property4);
+  else if (sortBy === "По названию")
+    return sortApi.sortByModuleName(modules.property4);
+  else return modules.property4;
+});
 
 const reduceTasks = (tasks, status) => {
   if (!tasks.length) return 0;
