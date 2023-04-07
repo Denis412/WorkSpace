@@ -25,7 +25,10 @@
         <div>Выполнено: {{ reduceTasks(1) }}</div>
         <div>Завершено: {{ reduceTasks(2) }}</div>
       </td>
-      <ModuleAction :module="module" />
+      <div class="row no-wrap">
+        <ModuleAction :module="module" />
+        <ModuleAction :moduleDelete="module" />
+      </div>
     </tr>
   </tbody>
 </template>

@@ -11,8 +11,13 @@ import {
   deleteModule,
   deletePage,
   createPermissionRule,
+  updatePage
 } from "src/graphql/mutations";
-import { getModulesAll } from "src/graphql/queries";
+import {
+  getModulesAll,
+  pagesAll,
+  pages
+  } from "src/graphql/queries";
 
 provideApolloClient(apolloClient);
 
@@ -25,6 +30,10 @@ const { mutate: deletingPage } = useMutation(deletePage);
 
 const { refetch: refetchModules } = useQuery(getModulesAll);
 const { mutate: updatingModule } = useMutation(updateModule);
+const { result: allpages } = useQuery(pagesAll);
+const { mutate: pageUpdate } = useMutation(updatePage);
+
+const { refetch: pagesRefetch } = useQuery(pages);
 
 const moduleCreate = async (form) => {
   const { data: createdModule } = await creatingModule({
@@ -113,19 +122,38 @@ const moduleUpdate = async (Moduleform, bufferModule) => {
 
   if (Object.entries(input).length != 0) {
     input.name = Moduleform.name;
+
     try {
-      const { data } = await updatingModule({
+      const { data: moduleData } = await updatingModule({
         id: bufferModule.at(-1),
         input: input,
       });
+
+      if(filtredValue.name){
+        const pageId = allpages.value.pages.data.find(
+          el=>el.object.id===bufferModule.at(-1)
+          ).id;
+        const { data: pageData } = await pageUpdate({
+          id:pageId,
+          input:{
+            title: input.name
+          }
+        })
+      }
       refetchModules();
+      pagesRefetch();
     } catch (error) {
       console.log(error);
     }
   }
 };
 
-const moduleDelete = async (moduleId, pageId) => {
+const moduleDelete = async (moduleId) => {
+
+  const pageId = allpages.value.pages.data.find(
+    el=>el.object.id===moduleId
+  )?.id;
+
   const { data: delM } = await deletingModule({
     module_id: moduleId,
   });
@@ -134,7 +162,8 @@ const moduleDelete = async (moduleId, pageId) => {
     page_id: pageId,
   });
 
-  console.log(delM, delP);
+  refetchModules();
+  pagesRefetch();
 };
 
 const moduleApi = { moduleCreate, moduleUpdate, moduleDelete };

@@ -5,7 +5,22 @@
     color="primary"
     label="Изменить"
   />
-  <q-btn v-else @click="show = true" color="primary" label="Создать модуль" />
+
+  <q-btn
+  v-else-if="moduleDelete"
+  @click="deleteModule"
+  color="negative"
+  label="Удалить"
+  class="q-ml-md"
+  />
+
+  <q-btn
+  v-else
+  @click="show = true"
+  color="primary"
+  label="Создать модуль"
+  />
+
 
   <q-dialog v-model="show">
     <ModuleForm
@@ -32,8 +47,9 @@ import { defineProps, ref } from "vue";
 import ModuleForm from "./ModuleForm.vue";
 import moduleApi from "src/sdk/module";
 
-const { module } = defineProps({
+const { module, moduleDelete } = defineProps({
   module: Object,
+  moduleDelete:Object
 });
 
 const show = ref(false);
@@ -62,6 +78,14 @@ const onSubmit = async (moduleForm) => {
     console.log(error);
   }
 };
+
+const deleteModule = async() =>{
+  try{
+    await moduleApi.moduleDelete(moduleDelete.id);
+  }catch(error) {
+    console.log(error);
+  }
+}
 </script>
 
 <style lang="scss" scoped></style>
