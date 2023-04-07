@@ -3,7 +3,7 @@
     <q-select
           filled
           v-model="sortBy"
-          :options="['Сначала новые','Сначала старые']"
+          :options="['Сначала новые','Сначала старые','По названию']"
           use-chips
           stack-label
           label="Single selection"

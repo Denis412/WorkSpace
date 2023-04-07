@@ -42,6 +42,8 @@ const SortModules = computed(()=>{
     return sortApi.sortDESCByCreate( modules.property4 );
   else if(sortBy==='Сначала старые')
     return sortApi.sortASCByCreate( modules.property4 );
+  else if(sortBy === 'По названию')
+    return sortApi.sortByModuleName( modules.property4 );
   else
     return modules.property4;
 

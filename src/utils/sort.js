@@ -19,8 +19,14 @@ const sortDESCByCreate = (item) =>{
   });
 }
 
+const sortByModuleName = (item) => {
+  const sortItem = [];
+  Object.assign( sortItem, item )
+  return sortItem.sort(( a, b )=> a.name.localeCompare(b.name));
+}
 
 
-const sortApi = { sortASCByCreate,sortDESCByCreate };
+
+const sortApi = { sortASCByCreate, sortDESCByCreate, sortByModuleName };
 
 export default sortApi;
