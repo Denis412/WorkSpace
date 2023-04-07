@@ -1,5 +1,9 @@
 <template>
-  <q-item class="q-pa-none column" :key="modules" v-show="subjectModules||page.object.type_id!=modulesType_id">
+  <q-item
+    class="q-pa-none column"
+    :key="modules"
+    v-show="subjectModules || page.object.type_id != modulesType_id"
+  >
     <router-link :to="{ name: routeName(), params: { id: page.id } }">
       <q-item
         clickable
@@ -27,7 +31,11 @@
 
     <q-item-section :class="childrenItemsClass">
       <div>
-        <TreeMenu v-show="isChildrens" :modules="modules" :pages="page.children?.data" />
+        <TreeMenu
+          v-show="isChildrens"
+          :modules="modules"
+          :pages="page.children?.data"
+        />
       </div>
     </q-item-section>
   </q-item>
@@ -38,10 +46,11 @@ import { computed, ref } from "vue";
 import { useQuery } from "@vue/apollo-composable";
 import { getGroupSubjects } from "src/graphql/queries";
 import TreeMenu from "./TreeMenu.vue";
+import { Cookies } from "quasar";
 
 const { page, modules } = defineProps({
   page: Object,
-  modules: Array
+  modules: Array,
 });
 
 const { result: subjects } = useQuery(getGroupSubjects, {
@@ -50,18 +59,13 @@ const { result: subjects } = useQuery(getGroupSubjects, {
 
 const modulesType_id = ref(process.env.MODULE_ID);
 
-const subjectModules = computed(()=> {
+const subjectModules = computed(() => {
+  const module = modules?.find((el) => el.id === page.object.id);
 
-  if(page.object.type_id===modulesType_id.value&&modules?.find(el => el.id===page.object.id)!=undefined){
-    const current_module = modules.find(el => el.id===page.object.id);
-    if(current_module.property4.id==="2214601131591635513")
-      return true
-    else
-      return false
-  }
-  else
-      return false
-})
+  if (!module || page.object.type_id !== process.env.MODULE_ID) return false;
+
+  return module.property4.user_id === parseFloat(Cookies.get("user_id"));
+});
 
 const showChildren = ref(false);
 
@@ -99,13 +103,13 @@ a {
 .children-wrapper-collapsed {
   @extend .children-wrapper;
   max-height: 0;
-  transition: max-height .35s ease-out;
+  transition: max-height 0.35s ease-out;
 }
 
 .children-wrapper-expanded {
   @extend .children-wrapper;
   max-height: 999px;
-  transition: max-height .67s ease-in;
+  transition: max-height 0.67s ease-in;
 }
 
 .drop-down-icon {

@@ -24,9 +24,9 @@ export const User = gql`
 `;
 
 export const pagesAll = gql`
-query pagesAll{
-  pages{
-    data {
+  query pagesAll {
+    pages {
+      data {
         id
         parent_id
         page_type
@@ -35,17 +35,17 @@ query pagesAll{
         icon
         level
         is_public
-				is_block
+        is_block
         position
         config
         created_at
         updated_at
-      	object{
+        object {
           id
           type_id
         }
-    }
-    paginatorInfo {
+      }
+      paginatorInfo {
         perPage
         count
         total
@@ -54,9 +54,9 @@ query pagesAll{
         to
         lastPage
         hasMorePages
+      }
     }
   }
-}
 `;
 
 export const pages = gql`
@@ -261,6 +261,7 @@ export const getModulesAll = gql`
         name
         property4 {
           id
+          user_id
           fullname {
             first_name
             last_name

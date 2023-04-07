@@ -20,37 +20,37 @@ import { useRouter } from "vue-router";
 //     name: "auth",
 //   });
 // });
-import stompClient from "src/lib/stompClient";
+// import stompClient from "src/lib/stompClient";
 
-let queue =
-  "user.5571026735801383150.notifications.1ef93875-adc7-4663-a6bc-3ae4126a2740";
+// let queue =
+//   "user.5571026735801383150.notifications.1ef93875-adc7-4663-a6bc-3ae4126a2740";
 
-let onConnect = async () => {
-  console.log("connected");
+// let onConnect = async () => {
+//   console.log("connected");
 
-  let onMessage = (message) => {
-    console.log("Receive message:", JSON.parse(message.body));
+//   let onMessage = (message) => {
+//     console.log("Receive message:", JSON.parse(message.body));
 
-    message.ack();
-  };
+//     message.ack();
+//   };
 
-  stompClient.subscribe(`/queue/${queue}`, onMessage, { ack: "client" });
-};
+//   stompClient.subscribe(`/queue/${queue}`, onMessage, { ack: "client" });
+// };
 
-let onError = (msg) => {
-  console.log("Error", msg);
-};
+// let onError = (msg) => {
+//   console.log("Error", msg);
+// };
 
-let onClose = (msg) => {
-  console.log("Close", msg);
-};
+// let onClose = (msg) => {
+//   console.log("Close", msg);
+// };
 
-stompClient.connect(
-  "readonly",
-  "@3P^Lgdab)sv",
-  onConnect,
-  onError,
-  "/",
-  onClose
-);
+// stompClient.connect(
+//   "readonly",
+//   "@3P^Lgdab)sv",
+//   onConnect,
+//   onError,
+//   "/",
+//   onClose
+// );
 </script>
