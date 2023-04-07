@@ -140,8 +140,10 @@ const moduleUpdate = async (Moduleform, bufferModule) => {
           },
         });
       }
+
       await refetchModules();
       await pagesRefetch();
+      await allPagesRefetch();
     } catch (error) {
       console.log(error);
     }

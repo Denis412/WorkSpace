@@ -21,9 +21,9 @@
       </td>
 
       <td class="q-pa-md text-center">
-        <div>Назначено: {{ reduceTasks(0) }}</div>
-        <div>Выполнено: {{ reduceTasks(1) }}</div>
-        <div>Завершено: {{ reduceTasks(2) }}</div>
+        <div>Назначено: {{ reduceTasks(module.property7, 0) }}</div>
+        <div>Выполнено: {{ reduceTasks(module.property7, 1) }}</div>
+        <div>Завершено: {{ reduceTasks(module.property7, 2) }}</div>
       </td>
       <div class="row no-wrap">
         <ModuleAction :module="module" />
@@ -42,23 +42,23 @@ const { modules } = defineProps({
 
 const task = computed(() => modules?.property4[0]?.property7);
 
-const reduceTasks = (status) => {
-  if (!task.value?.length) return 0;
+const reduceTasks = (tasks, status) => {
+  if (!tasks.length) return 0;
 
   let sum = 0;
 
   if (status === 0) {
-    task.value?.forEach((elem) => {
+    tasks.forEach((elem) => {
       elem.property3 === process.env.APPOINTED_ID ? sum++ : null;
     });
     return sum;
   } else if (status === 1) {
-    task.value?.forEach((elem) => {
+    tasks.forEach((elem) => {
       elem.property3 === process.env.COMPLETED_ID ? sum++ : null;
     });
     return sum;
   } else {
-    task.value?.forEach((elem) => {
+    tasks.forEach((elem) => {
       elem.property3 === process.env.FINISHED_ID ? sum++ : null;
     });
     return sum;
