@@ -21,7 +21,7 @@
 import MainTable from "src/components/MainTable.vue";
 import { useQuery } from "@vue/apollo-composable";
 import { getUserModules } from "src/graphql/queries";
-import { provide, ref } from "vue";
+import { provide } from "vue";
 import ModuleAction from "src/components/ModuleAction.vue";
 
 const { page } = defineProps({
@@ -30,9 +30,11 @@ const { page } = defineProps({
 
 provide("page", page);
 
-const showCreateForm = ref(false);
-
-const { result: modules, loading } = useQuery(getUserModules);
+const {
+  result: modules,
+  loading,
+  refetch: refetchModules,
+} = useQuery(getUserModules);
 
 const columnNames = [
   "Название",
@@ -41,4 +43,6 @@ const columnNames = [
   "Задачи",
   "Действия",
 ];
+
+provide("updateModules", refetchModules);
 </script>

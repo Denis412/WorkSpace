@@ -13,7 +13,7 @@ import {
   createPermissionRule,
   updatePage,
 } from "src/graphql/mutations";
-import { getUserModules, pagesAll, pages } from "src/graphql/queries";
+import { pagesAll } from "src/graphql/queries";
 import stompClient from "src/lib/stompClient";
 
 provideApolloClient(apolloClient);
@@ -25,12 +25,9 @@ const { mutate: creatingPermissionRule } = useMutation(createPermissionRule);
 const { mutate: deletingModule } = useMutation(deleteModule);
 const { mutate: deletingPage } = useMutation(deletePage);
 
-const { refetch: refetchModules } = useQuery(getUserModules);
 const { mutate: updatingModule } = useMutation(updateModule);
-const { result: allpages, refetch: allPagesRefetch } = useQuery(pagesAll);
+const { result: allpages, refetch: refetchAllPages } = useQuery(pagesAll);
 const { mutate: pageUpdate } = useMutation(updatePage);
-
-const { refetch: pagesRefetch } = useQuery(pages);
 
 const moduleCreate = async (form) => {
   const { data: createdModule } = await creatingModule({
@@ -82,9 +79,7 @@ const moduleCreate = async (form) => {
       },
     });
 
-  await refetchModules();
-  await pagesRefetch();
-  await allPagesRefetch();
+  refetchAllPages();
 
   stompClient.send(
     `/exchange/notifier/user.${form.responsible.user_id}`,
@@ -130,29 +125,21 @@ const moduleUpdate = async (Moduleform, bufferModule) => {
   if (Object.entries(input).length != 0) {
     input.name = Moduleform.name;
 
-    try {
-      const { data: moduleData } = await updatingModule({
-        id: bufferModule.at(-1),
-        input: input,
+    const { data: moduleData } = await updatingModule({
+      id: bufferModule.at(-1),
+      input: input,
+    });
+
+    if (filtredValue.name) {
+      const pageId = allpages.value.pages.data.find(
+        (el) => el.object.id === bufferModule.at(-1)
+      ).id;
+      const { data: pageData } = await pageUpdate({
+        id: pageId,
+        input: {
+          title: input.name,
+        },
       });
-
-      if (filtredValue.name) {
-        const pageId = allpages.value.pages.data.find(
-          (el) => el.object.id === bufferModule.at(-1)
-        ).id;
-        const { data: pageData } = await pageUpdate({
-          id: pageId,
-          input: {
-            title: input.name,
-          },
-        });
-      }
-
-      await refetchModules();
-      await pagesRefetch();
-      await allPagesRefetch();
-    } catch (error) {
-      console.log(error);
     }
   }
 };
@@ -169,10 +156,6 @@ const moduleDelete = async (moduleId) => {
   const { data: delP } = await deletingPage({
     page_id: pageId,
   });
-
-  await refetchModules();
-  await pagesRefetch();
-  await allPagesRefetch();
 };
 
 const moduleApi = { moduleCreate, moduleUpdate, moduleDelete };

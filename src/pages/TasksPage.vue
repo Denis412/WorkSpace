@@ -25,10 +25,17 @@
 import { useQuery } from "@vue/apollo-composable";
 import { getUserTasks, getTasksAll } from "src/graphql/queries";
 import MainTable from "src/components/MainTable.vue";
+import { provide } from "vue";
 
 const { page } = defineProps({
   page: Object,
 });
 
-const { result: allTasks, loading } = useQuery(getUserTasks);
+const {
+  result: allTasks,
+  loading,
+  refetch: refetchTasks,
+} = useQuery(getUserTasks);
+
+provide("updateTasks", refetchTasks);
 </script>

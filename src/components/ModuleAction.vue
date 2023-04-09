@@ -37,7 +37,7 @@
 </template>
 
 <script setup>
-import { defineProps, ref } from "vue";
+import { defineProps, inject, ref } from "vue";
 import ModuleForm from "./ModuleForm.vue";
 import moduleApi from "src/sdk/module";
 
@@ -63,11 +63,17 @@ const showForm = (module) => {
 
 const form = ref({});
 
+const updatePages = inject("updatePages");
+const updateModules = inject("updateModules");
+
 const onSubmit = async (moduleForm) => {
   try {
     module
       ? await moduleApi.moduleUpdate(moduleForm, bufferModule)
       : await moduleApi.moduleCreate(moduleForm);
+
+    updatePages();
+    updateModules();
   } catch (error) {
     console.log(error);
   }
@@ -76,6 +82,9 @@ const onSubmit = async (moduleForm) => {
 const deleteModule = async () => {
   try {
     await moduleApi.moduleDelete(moduleDelete.id);
+
+    updatePages();
+    updateModules();
   } catch (error) {
     console.log(error);
   }

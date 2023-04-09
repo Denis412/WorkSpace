@@ -36,8 +36,8 @@
 <script setup>
 import MainTable from "src/components/MainTable.vue";
 import { useQuery } from "@vue/apollo-composable";
-import { getModuleById } from "src/graphql/queries";
-import { onMounted } from "vue";
+import { getModuleById, getUserTasks } from "src/graphql/queries";
+import { onMounted, provide } from "vue";
 import TaskAction from "src/components/TaskAction.vue";
 
 const { page } = defineProps({
@@ -51,6 +51,10 @@ const {
 } = useQuery(getModuleById, {
   module_id: page.object.id,
 });
+
+const { refetch: refetchTasks } = useQuery(getUserTasks);
+
+provide("updateTasks", refetchTasks);
 
 onMounted(() => {
   if (!page) return;
