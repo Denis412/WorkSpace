@@ -55,6 +55,7 @@ const {
 const { refetch: refetchTasks } = useQuery(getUserTasks);
 
 provide("updateTasks", refetchTasks);
+provide("updateModule", refetchModule);
 
 onMounted(() => {
   if (!page) return;

@@ -1,6 +1,11 @@
-import { provideApolloClient, useMutation } from "@vue/apollo-composable";
+import {
+  provideApolloClient,
+  useMutation,
+  useQuery,
+} from "@vue/apollo-composable";
 import apolloClient from "src/apollo/apollo-client";
 import { createQueue } from "src/graphql/mutations";
+import { getUserModules, getUserTasks, pages } from "src/graphql/queries";
 import Cookies from "js-cookie";
 import stompClient from "src/lib/stompClient";
 
@@ -8,14 +13,16 @@ provideApolloClient(apolloClient);
 
 const { mutate: creatingQueue } = useMutation(createQueue);
 
-const queueCreate = async () => {
-  try {
-    const { data: createdQueue } = await creatingQueue();
+const { refetch: refetchPages } = useQuery(pages);
+const { refetch: refetchModules } = useQuery(getUserModules);
+const { refetch: refetchTasks } = useQuery(getUserTasks);
 
-    return createdQueue;
-  } catch (error) {
-    console.log(error);
-  }
+const queueCreate = async () => {
+  const { data: createdQueue } = await creatingQueue();
+
+  Cookies.set("queue", createdQueue.notificationSubscribe.hash);
+
+  return createdQueue;
 };
 
 const stompConnect = () => {
@@ -25,7 +32,22 @@ const stompConnect = () => {
     console.log("connected");
 
     let onMessage = (message) => {
-      console.log("Receive message:", JSON.parse(message.body));
+      const messageObj = JSON.parse(message.body);
+
+      console.log("Receive message:", messageObj);
+
+      if (
+        messageObj.type === "object.created" ||
+        messageObj.type === "page.created" ||
+        messageObj.type === "object.updated" ||
+        messageObj.type === "page.updated" ||
+        messageObj.type === "object.deleted" ||
+        messageObj.type === "page.deleted"
+      ) {
+        refetchPages();
+        refetchTasks();
+        refetchModules();
+      }
 
       message.ack();
     };

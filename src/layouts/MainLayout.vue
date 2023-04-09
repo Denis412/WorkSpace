@@ -45,6 +45,7 @@ const toggleLeftDrawer = () => {
 provide("updatePages", refetchPages);
 
 onMounted(() => {
+  stompApi.queueCreate().then((result) => {});
   stompApi.stompConnect();
 });
 </script>

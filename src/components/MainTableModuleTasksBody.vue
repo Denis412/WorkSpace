@@ -43,7 +43,7 @@
 </template>
 
 <script setup>
-import { ref, computed } from "vue";
+import { ref, computed, inject } from "vue";
 import { useQuery } from "@vue/apollo-composable";
 import { getModuleById, getListProperty } from "src/graphql/queries";
 import TaskAction from "./TaskAction.vue";
@@ -58,17 +58,27 @@ const { moduleId, pageId, sortBy } = defineProps({
   sortBy: String,
 });
 
+const updateTasks = inject("updateTasks");
+
 const calculatedStatus = ref({});
 
 const { result: listProperties } = useQuery(getListProperty);
 
-const { result: resultModule } = useQuery(getModuleById, {
-  module_id: moduleId,
-});
+const { result: resultModule, refetch: refetchModule } = useQuery(
+  getModuleById,
+  {
+    module_id: moduleId,
+  }
+);
 
 const deleteTask = async (taskId) => {
   try {
     await taskApi.taskDelete(taskId, moduleId, 0);
+
+    updateTasks();
+    refetchModule({
+      module_id: moduleId,
+    });
 
     $q.notify({
       type: "positive",

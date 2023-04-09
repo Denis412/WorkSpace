@@ -81,12 +81,6 @@ const moduleCreate = async (form) => {
 
   refetchAllPages();
 
-  stompClient.send(
-    `/exchange/notifier/user.${form.responsible.user_id}`,
-    {},
-    JSON.stringify(createdModule.create_type2)
-  );
-
   return {
     createdModule,
     createdPage,
@@ -149,13 +143,18 @@ const moduleDelete = async (moduleId) => {
     (el) => el.object.id === moduleId
   )?.id;
 
-  const { data: delM } = await deletingModule({
+  const { data: moduleData } = await deletingModule({
     module_id: moduleId,
   });
 
-  const { data: delP } = await deletingPage({
+  const { data: pageData } = await deletingPage({
     page_id: pageId,
   });
+
+  return {
+    moduleData,
+    pageData,
+  };
 };
 
 const moduleApi = { moduleCreate, moduleUpdate, moduleDelete };
