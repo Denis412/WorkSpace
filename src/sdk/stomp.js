@@ -36,18 +36,20 @@ const stompConnect = () => {
 
       console.log("Receive message:", messageObj);
 
-      if (
-        messageObj.type === "object.created" ||
-        messageObj.type === "page.created" ||
-        messageObj.type === "object.updated" ||
-        messageObj.type === "page.updated" ||
-        messageObj.type === "object.deleted" ||
-        messageObj.type === "page.deleted"
-      ) {
-        refetchPages();
-        refetchTasks();
-        refetchModules();
-      }
+      // if (
+      //   messageObj.type === "object.created" ||
+      //   messageObj.type === "page.created" ||
+      //   messageObj.type === "object.updated" ||
+      //   messageObj.type === "page.updated" ||
+      //   messageObj.type === "object.deleted" ||
+      //   messageObj.type === "page.deleted"
+      // ) {
+
+      console.log("owiwefjoiwejfoiwefgliwefgiwel");
+      refetchPages();
+      refetchTasks();
+      refetchModules();
+      // }
 
       message.ack();
     };

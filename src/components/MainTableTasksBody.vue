@@ -1,7 +1,8 @@
 <template>
+  <!-- <pre>t{{ tasks }}</pre> -->
   <tbody>
     <tr
-      v-for="task in tasksSort"
+      v-for="task in tasks.property2"
       :key="task.id"
       :style="{ 'background-color': calculatedCurrentStatus(task?.property3) }"
     >
@@ -39,7 +40,7 @@ import TaskPageVue from "src/pages/TaskPage.vue";
 import sortApi from "src/utils/sort";
 
 const { tasks, sortBy } = defineProps({
-  tasks: Object,
+  tasks: Array,
   sortBy: String,
 });
 

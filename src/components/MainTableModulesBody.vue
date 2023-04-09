@@ -1,6 +1,6 @@
 <template>
   <tbody>
-    <tr v-for="module in SortModules" :key="module.id">
+    <tr v-for="module in modules.property4" :key="module.id">
       <td class="q-pa-md text-center">
         {{ module.name }}
       </td>

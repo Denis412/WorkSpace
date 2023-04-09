@@ -4,6 +4,7 @@
   </q-page>
 
   <q-page v-else class="q-pa-md">
+    <!-- <pre>{{ modules }}</pre> -->
     <div class="text-h3 text-center q-pb-md">Модули</div>
 
     <div class="q-my-md flex">
