@@ -1,5 +1,4 @@
 <template>
-  <!-- <pre>t{{ tasks }}</pre> -->
   <tbody>
     <tr
       v-for="task in tasks.property2"
@@ -32,15 +31,14 @@
 </template>
 
 <script setup>
-import { onMounted, ref, computed } from "vue";
+import { ref, computed } from "vue";
 import { useQuery } from "@vue/apollo-composable";
 import { getListProperty } from "src/graphql/queries";
 import TaskAction from "./TaskAction.vue";
-import TaskPageVue from "src/pages/TaskPage.vue";
 import sortApi from "src/utils/sort";
 
 const { tasks, sortBy } = defineProps({
-  tasks: Array,
+  tasks: Object,
   sortBy: String,
 });
 

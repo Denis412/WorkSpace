@@ -8,6 +8,7 @@
       stack-label
       label="Сортировка"
     />
+
     <table style="width: 100%" class="table">
       <thead class="rounded-borders border-black-1">
         <tr>
@@ -23,7 +24,6 @@
 
       <MainTableModulesBody
         v-if="modules"
-        :key="sortBy"
         :modules="modules"
         :sortBy="sortBy"
       />
@@ -31,7 +31,6 @@
       <MainTableModuleTasksBody
         v-if="moduleId"
         :moduleId="moduleId"
-        :key="sortBy"
         :pageId="pageId"
         :sortBy="sortBy"
       />
@@ -43,14 +42,7 @@
         :subjects="subjects"
       />
 
-      <!-- <pre>{{ tasks }}</pre> -->
-      <MainTableTasksBody
-        v-if="tasks"
-        :key="sortBy"
-        :tasks="tasks"
-        :sortBy="sortBy"
-      />
-      <!-- <pre>{{ tasks?.paginate_subject.data[0].property2 }}</pre> -->
+      <MainTableTasksBody v-if="tasks" :tasks="tasks" :sortBy="sortBy" />
     </table>
   </div>
 </template>
@@ -60,7 +52,7 @@ import MainTableModulesBody from "src/components/MainTableModulesBody.vue";
 import MainTableSubjectsBody from "src/components/MainTableSubjectsBody.vue";
 import MainTableTasksBody from "src/components/MainTableTasksBody.vue";
 import MainTableModuleTasksBody from "./MainTableModuleTasksBody.vue";
-import { ref, computed } from "vue";
+import { ref } from "vue";
 
 const { columnNames, subjects, modules, tasks, moduleId, pageId } = defineProps(
   {

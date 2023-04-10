@@ -1,10 +1,15 @@
-import { createHttpLink, InMemoryCache } from "@apollo/client/core";
+import { createUploadLink } from "apollo-upload-client";
+import { createHttpLink, InMemoryCache, ApolloLink } from "@apollo/client/core";
 import { setContext } from "@apollo/client/link/context";
 import Cookies from "js-cookie";
 
 export function getClientOptions() {
   const httpLink = createHttpLink({
     uri: process.env.GRAPHQL_URI || "https://app.stud.druid.1t.ru/graphql",
+  });
+
+  const uploadLink = createUploadLink({
+    uri: "https://cdn.stud.druid.1t.ru/upload",
   });
 
   const authLink = setContext((_, { headers }) => {
@@ -18,9 +23,15 @@ export function getClientOptions() {
     };
   });
 
+  const link = ApolloLink.split(
+    (operation) => operation.getContext().hasUpload,
+    uploadLink,
+    authLink.concat(httpLink)
+  );
+
   return Object.assign(
     {
-      link: authLink.concat(httpLink),
+      link,
       cache: new InMemoryCache(),
     },
     process.env.MODE === "spa"
