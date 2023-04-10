@@ -17,12 +17,13 @@
         <q-file filled v-model="fileUpload" label="Загрузить файл">
           <template #append>
             <q-icon
-              class="cursor-pointer"
+              class="cursor-pointer icon-hover"
               name="close"
               @click.stop.prevent="fileUpload = null"
             />
+
             <q-icon
-              class="cursor-pointer"
+              class="cursor-pointer icon-hover"
               name="upload"
               @click.stop.prevent="upload"
             />
@@ -48,6 +49,9 @@
 import { defineProps, computed, ref } from "vue";
 import ModuleAction from "./ModuleAction.vue";
 import sortApi from "src/utils/sort.js";
+import { useMutation } from "@vue/apollo-composable";
+import { filesUpload } from "src/graphql/mutations";
+import { Cookies } from "quasar";
 const { modules, sortBy } = defineProps({
   modules: Object,
   sortBy: String,
@@ -55,7 +59,41 @@ const { modules, sortBy } = defineProps({
 
 const fileUpload = ref(null);
 
-const upload = () => {};
+const { mutate: uploadingFiles } = useMutation(filesUpload, {
+  context: {
+    headers: {
+      Authorization: `Bearer ${Cookies.get("token")}`,
+    },
+  },
+});
+
+const upload = async () => {
+  console.log(fileUpload.value);
+
+  try {
+    const { data: filesdd } = await uploadingFiles(
+      {
+        files: fileUpload.value,
+      },
+      {
+        context: {
+          hasUpload: true,
+        },
+      }
+    );
+
+    console.log("files", filesdd);
+  } catch (error) {
+    console.log(error);
+  }
+
+  // const mutation = _.cloneDeep(UPLOAD_FILES);
+  // mutation.variables.files = Array.isArray(uploadedFiles)
+  //   ? uploadedFiles.map(({ file }) => file)
+  //   : uploadedFiles.file;
+  // const { data } = await this.$apollo.mutate(mutation);
+  // return data.filesUpload.ids;
+};
 
 const SortModules = computed(() => {
   if (sortBy === "Сначала новые")
@@ -83,3 +121,11 @@ const reduceTasks = (tasks, status) => {
   );
 };
 </script>
+
+<style lang="scss" scoped>
+.icon-hover {
+  &:hover {
+    color: $primary;
+  }
+}
+</style>
