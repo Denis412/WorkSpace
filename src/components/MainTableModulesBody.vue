@@ -1,6 +1,9 @@
 <template>
-  <tbody>
-    <tr v-for="module in modules.property4" :key="module.id">
+  <tbody v-for="subject in modules" :key="subject.id">
+    <div v-if="subject.property4.length" class="w-100p text-center text-h5">
+      {{ subject.fullname.first_name }}
+    </div>
+    <tr v-for="module in subject.property4" :key="module.id">
       <td class="q-pa-md text-center">
         {{ module.name }}
       </td>
@@ -73,7 +76,7 @@ const upload = async () => {
   try {
     const { data: filesdd } = await uploadingFiles(
       {
-        files: fileUpload.value,
+        files: [fileUpload.value],
       },
       {
         context: {
@@ -86,13 +89,6 @@ const upload = async () => {
   } catch (error) {
     console.log(error);
   }
-
-  // const mutation = _.cloneDeep(UPLOAD_FILES);
-  // mutation.variables.files = Array.isArray(uploadedFiles)
-  //   ? uploadedFiles.map(({ file }) => file)
-  //   : uploadedFiles.file;
-  // const { data } = await this.$apollo.mutate(mutation);
-  // return data.filesUpload.ids;
 };
 
 const SortModules = computed(() => {

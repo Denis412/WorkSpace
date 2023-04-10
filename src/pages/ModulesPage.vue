@@ -4,7 +4,7 @@
   </q-page>
 
   <q-page v-else class="q-pa-md">
-    <!-- <pre>{{ modules }}</pre> -->
+    <!-- <pre>{{ currentModules }}</pre> -->
     <div class="text-h3 text-center q-pb-md">Модули</div>
 
     <div class="q-my-md flex">
@@ -12,7 +12,7 @@
     </div>
 
     <MainTable
-      :modules="modules?.paginate_subject.data[0]"
+      :modules="currentModules?.paginate_subject.data"
       :columnNames="columnNames"
     />
   </q-page>
@@ -21,9 +21,10 @@
 <script setup>
 import MainTable from "src/components/MainTable.vue";
 import { useQuery } from "@vue/apollo-composable";
-import { getUserModules } from "src/graphql/queries";
-import { provide } from "vue";
+import { getUserModules, getModulesAll } from "src/graphql/queries";
+import { provide, ref } from "vue";
 import ModuleAction from "src/components/ModuleAction.vue";
+import { Cookies } from "quasar";
 
 const { page } = defineProps({
   page: Object,
@@ -31,11 +32,27 @@ const { page } = defineProps({
 
 provide("page", page);
 
-const {
-  result: modules,
-  loading,
-  refetch: refetchModules,
-} = useQuery(getUserModules);
+let currentModules = ref(null);
+let loading = ref(null);
+let refetchModules;
+
+Cookies.get("user_id") === process.env.OWNER_ID
+  ? ({
+      result: currentModules,
+      loading,
+      refetch: refetchModules,
+    } = useQuery(getModulesAll))
+  : ({
+      result: currentModules,
+      loading,
+      refetch: refetchModules,
+    } = useQuery(getUserModules));
+
+// const {
+//   result: modules,
+//   loading,
+//   refetch: refetchModules,
+// } = useQuery(getUserModules);
 
 const columnNames = [
   "Название",

@@ -1,5 +1,4 @@
 <template>
-  <!-- <pre>t{{ tasks }}</pre> -->
   <tbody>
     <tr
       v-for="task in tasks.property2"
