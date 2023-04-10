@@ -1,6 +1,6 @@
 <template>
-  <tbody v-for="(group,index) in groupModules(modules.property4,groupBy)" :key="index">
-      <th>Группа {{ index+1 }}</th>
+  <tbody v-for="(group, index) in groupModules(modules.property4, groupBy)" :key="index">
+      <th>Группа {{ index + 1 }}</th>
       <tr v-for="module in group" :key="module.id">
         <td class="q-pa-md text-center">
         {{ module.name }}
@@ -38,11 +38,13 @@ const { modules, sortBy } = defineProps({
   groupBy: String
 });
 
-const groupModules = (modules,groupBy) =>{
-  if(groupBy==="По названию")
+const groupModules = (modules, groupBy) => {
+  if (groupBy === "По названию")
     return groupApi.groupByModuleName(modules);
-  else if(groupBy==="По дате начала")
+  else if (groupBy === "По дате начала")
     return groupApi.groupByStartDate(modules);
+  else if (groupBy === "По дате окончания")
+    return groupApi.groupByEndDate(modules);
 }
 
 const reduceTasks = (tasks, status) => {
@@ -52,8 +54,8 @@ const reduceTasks = (tasks, status) => {
     status === 0
       ? process.env.APPOINTED_ID
       : status === 1
-      ? process.env.COMPLETED_ID
-      : process.env.FINISHED_ID;
+        ? process.env.COMPLETED_ID
+        : process.env.FINISHED_ID;
 
   return tasks.reduce(
     (sum, task) => (task.property3 === checkedStatus ? sum + 1 : sum + 0),
@@ -63,6 +65,4 @@ const reduceTasks = (tasks, status) => {
 
 </script>
 
-<style lang="scss" scoped>
-
-</style>
+<style lang="scss" scoped></style>

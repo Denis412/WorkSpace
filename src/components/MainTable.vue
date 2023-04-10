@@ -1,6 +1,7 @@
 <template>
   <div style="min-width: 300px; overflow-x: auto;">
     <q-select
+      v-if="modules||tasks||moduleId"
       filled
       v-model="sortBy"
       :options="['Сначала новые','Сначала старые','По названию']"
@@ -10,9 +11,21 @@
       @update:model-value="sort"
     />
     <q-select
+      v-if="modules"
       filled
       v-model="groupBy"
-      :options="['По названию','По дате начала']"
+      :options="['По названию','По дате начала','По дате окончания']"
+      use-chips
+      stack-label
+      label="Группировка"
+      @update:model-value="group"
+
+    />
+    <q-select
+      v-if="moduleId"
+      filled
+      v-model="groupBy"
+      :options="['По названию','По исполнителю','По статусу задачи']"
       use-chips
       stack-label
       label="Группировка"
@@ -42,9 +55,8 @@
     <MainTableModuleTasksBody
       v-if="moduleId"
       :moduleId="moduleId"
-      :key="sortBy"
-      :pageId="pageId"
       :sortBy="sortBy"
+      :groupBy="groupBy"
     />
 
     <MainTableSubjectsBody
