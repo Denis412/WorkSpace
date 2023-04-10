@@ -1,13 +1,24 @@
 <template>
   <div style="min-width: 300px; overflow-x: auto;">
     <q-select
-          filled
-          v-model="sortBy"
-          :options="['Сначала новые','Сначала старые','По названию']"
-          use-chips
-          stack-label
-          label="Сортировка"
-        />
+      filled
+      v-model="sortBy"
+      :options="['Сначала новые','Сначала старые','По названию']"
+      use-chips
+      stack-label
+      label="Сортировка"
+      @update:model-value="sort"
+    />
+    <q-select
+      filled
+      v-model="groupBy"
+      :options="['По названию','По дате начала']"
+      use-chips
+      stack-label
+      label="Группировка"
+      @update:model-value="group"
+
+    />
     <table style="width: 100%"  class="table">
     <thead class="rounded-borders border-black-1">
       <tr>
@@ -23,9 +34,9 @@
 
     <MainTableModulesBody
     v-if="modules"
-    :key="sortBy"
     :modules="modules"
     :sortBy="sortBy"
+    :groupBy="groupBy"
     />
 
     <MainTableModuleTasksBody
@@ -73,6 +84,16 @@ const { columnNames, subjects, modules, tasks, moduleId, pageId } = defineProps(
 );
 
 const sortBy = ref(null);
+const groupBy = ref(null);
+
+const sort = () =>{
+  groupBy.value =null;
+}
+
+const group = () =>{
+  sortBy.value =null;
+}
+
 </script>
 
 <style>
