@@ -13,6 +13,23 @@
         До {{ module.property6.date }} {{ module.property6.time }}
       </td>
 
+      <td>
+        <q-file filled v-model="fileUpload" label="Загрузить файл">
+          <template #append>
+            <q-icon
+              class="cursor-pointer"
+              name="close"
+              @click.stop.prevent="fileUpload = null"
+            />
+            <q-icon
+              class="cursor-pointer"
+              name="upload"
+              @click.stop.prevent="upload"
+            />
+          </template>
+        </q-file>
+      </td>
+
       <td class="q-pa-md text-center">
         <div>Назначены: {{ reduceTasks(module.property7, 0) }}</div>
         <div>Выполнены: {{ reduceTasks(module.property7, 1) }}</div>
@@ -28,13 +45,17 @@
 </template>
 
 <script setup>
-import { defineProps, computed, watch } from "vue";
+import { defineProps, computed, ref } from "vue";
 import ModuleAction from "./ModuleAction.vue";
 import sortApi from "src/utils/sort.js";
 const { modules, sortBy } = defineProps({
   modules: Object,
   sortBy: String,
 });
+
+const fileUpload = ref(null);
+
+const upload = () => {};
 
 const SortModules = computed(() => {
   if (sortBy === "Сначала новые")

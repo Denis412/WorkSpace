@@ -238,3 +238,12 @@ export const createQueue = gql`
     }
   }
 `;
+
+export const filesUpload = gql`
+  mutation filesUpload($files: [Upload]!) {
+    filesUpload(files: $files) {
+      status
+      ids
+    }
+  }
+`;
