@@ -1,6 +1,6 @@
 <template>
   <tbody>
-    <tr v-for="module in SortModules" :key="module.id">
+    <tr v-for="module in SortModules(modules.property4)" :key="module.id">
       <td class="q-pa-md text-center">
         {{ module.name }}
       </td>
@@ -36,18 +36,18 @@ const { modules, sortBy } = defineProps({
   sortBy: String
 });
 
-const SortModules = computed(()=>{
+const SortModules = (modules)=>{
 
   if(sortBy==='Сначала новые')
-    return sortApi.sortDESCByCreate( modules.property4 );
+    return sortApi.sortDESCByCreate( modules );
   else if(sortBy==='Сначала старые')
-    return sortApi.sortASCByCreate( modules.property4 );
+    return sortApi.sortASCByCreate( modules );
   else if(sortBy === 'По названию')
-    return sortApi.sortByModuleName( modules.property4 );
+    return sortApi.sortByModuleName( modules );
   else
-    return modules.property4;
+    return modules;
 
-})
+}
 
 
 
