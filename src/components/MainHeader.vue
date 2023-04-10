@@ -1,8 +1,5 @@
 <template>
-  <q-header elevated
-  v-bind:class="currentScheme"
-  
-  >
+  <q-header elevated v-bind:class="currentScheme">
     <q-toolbar class="flex justify-between">
       <div class="flex">
         <q-btn
@@ -17,14 +14,16 @@
         <q-toolbar-title>{{ title }}</q-toolbar-title>
       </div>
 
-      <router-link :to="{ name: 'auth' }" class="flex link text-white">
-        <q-btn label="Войти" />
-      </router-link>
-    </q-toolbar>
+      <div class="flex items-center">
+        <div class="q-pa-md">
+          <q-toggle v-model="value" color="pink-3" v-on:click="themeHandler" />
+        </div>
 
-    <div class="q-pa-md">
-      <q-toggle v-model="value" color="pink-3" v-on:click="themeHandler" />
-    </div>
+        <router-link :to="{ name: 'auth' }" class="flex link text-white">
+          <q-btn label="Войти" />
+        </router-link>
+      </div>
+    </q-toolbar>
   </q-header>
 </template>
 
@@ -43,6 +42,7 @@ const { toggleLeftDrawer, title } = defineProps({
 const value = ref(false);
 
 const currentScheme = ref("bg-ligth");
+
 const themeHandler = () => {
   const storageScheme = localStorage.getItem("color-scheme");
   if (storageScheme === "bg-ligth") {
