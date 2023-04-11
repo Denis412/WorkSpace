@@ -1,16 +1,16 @@
 <template>
   <tbody>
     <tr
-      v-for="task in tasks.property2"
+      v-for="task in tasks.tasks"
       :key="task.id"
-      :style="{ 'background-color': calculatedCurrentStatus(task?.property3) }"
+      :style="{ 'background-color': calculatedCurrentStatus(task?.status) }"
     >
       <td>
         {{ task.name }}
       </td>
 
       <td>
-        {{ task.property1 }}
+        {{ task.description }}
       </td>
 
       <td>
@@ -19,7 +19,7 @@
 
       <td>
         <TaskAction
-          :module-id="task.property7?.id"
+          :module-id="task.module?.id"
           title="Редактирование задачи"
           button-label="Изменить"
           :task="task"
@@ -58,11 +58,11 @@ const calculatedCurrentStatus = (taskProperty) => {
 
 const tasksSort = computed(() => {
   if (sortBy === "Сначала новые")
-    return sortApi.sortDESCByCreate(tasks.property2);
+    return sortApi.sortDESCByCreate(tasks.executor);
   else if (sortBy === "Сначала старые")
-    return sortApi.sortASCByCreate(tasks.property2);
+    return sortApi.sortASCByCreate(tasks.executor);
   else if (sortBy === "По названию")
-    return sortApi.sortByModuleName(tasks.property2);
-  else return tasks.property2;
+    return sortApi.sortByModuleName(tasks.executor);
+  else return tasks.executor;
 });
 </script>

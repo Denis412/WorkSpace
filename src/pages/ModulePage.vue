@@ -7,13 +7,13 @@
     <!-- <pre>{{ page }}</pre> -->
     <!-- <pre>re{{ resultModule }}</pre> -->
     <header class="text-h3 text-center">
-      {{ resultModule?.get_type2.name }}
+      {{ resultModule?.get_module.name }}
     </header>
 
     <main class="q-mt-md">
       <div class="flex">
         <TaskAction
-          :module-id="resultModule?.get_type2.id"
+          :module-id="resultModule?.get_module.id"
           title="Создание задачи"
           button-label="Создать задачу"
         />
@@ -27,7 +27,7 @@
           'Исполнитель',
           'Действия',
         ]"
-        :module-id="resultModule?.get_type2.id"
+        :module-id="resultModule?.get_module.id"
       />
     </main>
   </q-page>

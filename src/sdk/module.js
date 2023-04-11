@@ -33,14 +33,14 @@ const moduleCreate = async (form) => {
   const { data: createdModule } = await creatingModule({
     input: {
       name: form.name,
-      property4: {
+      responsible: {
         [process.env.SUBJECT_ID]: form.responsible.value,
       },
-      property5: {
+      startdate: {
         date: new Date(form.date_start).toLocaleDateString(),
         time: "01:00:00",
       },
-      property6: {
+      expirationdate: {
         date: new Date(form.date_end).toLocaleDateString(),
         time: "23:55:00",
       },
@@ -49,11 +49,11 @@ const moduleCreate = async (form) => {
 
   const { data: createdPage } = await creatingPage({
     input: {
-      title: createdModule.create_type2.record.name,
+      title: createdModule.create_module.record.name,
       parent_id: process.env.MODULE_PAGE_ID,
       object: {
-        id: createdModule.create_type2.recordId,
-        type_id: createdModule.create_type2.record.type_id,
+        id: createdModule.create_module.recordId,
+        type_id: createdModule.create_module.record.type_id,
       },
     },
   });
@@ -72,7 +72,7 @@ const moduleCreate = async (form) => {
     await creatingPermissionRule({
       input: {
         model_type: "object",
-        model_id: createdModule.create_type2.recordId,
+        model_id: createdModule.create_module.recordId,
         owner_type: "subject",
         owner_id: form.responsible.value,
         level: 5,
@@ -101,17 +101,17 @@ const moduleUpdate = async (Moduleform, bufferModule) => {
 
   filtredValue.name ? (input.name = filtredValue.name) : null;
   filtredValue.responsible
-    ? (input.property4 = {
+    ? (input.responsible = {
         [process.env.SUBJECT_ID]: filtredValue.responsible.value,
       })
     : null;
   filtredValue.date_start
-    ? (input.property5 = {
+    ? (input.startdate = {
         date: new Date(filtredValue.date_start).toLocaleDateString(),
       })
     : null;
   filtredValue.date_end
-    ? (input.property6 = {
+    ? (input.expirationdate = {
         date: new Date(filtredValue?.date_end).toLocaleDateString(),
       })
     : null;

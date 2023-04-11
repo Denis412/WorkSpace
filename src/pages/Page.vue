@@ -6,7 +6,7 @@
   <ModulesPage v-else-if="pageType === 'Модули'" :page="page?.page" />
   <ModulePage v-else-if="pageType === 'Модуль'" :page="page?.page" />
 
-  <TasksPage v-else-if="pageType === 'Мои задачи'" :page="page?.page" />
+  <TasksPage v-else-if="pageType === 'Задачи'" :page="page?.page" />
   <TaskPage v-else-if="pageType === 'Задача'" :page="page?.page" />
 
   <!-- <q-page>
@@ -39,8 +39,8 @@ const pageTypeUpdate = () => {
   const page_title = page.value?.page.title;
 
   if (page_type_id === null) pageType.value = page_title;
-  else if (page_type_id === "7257711564957497306") pageType.value = "Модуль";
-  else if (page_type_id === "4474239268760732705") pageType.value = "Задача";
+  else if (page_type_id === "3787230485103944499") pageType.value = "Модуль";
+  else if (page_type_id === "8666135715858217678") pageType.value = "Задача";
 };
 
 onMounted(() => {

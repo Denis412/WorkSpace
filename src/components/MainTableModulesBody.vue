@@ -1,23 +1,23 @@
 <template>
   <tbody v-for="subject in modules" :key="subject.id">
     <div
-      v-if="subject.property4.length && modules.length > 1"
+      v-if="subject.modules.length && modules.length > 1"
       class="w-100p text-center text-h5"
     >
       {{ subject.fullname.first_name }}
     </div>
 
-    <tr v-for="module in subject.property4" :key="module.id">
+    <tr v-for="module in subject.modules" :key="module.id">
       <td class="q-pa-md text-center">
         {{ module.name }}
       </td>
 
       <td class="q-pa-md text-center">
-        C {{ module.property5.date }} {{ module.property5.time }}
+        C {{ module.startdate.date }} {{ module.startdate.time }}
       </td>
 
       <td class="q-pa-md text-center">
-        До {{ module.property6.date }} {{ module.property6.time }}
+        До {{ module.expirationdate.date }} {{ module.expirationdate.time }}
       </td>
 
       <td>
@@ -39,9 +39,9 @@
       </td>
 
       <td class="q-pa-md text-center">
-        <div>Назначены: {{ reduceTasks(module.property7, 0) }}</div>
-        <div>Выполнены: {{ reduceTasks(module.property7, 1) }}</div>
-        <div>Завершены: {{ reduceTasks(module.property7, 2) }}</div>
+        <div>Назначены: {{ reduceTasks(module.tasks, 0) }}</div>
+        <div>Выполнены: {{ reduceTasks(module.tasks, 1) }}</div>
+        <div>Завершены: {{ reduceTasks(module.tasks, 2) }}</div>
       </td>
 
       <td v-if="isOwner" class="flex justify-center items-center">
@@ -107,7 +107,7 @@ const reduceTasks = (tasks, status) => {
       : process.env.FINISHED_ID;
 
   return tasks.reduce(
-    (sum, task) => (task.property3 === checkedStatus ? sum + 1 : sum + 0),
+    (sum, task) => (task.status === checkedStatus ? sum + 1 : sum + 0),
     0
   );
 };

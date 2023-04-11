@@ -29,12 +29,12 @@ const taskCreate = async (form, moduleId) => {
   const { data: createdTask } = await creatingTask({
     input: {
       name: form.name,
-      property1: form.description,
-      property2: {
+      description: form.description,
+      executor: {
         [process.env.SUBJECT_ID]: form.executor.value,
       },
-      property3: process.env.APPOINTED_ID,
-      property7: {
+      status: process.env.APPOINTED_ID,
+      module: {
         [process.env.MODULE_ID]: moduleId,
       },
     },
@@ -43,7 +43,7 @@ const taskCreate = async (form, moduleId) => {
   const { data: createdPermissionRule } = await creatingPermissionRule({
     input: {
       model_type: "object",
-      model_id: createdTask.create_type1.recordId,
+      model_id: createdTask.create_task.recordId,
       owner_type: "subject",
       owner_id: form.executor.value,
       level: 5,
@@ -65,11 +65,11 @@ const taskUpdate = async (form, taskId) => {
     id: taskId,
     input: {
       name: form.name,
-      property1: form.description,
-      property2: {
+      description: form.description,
+      executor: {
         [process.env.SUBJECT_ID]: form.executor.value,
       },
-      property3: form.status.value,
+      status: form.status.value,
     },
   });
 

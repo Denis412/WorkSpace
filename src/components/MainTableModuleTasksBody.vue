@@ -3,7 +3,7 @@
     <tr
       v-for="task in sortTasks"
       :key="task.id"
-      :style="{ 'background-color': calculatedCurrentStatus(task?.property3) }"
+      :style="{ 'background-color': calculatedCurrentStatus(task?.status) }"
     >
       <td>
         <div class="link">
@@ -12,14 +12,14 @@
       </td>
 
       <td>
-        {{ task.property1 }}
+        {{ task.description }}
       </td>
 
       <td>
         <router-link
-          :to="{ name: 'subject', params: { id: task.property2.id } }"
+          :to="{ name: 'subject', params: { id: task.executor.id } }"
         >
-          {{ task.property2.fullname.first_name }}
+          {{ task.executor.fullname.first_name }}
         </router-link>
       </td>
 
@@ -100,12 +100,13 @@ const calculatedCurrentStatus = (taskProperty) => {
 };
 
 const sortTasks = computed(() => {
+  console.log(resultModule.value);
   if (sortBy === "Сначала новые")
-    return sortApi.sortDESCByCreate(resultModule.value?.get_type2.property7);
+    return sortApi.sortDESCByCreate(resultModule.value?.get_module.tasks);
   else if (sortBy === "Сначала старые")
-    return sortApi.sortASCByCreate(resultModule.value?.get_type2.property7);
+    return sortApi.sortASCByCreate(resultModule.value?.get_module.tasks);
   else if (sortBy === "По названию")
-    return sortApi.sortByModuleName(resultModule.value?.get_type2.property7);
-  else return resultModule.value?.get_type2.property7;
+    return sortApi.sortByModuleName(resultModule.value?.get_module.tasks);
+  else return resultModule.value?.get_module.tasks;
 });
 </script>

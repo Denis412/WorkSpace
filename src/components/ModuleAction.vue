@@ -53,9 +53,9 @@ const bufferModule = [];
 const showForm = (module) => {
   show.value = true;
   form.value.module_name = module.name;
-  form.value.user_name = `${module.property4.fullname.first_name} ${module.property4.fullname.last_name}`;
-  form.value.date_start = module.property5.date;
-  form.value.date_end = module.property6.date;
+  form.value.user_name = `${module.responsible.fullname.first_name} ${module.responsible.fullname.last_name}`;
+  form.value.date_start = module.startdate.date;
+  form.value.date_end = module.expirationdate.date;
 
   Object.values(form.value).forEach((el) => bufferModule.push(el));
   bufferModule.push(module.id);
