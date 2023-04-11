@@ -4,10 +4,9 @@
   </q-page>
 
   <q-page v-else class="q-pa-md">
-    <!-- <pre>{{ currentModules }}</pre> -->
     <div class="text-h3 text-center q-pb-md">Модули</div>
 
-    <div class="q-my-md flex">
+    <div v-if="isOwner" class="q-my-md flex">
       <ModuleAction />
     </div>
 
