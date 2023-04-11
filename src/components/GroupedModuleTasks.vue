@@ -1,57 +1,19 @@
 <template>
   <tbody
-  class="relative-position"
+  class="relative-position tbody"
   v-for="(group, key) in groupTasks(tasks,groupBy)"
   :key="key"
   >
-    <th class="th q-py-sm">
-      Значение: {{ key }}. Обьектов: {{ group.length }}
-    </th>
+    <div class="th q-py-sm q-pl-sm">
+      Значение: <strong>{{ key }}</strong>. Обьектов: <strong>{{ group.length }}</strong>
+    </div>
     <Dropdown
     :group="group"
     :listProperties="listProperties"
     :deleteBtn="true"
     :moduleId="moduleId"
     />
-    <!-- <tr
-      v-for="task in group"
-      :key="task.id"
-      :style="{ 'background-color': calculatedCurrentStatus(task?.property3) }"
-    >
-      <td>
-        <div class="link">
-          {{ task.name }}
-        </div>
-      </td>
 
-      <td>
-        {{ task.property1 }}
-      </td>
-
-      <td>
-        <router-link
-          :to="{ name: 'subject', params: { id: task.property2.id } }"
-        >
-          {{ task.property2.fullname.first_name }}
-        </router-link>
-      </td>
-
-      <td class="flex justify-center">
-        <TaskAction
-          :module-id="moduleId"
-          title="Редактирование задачи"
-          button-label="Изменить"
-          :task="task"
-        />
-
-        <q-btn
-          class="q-ml-md"
-          @click="deleteTask(task.id)"
-          color="negative"
-          label="Удалить"
-        />
-      </td>
-    </tr> -->
   </tbody>
 </template>
 
@@ -82,5 +44,9 @@ const groupTasks = (tasks,groupBy) => {
   height: 43px;
   white-space: nowrap;
   text-align: start;
+}
+
+.tbody{
+  box-shadow: 0px 1px $grey-3;
 }
 </style>

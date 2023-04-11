@@ -1,43 +1,52 @@
 <template>
   <div style="min-width: 300px; overflow-x: auto;">
 
-    <Select
-    v-if="modules||tasks||moduleId"
-    :options="['Сначала новые','Сначала старые','По названию']"
-    :changeValue = "sortBy"
-    :key="sortBy"
-    :label="'Сортировка'"
-    @change="sort"
-    />
+    <div class="row no-wrap">
+      <Select
+      v-if="modules||tasks||moduleId"
+      :options="['Сначала новые','Сначала старые','По названию']"
+      :changeValue = "sortBy"
+      :key="sortBy"
+      :label="'Сортировка'"
+      :icon="'sort'"
+      @change="sort"
+      />
 
-    <Select
-    v-if="modules"
-    :options="['По названию','По дате начала','По дате окончания']"
-    :changeValue = "groupBy"
-    :key="groupBy"
-    :label="'Группировка'"
-    @change="group"
-    />
+      <Select
+      v-if="modules"
+      class="q-ml-sm"
+      :options="['По названию','По дате начала','По дате окончания']"
+      :changeValue = "groupBy"
+      :key="groupBy"
+      :label="'Группировка'"
+      :icon="'workspaces'"
+      @change="group"
+      />
 
-    <Select
-    v-if="moduleId"
-    :options="['По названию','По исполнителю','По статусу задачи']"
-    :changeValue = "groupBy"
-    :key="groupBy"
-    :label="'Группировка'"
-    @change="group"
-    />
+      <Select
+      v-if="moduleId"
+      class="q-ml-sm"
+      :options="['По названию','По исполнителю','По статусу задачи']"
+      :changeValue = "groupBy"
+      :key="groupBy"
+      :label="'Группировка'"
+      :icon="'workspaces'"
+      @change="group"
+      />
 
-    <Select
-    v-if="tasks"
-    :options="['По названию','По статусу задачи']"
-    :changeValue = "groupBy"
-    :key="groupBy"
-    :label="'Группировка'"
-    @change="group"
-    />
+      <Select
+      v-if="tasks"
+      class="q-ml-sm"
+      :options="['По названию','По статусу задачи']"
+      :changeValue = "groupBy"
+      :key="groupBy"
+      :label="'Группировка'"
+      :icon="'workspaces'"
+      @change="group"
+      />
+    </div>
 
-    <table style="width: 100%"  class="table">
+    <table style="width: 100%"  class="table q-mt-lg">
     <thead class="rounded-borders border-black-1">
       <tr>
         <th

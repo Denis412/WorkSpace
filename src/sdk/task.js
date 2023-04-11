@@ -25,7 +25,6 @@ const { refetch: refetchModule } = useQuery(getModuleById, {
 });
 
 const taskCreate = async (form, moduleId) => {
-  console.log(form, process.env.MODULE_ID);
 
   const { data: createdTask } = await creatingTask({
     input: {

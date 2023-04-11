@@ -1,12 +1,12 @@
 <template>
   <tbody
-  class="relative-position"
+  class="relative-position tbody"
   v-for="(group, key) in groupTasks(tasks,groupBy)"
   :key="key"
   >
-    <th class="th q-py-sm">
-      Значение: {{ key }}. Обьектов: {{ group.length }}
-    </th>
+    <div class="th q-py-sm q-pl-sm">
+      Значение: <strong>{{ key }}</strong>. Обьектов: <strong>{{ group.length }}</strong>
+    </div>
     <Dropdown
     :group="group"
     :listProperties="listProperties"
@@ -41,5 +41,9 @@ const groupTasks = (tasks,groupBy) => {
   height: 43px;
   white-space: nowrap;
   text-align: start;
+}
+
+.tbody{
+  box-shadow: 0px 1px $grey-3;
 }
 </style>

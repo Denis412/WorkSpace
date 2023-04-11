@@ -1,8 +1,11 @@
 <template>
-  <tbody class="relative-position" v-for="(group, key) in groupModules(modules.property4, groupBy)" :key="key">
-    <th class="th q-py-sm">
-      Значение: {{ key }}. Обьектов: {{ group.length }}
-    </th>
+  <tbody
+  class="relative-position tbody"
+  v-for="(group, key) in groupModules(modules.property4, groupBy)"
+  :key="key">
+    <div class="th q-py-sm q-pl-sm">
+      Значение: <strong>{{ key }}</strong>. Обьектов: <strong>{{ group.length }}</strong>
+    </div>
     <Dropdown
     :group="group"
     />
@@ -35,5 +38,9 @@ const groupModules = (modules, groupBy) => {
   height: 43px;
   white-space: nowrap;
   text-align: start;
+}
+
+.tbody{
+  box-shadow: 0px 1px $grey-3;
 }
 </style>
