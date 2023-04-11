@@ -22,7 +22,7 @@
 import MainTable from "src/components/MainTable.vue";
 import { useQuery } from "@vue/apollo-composable";
 import { getUserModules, getModulesAll } from "src/graphql/queries";
-import { provide, ref } from "vue";
+import { inject, onMounted, provide, ref } from "vue";
 import ModuleAction from "src/components/ModuleAction.vue";
 import { Cookies } from "quasar";
 
@@ -35,6 +35,7 @@ provide("page", page);
 let currentModules = ref(null);
 let loading = ref(null);
 let refetchModules;
+const isOwner = inject("isOwner");
 
 Cookies.get("user_id") === process.env.OWNER_ID
   ? ({
@@ -48,20 +49,23 @@ Cookies.get("user_id") === process.env.OWNER_ID
       refetch: refetchModules,
     } = useQuery(getUserModules));
 
-// const {
-//   result: modules,
-//   loading,
-//   refetch: refetchModules,
-// } = useQuery(getUserModules);
-
-const columnNames = [
-  "Название",
-  "Дата и время начала",
-  "Дата и время окончания",
-  "Файл",
-  "Задачи",
-  "Действия",
-];
+const columnNames = ref();
 
 provide("updateModules", refetchModules);
+
+onMounted(() => {
+  const constColumns = [
+    "Название",
+    "Дата и время начала",
+    "Дата и время окончания",
+    "Файл",
+    "Задачи",
+  ];
+
+  isOwner.value ? constColumns.push("Действия") : null;
+
+  console.log(constColumns);
+
+  columnNames.value = constColumns;
+});
 </script>

@@ -31,10 +31,12 @@ import { pages } from "src/graphql/queries";
 import apolloClient from "src/apollo/apollo-client";
 import { onMounted } from "vue";
 import stompApi from "src/sdk/stomp";
+import { Cookies } from "quasar";
 
 provideApolloClient(apolloClient);
 
 const leftDrawerOpen = ref(false);
+const isOwner = ref(Cookies.get("user_id") === process.env.OWNER_ID);
 
 const { result: currentSpacePages, refetch: refetchPages } = useQuery(pages);
 
@@ -43,6 +45,7 @@ const toggleLeftDrawer = () => {
 };
 
 provide("updatePages", refetchPages);
+provide("isOwner", isOwner);
 
 onMounted(() => {
   stompApi.queueCreate().then((result) => {});

@@ -1,6 +1,9 @@
 <template>
   <tbody v-for="subject in modules" :key="subject.id">
-    <div v-if="subject.property4.length" class="w-100p text-center text-h5">
+    <div
+      v-if="subject.property4.length && modules.length > 1"
+      class="w-100p text-center text-h5"
+    >
       {{ subject.fullname.first_name }}
     </div>
 
@@ -41,7 +44,7 @@
         <div>Завершены: {{ reduceTasks(module.property7, 2) }}</div>
       </td>
 
-      <td class="flex justify-center items-center">
+      <td v-if="isOwner" class="flex justify-center items-center">
         <ModuleAction :module="module" />
         <ModuleAction :moduleDelete="module" />
       </td>
@@ -50,9 +53,8 @@
 </template>
 
 <script setup>
-import { defineProps, computed, ref } from "vue";
+import { defineProps, inject, ref } from "vue";
 import ModuleAction from "./ModuleAction.vue";
-import sortApi from "src/utils/sort.js";
 import { useMutation } from "@vue/apollo-composable";
 import { filesUpload } from "src/graphql/mutations";
 import { Cookies } from "quasar";
@@ -70,6 +72,8 @@ const { mutate: uploadingFiles } = useMutation(filesUpload, {
     },
   },
 });
+
+const isOwner = inject("isOwner");
 
 const upload = async () => {
   console.log(fileUpload.value);
@@ -91,16 +95,6 @@ const upload = async () => {
     console.log(error);
   }
 };
-
-const SortModules = computed(() => {
-  if (sortBy === "Сначала новые")
-    return sortApi.sortDESCByCreate(modules.property4);
-  else if (sortBy === "Сначала старые")
-    return sortApi.sortASCByCreate(modules.property4);
-  else if (sortBy === "По названию")
-    return sortApi.sortByModuleName(modules.property4);
-  else return modules.property4;
-});
 
 const reduceTasks = (tasks, status) => {
   if (!tasks.length) return 0;

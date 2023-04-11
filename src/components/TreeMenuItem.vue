@@ -42,7 +42,7 @@
 </template>
 
 <script setup>
-import { computed, ref } from "vue";
+import { computed, ref, inject } from "vue";
 import { useQuery } from "@vue/apollo-composable";
 import { getGroupSubjects } from "src/graphql/queries";
 import TreeMenu from "./TreeMenu.vue";
@@ -58,7 +58,7 @@ const { result: subjects } = useQuery(getGroupSubjects, {
 });
 
 const modulesType_id = ref(process.env.MODULE_ID);
-const isOwner = ref(Cookies.get("user_id") === process.env.OWNER_ID);
+const isOwner = inject("isOwner");
 
 const subjectModules = computed(() => {
   const moduless = modules?.reduce((modulesArr, subject) => {
@@ -69,9 +69,9 @@ const subjectModules = computed(() => {
 
   const module = moduless?.find((el) => el.id === page.object.id);
 
-  if (!module) return false;
-
-  return module.property4.user_id === parseFloat(Cookies.get("user_id"));
+  return module
+    ? module.property4.user_id === parseFloat(Cookies.get("user_id"))
+    : false;
 });
 
 const showChildren = ref(false);
