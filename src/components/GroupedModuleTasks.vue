@@ -1,7 +1,19 @@
 <template>
-  <tbody v-for="(group, index) in groupTasks(tasks,groupBy)" :key="index">
-    <th>Группа {{ index + 1 }}</th>
-    <tr
+  <tbody
+  class="relative-position"
+  v-for="(group, key) in groupTasks(tasks,groupBy)"
+  :key="key"
+  >
+    <th class="th q-py-sm">
+      Значение: {{ key }}. Обьектов: {{ group.length }}
+    </th>
+    <Dropdown
+    :group="group"
+    :listProperties="listProperties"
+    :deleteBtn="true"
+    :moduleId="moduleId"
+    />
+    <!-- <tr
       v-for="task in group"
       :key="task.id"
       :style="{ 'background-color': calculatedCurrentStatus(task?.property3) }"
@@ -39,53 +51,20 @@
           label="Удалить"
         />
       </td>
-    </tr>
+    </tr> -->
   </tbody>
 </template>
 
 <script setup>
-import TaskAction from "./TaskAction.vue";
-import taskApi from "src/sdk/task";
 import groupApi from "src/utils/group";
-import { useQuasar } from "quasar";
-import { ref } from "vue";
+import Dropdown from "./GroupedTasksDropdown.vue";
 
 const { tasks, grouptBy, listProperties,moduleId  } = defineProps({
   tasks: Array,
   groupBy: String,
   listProperties: Object,
   moduleId: String,
-
 });
-
-const $q = useQuasar();
-
-const calculatedStatus = ref({});
-
-const deleteTask = async (taskId) => {
-  try {
-    await taskApi.taskDelete(taskId, moduleId, 0);
-
-    $q.notify({
-      type: "positive",
-      message: "Задача удалена!",
-    });
-  } catch (error) {
-    console.log(error);
-  }
-};
-
-const calculatedCurrentStatus = (taskProperty) => {
-  const obj = listProperties?.property.meta.options.find(
-    (status) => status.id === taskProperty
-  );
-
-  calculatedStatus.value = obj;
-
-  return obj?.color;
-};
-
-
 
 const groupTasks = (tasks,groupBy) => {
   if (groupBy === "По названию")
@@ -99,5 +78,9 @@ const groupTasks = (tasks,groupBy) => {
 </script>
 
 <style lang="scss" scoped>
-
+.th{
+  height: 43px;
+  white-space: nowrap;
+  text-align: start;
+}
 </style>
