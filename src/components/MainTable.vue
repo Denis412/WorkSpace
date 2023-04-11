@@ -6,6 +6,7 @@
     :options="['Сначала новые','Сначала старые','По названию']"
     :changeValue = "sortBy"
     :key="sortBy"
+    :label="'Сортировка'"
     @change="sort"
     />
 
@@ -14,6 +15,7 @@
     :options="['По названию','По дате начала','По дате окончания']"
     :changeValue = "groupBy"
     :key="groupBy"
+    :label="'Группировка'"
     @change="group"
     />
 
@@ -22,6 +24,7 @@
     :options="['По названию','По исполнителю','По статусу задачи']"
     :changeValue = "groupBy"
     :key="groupBy"
+    :label="'Группировка'"
     @change="group"
     />
 
@@ -30,6 +33,7 @@
     :options="['По названию','По статусу задачи']"
     :changeValue = "groupBy"
     :key="groupBy"
+    :label="'Группировка'"
     @change="group"
     />
 

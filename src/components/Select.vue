@@ -5,7 +5,7 @@
       :options="options"
       use-chips
       stack-label
-      label="Группировка"
+      :label="label"
       @update:model-value="change"
 
     />
@@ -15,9 +15,10 @@
 import { defineEmits,defineProps,ref } from "vue";
 
 const emit = defineEmits(["change"]);
-const { options, changeValue } = defineProps({
+const { options, changeValue, label } = defineProps({
   options:Array,
-  changeValue:String
+  changeValue:String,
+  label: String
 })
 
 const changeBy = ref(changeValue);
