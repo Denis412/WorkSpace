@@ -1,8 +1,5 @@
 <template>
-  <q-header elevated
-  v-bind:class="currentScheme"
-  
-  >
+  <q-header elevated class="bg">
     <q-toolbar class="flex justify-between">
       <div class="flex">
         <q-btn
@@ -18,7 +15,7 @@
       </div>
 
       <router-link :to="{ name: 'auth' }" class="flex link text-white">
-        <q-btn label="Войти" />
+        <q-btn label="Войти" class="bg-green-5" />
       </router-link>
     </q-toolbar>
 
@@ -30,8 +27,10 @@
 
 <script setup>
 import { Cookies } from "quasar";
+
 import UserAvatarButton from "./UserAvatarButton.vue";
 import { ref } from "vue";
+import { useQuasar } from "quasar";
 
 const currentUser = Cookies.get("user_id");
 
@@ -42,26 +41,11 @@ const { toggleLeftDrawer, title } = defineProps({
 
 const value = ref(false);
 
-const currentScheme = ref("bg-ligth");
 const themeHandler = () => {
-  const storageScheme = localStorage.getItem("color-scheme");
-  if (storageScheme === "bg-ligth") {
-    localStorage.setItem("color-scheme", "bg-dark");
-    currentScheme.value = "bg-dark";
+  if (value.value === true) {
+    document.documentElement.setAttribute("data-theme", "dark");
   } else {
-    localStorage.setItem("color-scheme", "bg-ligth");
-    currentScheme.value = "bg-ligth";
+    document.documentElement.removeAttribute("data-theme");
   }
 };
 </script>
-
-<style lang="scss">
-.bg-dark {
-  background-color: #222;
-  color: #fff;
-}
-.bg-light {
-  background-color: #fff;
-  color: #222;
-}
-</style>

@@ -1,6 +1,6 @@
 <template>
   <tbody>
-    <tr v-for="module in modules.property4" :key="module.id">
+    <tr v-for="module in modules.property4" :key="module.id " >
       <td class="q-pa-md text-center">
         {{ module.name }}
       </td>
@@ -13,7 +13,7 @@
         До {{ module.property6.date }} {{ module.property6.time }}
       </td>
 
-      <td class="q-pa-md text-center">
+      <td class="q-pa-md text-center bg">
         <div>Назначены: {{ reduceTasks(module.property7, 0) }}</div>
         <div>Выполнены: {{ reduceTasks(module.property7, 1) }}</div>
         <div>Завершены: {{ reduceTasks(module.property7, 2) }}</div>

@@ -1,6 +1,7 @@
 <template>
   <div style="min-width: 300px; overflow-x: auto">
     <q-select
+      class="bg-selector"
       filled
       v-model="sortBy"
       :options="['Сначала новые', 'Сначала старые', 'По названию']"
@@ -8,8 +9,8 @@
       stack-label
       label="Сортировка"
     />
-    <table style="width: 100%" class="table">
-      <thead class="rounded-borders border-black-1">
+    <table style="width: 100%" class="table ">
+      <thead class="rounded-borders border-black-1 ">
         <tr>
           <th
             v-for="columnName in columnNames"
@@ -76,8 +77,15 @@ const { columnNames, subjects, modules, tasks, moduleId, pageId } = defineProps(
 const sortBy = ref(null);
 </script>
 
-<style>
+<style lang="scss">
 .border-bottom {
   border-bottom: 1px solid black;
 }
+
+.bg-selector {
+  background: var(--bg-color-2);
+ 
+}
+
+
 </style>

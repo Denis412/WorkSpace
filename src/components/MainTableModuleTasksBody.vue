@@ -1,5 +1,5 @@
 <template>
-  <tbody>
+  <tbody >
     <tr
       v-for="task in sortTasks"
       :key="task.id"
@@ -23,7 +23,7 @@
         </router-link>
       </td>
 
-      <td class="flex justify-center">
+      <td class="flex justify-center ">
         <TaskAction
           :module-id="moduleId"
           title="Редактирование задачи"

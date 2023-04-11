@@ -20,7 +20,7 @@
       </div>
 
       <MainTable
-        class="w-100p q-my-md"
+        class="w-100p q-my-md "
         :column-names="[
           'Название задачи',
           'Описание задачи',

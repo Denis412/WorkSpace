@@ -8,7 +8,7 @@
 
     <main>
       <!-- <pre>dll{{ allTasks?.paginate_subject.data[0] }}</pre> -->
-      <MainTable
+      <MainTable 
         :column-names="[
           'Название задачи',
           'Описание задачи',

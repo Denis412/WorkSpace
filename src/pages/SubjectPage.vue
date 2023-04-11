@@ -1,6 +1,7 @@
 <template>
   <q-page>
     <SubjectTable
+    
       :loading="loading"
       :title="getName()"
       :groups="subject?.get_subject?.group"

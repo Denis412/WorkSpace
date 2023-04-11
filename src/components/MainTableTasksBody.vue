@@ -19,7 +19,7 @@
       </td>
 
       <td>
-        <TaskAction
+        <TaskAction 
           :module-id="task.property7?.id"
           title="Редактирование задачи"
           button-label="Изменить"

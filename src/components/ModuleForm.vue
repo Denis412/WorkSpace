@@ -1,18 +1,23 @@
 <template>
-  <div class="bg-white q-pa-md rounded-borders">
+  <div class=" q-pa-md rounded-borders bg ">
     <q-form @submit="onSubmit">
-      <header class="text-h4 text-center q-mb-md">{{ moduleName }}</header>
+      <header class="text-h4 text-center q-mb-md bg" >{{ moduleName }}</header>
 
-      <main>
+      <main 
+       class="bg">
         <q-input
+
           v-model="form.name"
+           color="red"
           type="text"
           label="Название"
           placeholder="Введите название модуля"
         />
 
         <q-select
+        
           v-model="form.responsible"
+          color="red"
           label="Ответственный"
           :options="responsibleGroupSubjectsNames"
           placeholder="Выберите ответственного"
@@ -57,7 +62,8 @@
         </q-dialog>
       </main>
 
-      <footer>
+      <footer 
+       class="bg">
         <div class="col-12 q-mt-md">
           <q-btn
             class="block"

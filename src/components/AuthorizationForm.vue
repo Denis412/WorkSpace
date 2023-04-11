@@ -1,9 +1,9 @@
 <template>
-  <q-form
+  <q-form 
     class="flex column rounded-borders bg-grey-3 justify-between q-pa-md form-width"
     @submit="signIn"
   >
-    <header class="text-center text-h6">Вход</header>
+    <header class="text-center text-h6 ">Вход</header>
 
     <main>
       <q-input
@@ -13,12 +13,12 @@
         placeholder="Введите email"
       />
 
-      <q-input
+      <q-input 
         v-model="form.password"
         type="password"
         label="Пароль"
         placeholder="Введите пароль"
-        class="q-mt-sm"
+        class="q-mt-sm " 
       />
     </main>
 

@@ -1,5 +1,5 @@
 <template>
-  <q-btn
+  <q-btn 
     v-if="module"
     @click="showForm(module)"
     color="primary"
@@ -14,9 +14,9 @@
     class="q-ml-md"
   />
 
-  <q-btn v-else @click="show = true" color="primary" label="Создать модуль" />
+  <q-btn v-else @click="show = true" color="primary" label="Создать модуль"  />
 
-  <q-dialog v-model="show">
+  <q-dialog  v-model="show">
     <ModuleForm
       v-if="module"
       class="w-100p"

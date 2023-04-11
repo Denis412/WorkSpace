@@ -11,7 +11,7 @@
       <ModuleAction />
     </div>
 
-    <MainTable
+    <MainTable 
       :modules="modules?.paginate_subject.data[0]"
       :columnNames="columnNames"
     />

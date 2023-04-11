@@ -1,9 +1,9 @@
 <template>
-  <q-layout view="hHh Lpr fFf">
+  <q-layout view="hHh Lpr fFf" class="bg">
     <MainHeader :toggleLeftDrawer="toggleLeftDrawer" title="Space" />
 
-    <MainDrawer v-model="leftDrawerOpen" side="left" title="Список">
-      <template #list>
+    <MainDrawer  v-model="leftDrawerOpen" side="left" title="Список" class="bg">
+      <template  #list>
         <TreeMenu :pages="currentSpacePages?.rootPages.data" />
       </template>
     </MainDrawer>
@@ -49,3 +49,12 @@ onMounted(() => {
   stompApi.stompConnect();
 });
 </script>
+
+<style lang="scss">
+@import "../css/theme.scss";
+
+.bg {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+}
+</style>

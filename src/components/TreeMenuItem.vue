@@ -4,7 +4,10 @@
     :key="modules"
     v-if="subjectModules || page.object.type_id != modulesType_id || isOwner"
   >
-    <router-link :to="{ name: routeName(), params: { id: page.id } }">
+    <router-link
+      class="bg"
+      :to="{ name: routeName(), params: { id: page.id } }"
+    >
       <q-item
         clickable
         class="cursor-pointer rounded-borders q-pa-sm flex items-center"

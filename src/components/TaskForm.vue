@@ -1,7 +1,7 @@
 <template>
-  <q-form @submit="$emit('submitForm', form)">
-    <main class="text-h4 text-center q-mb-md justify-between form-width">
-      <q-input
+  <q-form  @submit="$emit('submitForm', form)">
+    <main class="text-h4 text-center q-mb-md justify-between ">
+      <q-input 
         :disable="executorEdit"
         v-model="form.name"
         type="text"
@@ -37,6 +37,7 @@
 
     <footer class="q-mt-md">
       <q-btn
+      
         class="w-100p"
         color="primary"
         :label="task ? 'Обновить задачу' : 'Создать задачу'"
