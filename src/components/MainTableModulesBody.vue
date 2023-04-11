@@ -3,6 +3,7 @@
     <div v-if="subject.property4.length" class="w-100p text-center text-h5">
       {{ subject.fullname.first_name }}
     </div>
+
     <tr v-for="module in subject.property4" :key="module.id">
       <td class="q-pa-md text-center">
         {{ module.name }}

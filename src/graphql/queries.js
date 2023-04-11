@@ -269,6 +269,7 @@ export const getModulesAll = gql`
           created_at
           property4 {
             id
+            user_id
             fullname {
               first_name
               last_name

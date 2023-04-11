@@ -4,7 +4,7 @@
       v-for="page in pages"
       :key="page.id"
       :page="page"
-      :modules="modules?.paginate_type2?.data"
+      :modules="modules?.paginate_subject?.data"
     />
   </q-list>
 </template>
@@ -19,4 +19,16 @@ const { pages } = defineProps({
 });
 
 const { result: modules } = useQuery(getModulesAll);
+
+// Cookies.get("user_id") === process.env.OWNER_ID
+//   ? ({
+//       result: currentModules,
+//       loading,
+//       refetch: refetchModules,
+//     } = useQuery(getModulesAll))
+//   : ({
+//       result: currentModules,
+//       loading,
+//       refetch: refetchModules,
+//     } = useQuery(getUserModules));
 </script>

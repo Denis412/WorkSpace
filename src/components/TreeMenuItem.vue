@@ -61,7 +61,13 @@ const modulesType_id = ref(process.env.MODULE_ID);
 const isOwner = ref(Cookies.get("user_id") === process.env.OWNER_ID);
 
 const subjectModules = computed(() => {
-  const module = modules?.find((el) => el.id === page.object.id);
+  const moduless = modules?.reduce((modulesArr, subject) => {
+    modulesArr.push(...subject.property4);
+
+    return modulesArr;
+  }, []);
+
+  const module = moduless?.find((el) => el.id === page.object.id);
 
   if (!module) return false;
 
