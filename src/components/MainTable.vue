@@ -10,6 +10,7 @@
       label="Сортировка"
       @update:model-value="sort"
     />
+
     <q-select
       v-if="modules"
       filled
@@ -30,7 +31,16 @@
       stack-label
       label="Группировка"
       @update:model-value="group"
-
+    />
+    <q-select
+      v-if="tasks"
+      filled
+      v-model="groupBy"
+      :options="['По названию','По статусу задачи']"
+      use-chips
+      stack-label
+      label="Группировка"
+      @update:model-value="group"
     />
     <table style="width: 100%"  class="table">
     <thead class="rounded-borders border-black-1">
@@ -71,6 +81,7 @@
     :key="sortBy"
     :tasks="tasks"
     :sortBy="sortBy"
+    :groupBy="groupBy"
     />
   </table>
   </div>

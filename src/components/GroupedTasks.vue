@@ -7,9 +7,7 @@
       :style="{ 'background-color': calculatedCurrentStatus(task?.property3) }"
     >
       <td>
-        <div class="link">
-          {{ task.name }}
-        </div>
+        {{ task.name }}
       </td>
 
       <td>
@@ -17,26 +15,16 @@
       </td>
 
       <td>
-        <router-link
-          :to="{ name: 'subject', params: { id: task.property2.id } }"
-        >
-          {{ task.property2.fullname.first_name }}
-        </router-link>
+        {{ calculatedStatus?.label }}
       </td>
 
-      <td class="flex justify-center">
+      <td>
         <TaskAction
-          :module-id="moduleId"
+          :module-id="task.property7?.id"
           title="Редактирование задачи"
           button-label="Изменить"
           :task="task"
-        />
-
-        <q-btn
-          class="q-ml-md"
-          @click="deleteTask(task.id)"
-          color="negative"
-          label="Удалить"
+          :executor-edit="true"
         />
       </td>
     </tr>
@@ -45,35 +33,21 @@
 
 <script setup>
 import TaskAction from "./TaskAction.vue";
-import taskApi from "src/sdk/task";
 import groupApi from "src/utils/group";
 import { useQuasar } from "quasar";
 import { ref } from "vue";
 
-const { tasks, grouptBy, listProperties,moduleId  } = defineProps({
-  tasks: Array,
+const { tasks, grouptBy, listProperties  } = defineProps({
+  tasks: Object,
   groupBy: String,
-  listProperties: Object,
-  moduleId: String,
-
+  listProperties: Object
 });
 
 const $q = useQuasar();
 
 const calculatedStatus = ref({});
 
-const deleteTask = async (taskId) => {
-  try {
-    await taskApi.taskDelete(taskId, moduleId, 0);
 
-    $q.notify({
-      type: "positive",
-      message: "Задача удалена!",
-    });
-  } catch (error) {
-    console.log(error);
-  }
-};
 
 const calculatedCurrentStatus = (taskProperty) => {
   const obj = listProperties?.property.meta.options.find(
