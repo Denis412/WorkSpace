@@ -1,47 +1,38 @@
 <template>
   <div style="min-width: 300px; overflow-x: auto;">
-    <q-select
-      v-if="modules||tasks||moduleId"
-      filled
-      v-model="sortBy"
-      :options="['Сначала новые','Сначала старые','По названию']"
-      use-chips
-      stack-label
-      label="Сортировка"
-      @update:model-value="sort"
+
+    <Select
+    v-if="modules||tasks||moduleId"
+    :options="['Сначала новые','Сначала старые','По названию']"
+    :changeValue = "sortBy"
+    :key="sortBy"
+    @change="sort"
     />
 
-    <q-select
-      v-if="modules"
-      filled
-      v-model="groupBy"
-      :options="['По названию','По дате начала','По дате окончания']"
-      use-chips
-      stack-label
-      label="Группировка"
-      @update:model-value="group"
+    <Select
+    v-if="modules"
+    :options="['По названию','По дате начала','По дате окончания']"
+    :changeValue = "groupBy"
+    :key="groupBy"
+    @change="group"
+    />
 
+    <Select
+    v-if="moduleId"
+    :options="['По названию','По исполнителю','По статусу задачи']"
+    :changeValue = "groupBy"
+    :key="groupBy"
+    @change="group"
     />
-    <q-select
-      v-if="moduleId"
-      filled
-      v-model="groupBy"
-      :options="['По названию','По исполнителю','По статусу задачи']"
-      use-chips
-      stack-label
-      label="Группировка"
-      @update:model-value="group"
+
+    <Select
+    v-if="tasks"
+    :options="['По названию','По статусу задачи']"
+    :changeValue = "groupBy"
+    :key="groupBy"
+    @change="group"
     />
-    <q-select
-      v-if="tasks"
-      filled
-      v-model="groupBy"
-      :options="['По названию','По статусу задачи']"
-      use-chips
-      stack-label
-      label="Группировка"
-      @update:model-value="group"
-    />
+
     <table style="width: 100%"  class="table">
     <thead class="rounded-borders border-black-1">
       <tr>
@@ -93,6 +84,7 @@ import MainTableModulesBody from "src/components/MainTableModulesBody.vue";
 import MainTableSubjectsBody from "src/components/MainTableSubjectsBody.vue";
 import MainTableTasksBody from "src/components/MainTableTasksBody.vue";
 import MainTableModuleTasksBody from "./MainTableModuleTasksBody.vue";
+import Select from "./Select.vue";
 import { ref,computed } from "vue";
 
 const { columnNames, subjects, modules, tasks, moduleId, pageId } = defineProps(
@@ -109,11 +101,13 @@ const { columnNames, subjects, modules, tasks, moduleId, pageId } = defineProps(
 const sortBy = ref(null);
 const groupBy = ref(null);
 
-const sort = () =>{
+const sort = (sortValue) =>{
+  sortBy.value=sortValue;
   groupBy.value =null;
 }
 
-const group = () =>{
+const group = (groupValue) =>{
+  groupBy.value = groupValue;
   sortBy.value =null;
 }
 
