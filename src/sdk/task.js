@@ -9,7 +9,7 @@ import {
   deleteTask,
   createPermissionRule,
 } from "src/graphql/mutations";
-import { getModuleById, getUserTasks } from "src/graphql/queries";
+import { getModuleById } from "src/graphql/queries";
 import apolloClient from "src/apollo/apollo-client";
 
 provideApolloClient(apolloClient);
@@ -22,8 +22,6 @@ const { mutate: creatingPermissionRule } = useMutation(createPermissionRule);
 const { refetch: refetchModule } = useQuery(getModuleById, {
   module_id: "1",
 });
-
-const { refetch: refetchTasks } = useQuery(getUserTasks);
 
 const taskCreate = async (form, module) => {
   const { data: createdTask } = await creatingTask({
@@ -61,17 +59,9 @@ const taskCreate = async (form, module) => {
       },
     });
 
-  refetchModule({
+  await refetchModule({
     module_id: module.id,
   });
-
-  console.log({
-    createdTask,
-    createdPermissionRule,
-    createdPermissionRuleForModuleTask,
-  });
-
-  await refetchTasks();
 
   return {
     createdTask,
@@ -96,9 +86,13 @@ const taskUpdate = async (form, taskId) => {
   return data;
 };
 
-const taskDelete = async (taskId) => {
+const taskDelete = async (taskId, module) => {
   const { data } = await deletingTask({
     task_id: taskId,
+  });
+
+  await refetchModule({
+    module_id: module.id,
   });
 
   return data;

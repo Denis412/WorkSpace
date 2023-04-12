@@ -39,6 +39,7 @@ const { module, title, buttonLabel, task, executorEdit } = defineProps({
 
 const showForm = ref(false);
 const updateTasks = inject("updateTasks");
+const updateModule = module ? inject("updateModule") : null;
 
 const actionTask = async (form) => {
   try {
@@ -46,7 +47,11 @@ const actionTask = async (form) => {
       ? await taskApi.taskUpdate(form, task.id, module)
       : await taskApi.taskCreate(form, module);
 
-    updateTasks();
+    await updateTasks();
+
+    await updateModule?.({
+      module_id: module.id,
+    });
 
     $q.notify({
       type: "positive",

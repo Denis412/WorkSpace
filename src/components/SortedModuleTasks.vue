@@ -3,7 +3,7 @@
     <tr
       v-for="task in sortTasks(sortBy)"
       :key="task.id"
-      :style="{ 'background-color': calculatedCurrentStatus(task?.status) }"
+      :style="{ 'background-color': task.status.color }"
     >
       <td>
         <div class="link">
@@ -25,7 +25,7 @@
 
       <td class="flex justify-center">
         <TaskAction
-          :module-id="moduleId"
+          :module="module"
           title="Редактирование задачи"
           button-label="Изменить"
           :task="task"
@@ -46,40 +46,48 @@
 import sortApi from "src/utils/sort.js";
 import TaskAction from "./TaskAction.vue";
 import taskApi from "src/sdk/task";
-import { ref } from "vue";
+import { computed, inject } from "vue";
 import { useQuasar } from "quasar";
+import _ from "lodash";
 
-const { tasks, sortBy, listProperties, moduleId } = defineProps({
-  tasks: Array,
+const { sortBy, listProperties, module } = defineProps({
   sortBy: String,
   listProperties: Object,
-  moduleId: String,
+  module: Object,
 });
 
 const $q = useQuasar();
 
-const calculatedStatus = ref({});
+const editedTasks = computed(() =>
+  module.tasks.map((task) =>
+    Object.assign(_.cloneDeep(task), {
+      status:
+        listProperties?.property.meta.options.find(
+          (status) => status.id === task.status
+        ) || {},
+    })
+  )
+);
 
 const sortTasks = (sortBy) => {
-  if (sortBy === "Сначала новые") return sortApi.sortDESCByCreate(tasks);
-  else if (sortBy === "Сначала старые") return sortApi.sortASCByCreate(tasks);
-  else if (sortBy === "По названию") return sortApi.sortByModuleName(tasks);
-  else return tasks;
+  if (sortBy === "Сначала новые")
+    return sortApi.sortDESCByCreate(editedTasks.value);
+  else if (sortBy === "Сначала старые")
+    return sortApi.sortASCByCreate(editedTasks.value);
+  else if (sortBy === "По названию")
+    return sortApi.sortByModuleName(editedTasks.value);
+  else return editedTasks.value;
 };
 
-const calculatedCurrentStatus = (taskProperty) => {
-  const obj = listProperties?.property.meta.options.find(
-    (status) => status.id === taskProperty
-  );
-
-  calculatedStatus.value = obj;
-
-  return obj?.color;
-};
+const updateModule = inject("updateModule");
 
 const deleteTask = async (taskId) => {
   try {
-    await taskApi.taskDelete(taskId, moduleId, 0);
+    await taskApi.taskDelete(taskId, module);
+
+    await updateModule({
+      module_id: module.id,
+    });
 
     $q.notify({
       type: "positive",
