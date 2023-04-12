@@ -49,15 +49,15 @@ module.exports = configure(function (/* ctx */) {
         FILE_STORAGE_URI: "https://cdn.stud.druid.1t.ru",
         RABBITMQ_WEBSTOMP_URI: "wss://stud.druid.1t.ru/ws",
 
-        SUBJECT_ID: "2529884860175464566",
-        MODULE_ID: "7257711564957497306",
-        MODULE_PAGE_ID: "2196357089691369512",
+        SUBJECT_ID: "5140086536069343966",
+        MODULE_ID: "3787230485103944499",
+        MODULE_PAGE_ID: "4814613506144102941",
 
         OWNER_ID: "5571026735801383150",
 
-        APPOINTED_ID: "5008436242887479508",
-        COMPLETED_ID: "876630288677854240",
-        FINISHED_ID: "2623801275564549881",
+        APPOINTED_ID: "3046700084378709559",
+        COMPLETED_ID: "3874423859735854302",
+        FINISHED_ID: "2491577474111315724",
       },
 
       vueRouterMode: "hash", // available values: 'hash', 'history'

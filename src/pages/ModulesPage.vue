@@ -10,6 +10,7 @@
       <ModuleAction />
     </div>
 
+    <!-- <pre>{{ currentModules?.paginate_subject.data }}</pre> -->
     <MainTable
       :modules="currentModules?.paginate_subject.data"
       :columnNames="columnNames"
@@ -57,7 +58,6 @@ onMounted(() => {
     "Название",
     "Дата и время начала",
     "Дата и время окончания",
-    "Файл",
     "Задачи",
   ];
 

@@ -62,7 +62,7 @@ const isOwner = inject("isOwner");
 
 const subjectModules = computed(() => {
   const moduless = modules?.reduce((modulesArr, subject) => {
-    modulesArr.push(...subject.property4);
+    modulesArr.push(...subject.modules);
 
     return modulesArr;
   }, []);
@@ -70,7 +70,7 @@ const subjectModules = computed(() => {
   const module = moduless?.find((el) => el.id === page.object.id);
 
   return module
-    ? module.property4.user_id === parseFloat(Cookies.get("user_id"))
+    ? module.responsible.user_id === parseFloat(Cookies.get("user_id"))
     : false;
 });
 

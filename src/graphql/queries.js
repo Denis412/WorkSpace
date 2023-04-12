@@ -141,11 +141,11 @@ export const getGroupSubjects = gql`
           id
           name
         }
-        property4 {
+        modules {
           id
           name
         }
-        property2 {
+        tasks {
           id
           name
         }
@@ -156,7 +156,7 @@ export const getGroupSubjects = gql`
 
 export const getResponsibleGroupSubjects = gql`
   query getGroupSubjects {
-    get_group(id: "4579859626660313705") {
+    get_group(id: "6151953155520787188") {
       id
       author_id
       name
@@ -181,7 +181,7 @@ export const getResponsibleGroupSubjects = gql`
 
 export const getExecutorGroupSubjects = gql`
   query getGroupSubjects {
-    get_group(id: "7007095239370065289") {
+    get_group(id: "1605164073721191913") {
       id
       author_id
       name
@@ -263,11 +263,11 @@ export const getModulesAll = gql`
           first_name
           last_name
         }
-        property4 {
+        modules {
           id
           name
           created_at
-          property4 {
+          responsible {
             id
             user_id
             fullname {
@@ -276,17 +276,17 @@ export const getModulesAll = gql`
             }
           }
 
-          property5 {
+          startdate {
             date
             time
           }
-          property6 {
+          expirationdate {
             date
             time
           }
-          property7 {
+          tasks {
             id
-            property3
+            status
           }
         }
       }
@@ -306,7 +306,7 @@ export const getModulesAll = gql`
 
 export const getTasksAll = gql`
   query getTasks {
-    paginate_type1(page: 1, perPage: 100) {
+    paginate_task(page: 1, perPage: 100) {
       data {
         id
         type_id
@@ -316,8 +316,8 @@ export const getTasksAll = gql`
         created_at
         updated_at
         name
-        property1
-        property2 {
+        description
+        executor {
           id
           user_id
           fullname {
@@ -325,7 +325,7 @@ export const getTasksAll = gql`
             last_name
           }
         }
-        property3
+        status
       }
       paginatorInfo {
         perPage
@@ -357,11 +357,11 @@ export const getUserModules = gql`
           first_name
           last_name
         }
-        property4 {
+        modules {
           id
           name
           created_at
-          property4 {
+          responsible {
             id
             fullname {
               first_name
@@ -369,17 +369,17 @@ export const getUserModules = gql`
             }
           }
 
-          property5 {
+          startdate {
             date
             time
           }
-          property6 {
+          expirationdate {
             date
             time
           }
-          property7 {
+          tasks {
             id
-            property3
+            status
           }
         }
       }
@@ -399,39 +399,38 @@ export const getUserModules = gql`
 
 export const getModuleById = gql`
   query getModuleById($module_id: String!) {
-    get_type2(id: $module_id) {
+    get_module(id: $module_id) {
       id
       name
       created_at
-      property4 {
+      responsible {
         id
         fullname {
           first_name
-          middle_name
           last_name
         }
       }
-      property5 {
+      startdate {
         date
         time
       }
-      property6 {
+      expirationdate {
         date
         time
       }
-      property7 {
+      tasks {
         id
         name
         created_at
-        property1
-        property2 {
+        description
+        executor {
           id
           fullname {
             first_name
             last_name
           }
         }
-        property3
+        status
       }
     }
   }
@@ -453,20 +452,20 @@ export const getUserTasks = gql`
           first_name
           last_name
         }
-        property2 {
+        tasks {
           id
           name
-          property1
+          description
           created_at
-          property2 {
+          executor {
             id
             fullname {
               first_name
               last_name
             }
           }
-          property3
-          property7 {
+          status
+          module {
             id
           }
         }
@@ -487,7 +486,7 @@ export const getUserTasks = gql`
 
 export const getListProperty = gql`
   query getProperty {
-    property(id: "1842204611759571053") {
+    property(id: "952775457880529425") {
       id
       type_id
       author_id

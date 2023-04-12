@@ -9,7 +9,7 @@ export function getClientOptions() {
   });
 
   const uploadLink = createUploadLink({
-    uri: "https://cdn.stud.druid.1t.ru/upload",
+    uri: "https://app.stud.druid.1t.ru/graphql",
   });
 
   const authLink = setContext((_, { headers }) => {

@@ -7,7 +7,7 @@
     <header class="text-center text-h3 q-mb-md">{{ page.title }}</header>
 
     <main>
-      <!-- <pre>dll{{ allTasks?.paginate_subject.data[0] }}</pre> -->
+      <!-- <pre>dll{{ allTasks?.paginate_task.data }}</pre> -->
       <MainTable
         :column-names="[
           'Название задачи',
