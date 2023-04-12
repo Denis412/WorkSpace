@@ -25,7 +25,7 @@ const { refetch: refetchModule } = useQuery(getModuleById, {
 
 const { refetch: refetchTasks } = useQuery(getUserTasks);
 
-const taskCreate = async (form, moduleId) => {
+const taskCreate = async (form, module) => {
   const { data: createdTask } = await creatingTask({
     input: {
       name: form.name,
@@ -35,7 +35,7 @@ const taskCreate = async (form, moduleId) => {
       },
       status: process.env.APPOINTED_ID,
       module: {
-        [process.env.MODULE_ID]: moduleId,
+        [process.env.MODULE_ID]: module.id,
       },
     },
   });
@@ -50,8 +50,25 @@ const taskCreate = async (form, moduleId) => {
     },
   });
 
+  const { data: createdPermissionRuleForModuleTask } =
+    await creatingPermissionRule({
+      input: {
+        model_type: "object",
+        model_id: createdTask.create_task.recordId,
+        owner_type: "subject",
+        owner_id: module.responsible.id,
+        level: 7,
+      },
+    });
+
   refetchModule({
-    module_id: moduleId,
+    module_id: module.id,
+  });
+
+  console.log({
+    createdTask,
+    createdPermissionRule,
+    createdPermissionRuleForModuleTask,
   });
 
   await refetchTasks();
@@ -59,6 +76,7 @@ const taskCreate = async (form, moduleId) => {
   return {
     createdTask,
     createdPermissionRule,
+    createdPermissionRuleForModuleTask,
   };
 };
 

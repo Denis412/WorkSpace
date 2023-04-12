@@ -247,6 +247,49 @@ export const getPage = gql`
   }
 `;
 
+export const getM = gql`
+  query getUserModules {
+    paginate_module(page: 1, perPage: 100) {
+      data {
+        id
+        name
+        created_at
+        level
+        responsible {
+          id
+          user_id
+          fullname {
+            first_name
+            last_name
+          }
+        }
+        startdate {
+          date
+          time
+        }
+        expirationdate {
+          date
+          time
+        }
+        tasks {
+          id
+          status
+        }
+      }
+      paginatorInfo {
+        perPage
+        currentPage
+        lastPage
+        total
+        count
+        from
+        to
+        hasMorePages
+      }
+    }
+  }
+`;
+
 export const getModulesAll = gql`
   query getUserModules {
     paginate_subject(page: 1, perPage: 100) {

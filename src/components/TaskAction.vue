@@ -1,22 +1,24 @@
 <template>
-  <q-btn color="primary" @click="showForm = true" :label="buttonLabel" />
+  <div>
+    <q-btn color="primary" @click="showForm = true" :label="buttonLabel" />
 
-  <q-dialog v-model="showForm">
-    <q-card>
-      <q-card-section class="text-h4 text-center">
-        {{ title }}
-      </q-card-section>
+    <q-dialog v-model="showForm">
+      <q-card>
+        <q-card-section class="text-h4 text-center">
+          {{ title }}
+        </q-card-section>
 
-      <q-card-section class="q-pt-none">
-        <TaskForm
-          form-context="create"
-          :task="task"
-          :executorEdit="executorEdit"
-          @submit-form="actionTask"
-        />
-      </q-card-section>
-    </q-card>
-  </q-dialog>
+        <q-card-section class="q-pt-none">
+          <TaskForm
+            form-context="create"
+            :task="task"
+            :executorEdit="executorEdit"
+            @submit-form="actionTask"
+          />
+        </q-card-section>
+      </q-card>
+    </q-dialog>
+  </div>
 </template>
 
 <script setup>
@@ -27,8 +29,8 @@ import taskApi from "src/sdk/task";
 
 const $q = useQuasar();
 
-const { moduleId, title, buttonLabel, task, executorEdit } = defineProps({
-  moduleId: String,
+const { module, title, buttonLabel, task, executorEdit } = defineProps({
+  module: Object,
   title: String,
   task: Object,
   buttonLabel: String,
@@ -41,8 +43,8 @@ const updateTasks = inject("updateTasks");
 const actionTask = async (form) => {
   try {
     task
-      ? await taskApi.taskUpdate(form, task.id, moduleId)
-      : await taskApi.taskCreate(form, moduleId);
+      ? await taskApi.taskUpdate(form, task.id, module)
+      : await taskApi.taskCreate(form, module);
 
     updateTasks();
 

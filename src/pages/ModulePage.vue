@@ -4,8 +4,6 @@
   </q-page>
 
   <q-page v-else class="q-pa-md">
-    <!-- <pre>{{ page }}</pre> -->
-    <!-- <pre>re{{ resultModule }}</pre> -->
     <header class="text-h3 text-center">
       {{ resultModule?.get_module.name }}
     </header>
@@ -13,7 +11,7 @@
     <main class="q-mt-md">
       <div class="flex">
         <TaskAction
-          :module-id="resultModule?.get_module.id"
+          :module="resultModule?.get_module"
           title="Создание задачи"
           button-label="Создать задачу"
         />
@@ -27,7 +25,7 @@
           'Исполнитель',
           'Действия',
         ]"
-        :module-id="resultModule?.get_module.id"
+        :module="resultModule?.get_module"
       />
     </main>
   </q-page>

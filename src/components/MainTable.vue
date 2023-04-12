@@ -2,7 +2,7 @@
   <div style="min-width: 300px; overflow-x: auto">
     <div class="row no-wrap">
       <Select
-        v-if="modules || tasks || moduleId"
+        v-if="modules || tasks || module"
         :options="['Сначала новые', 'Сначала старые', 'По названию']"
         :changeValue="sortBy"
         :key="sortBy"
@@ -23,7 +23,7 @@
       />
 
       <Select
-        v-if="moduleId"
+        v-if="module"
         class="q-ml-sm"
         :options="['По названию', 'По исполнителю', 'По статусу задачи']"
         :changeValue="groupBy"
@@ -68,14 +68,14 @@
       <MainTableSubjectsBody
         v-if="subjects"
         :subjects="subjects"
-        :moduleId="moduleId"
+        :module="module"
         :sortBy="sortBy"
         :groupBy="groupBy"
       />
 
       <MainTableModuleTasksBody
-        v-if="moduleId"
-        :moduleId="moduleId"
+        v-if="module"
+        :module="module"
         :sortBy="sortBy"
         :groupBy="groupBy"
       />
@@ -99,16 +99,14 @@ import MainTableModuleTasksBody from "./MainTableModuleTasksBody.vue";
 import Select from "./Select.vue";
 import { ref, computed } from "vue";
 
-const { columnNames, subjects, modules, tasks, moduleId, pageId } = defineProps(
-  {
-    columnNames: Array,
-    subjects: Array,
-    modules: Object,
-    tasks: Object,
-    moduleId: String,
-    pageId: String,
-  }
-);
+const { columnNames, subjects, modules, tasks, module, pageId } = defineProps({
+  columnNames: Array,
+  subjects: Array,
+  modules: Object,
+  tasks: Object,
+  module: Object,
+  pageId: String,
+});
 
 const sortBy = ref(null);
 const groupBy = ref(null);

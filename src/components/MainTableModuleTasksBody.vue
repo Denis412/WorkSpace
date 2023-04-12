@@ -4,14 +4,14 @@
     :tasks="resultModule?.get_module.tasks"
     :sortBy="sortBy"
     :listProperties="listProperties"
-    :moduleId="moduleId"
+    :module="module"
   />
 
   <GroupedModuleTasks
     :tasks="resultModule?.get_module.tasks"
     :groupBy="groupBy"
     :listProperties="listProperties"
-    :moduleId="moduleId"
+    :module="module"
   />
 </template>
 
@@ -22,8 +22,8 @@ import { getModuleById, getListProperty } from "src/graphql/queries";
 import SortedTasks from "./SortedModuleTasks.vue";
 import GroupedModuleTasks from "./GroupedModuleTasks.vue";
 
-const { moduleId, sortBy, groupBy } = defineProps({
-  moduleId: String,
+const { module, sortBy, groupBy } = defineProps({
+  module: Object,
   sortBy: String,
   groupBy: String,
 });
@@ -35,7 +35,7 @@ const { result: listProperties } = useQuery(getListProperty);
 const { result: resultModule, refetch: refetchModule } = useQuery(
   getModuleById,
   {
-    module_id: moduleId,
+    module_id: module.id,
   }
 );
 </script>

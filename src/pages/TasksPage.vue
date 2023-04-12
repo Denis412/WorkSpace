@@ -7,7 +7,6 @@
     <header class="text-center text-h3 q-mb-md">{{ page.title }}</header>
 
     <main>
-      <!-- <pre>dll{{ allTasks?.paginate_task.data }}</pre> -->
       <MainTable
         :column-names="[
           'Название задачи',
@@ -15,7 +14,7 @@
           'Статус',
           'Действия',
         ]"
-        :tasks="allTasks?.paginate_subject.data[0]"
+        :tasks="allTasks?.paginate_task.data"
       />
     </main>
   </q-page>
@@ -35,7 +34,7 @@ const {
   result: allTasks,
   loading,
   refetch: refetchTasks,
-} = useQuery(getUserTasks);
+} = useQuery(getTasksAll);
 
 provide("updateTasks", refetchTasks);
 </script>

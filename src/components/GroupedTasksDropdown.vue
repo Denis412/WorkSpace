@@ -27,7 +27,7 @@
 
     <td>
       <TaskAction
-        :module-id="moduleId || task.module?.id"
+        :module="module || task.module"
         title="Редактирование задачи"
         button-label="Изменить"
         :task="task"
@@ -50,10 +50,10 @@ import TaskAction from "./TaskAction.vue";
 import { useQuasar } from "quasar";
 import { ref, defineProps } from "vue";
 
-const { group, listProperties, moduleId } = defineProps({
+const { group, listProperties, module } = defineProps({
   group: Array,
   listProperties: Object,
-  moduleId: String,
+  module: Object,
   deleteBtn: Boolean,
 });
 

@@ -1,13 +1,13 @@
 <template>
   <SortedTasks
     v-if="!groupBy"
-    :tasks="tasks.tasks"
+    :tasks="tasks"
     :sortBy="sortBy"
     :listProperties="listProperties"
   />
 
   <GroupedTasks
-    :tasks="tasks.tasks"
+    :tasks="tasks"
     :groupBy="groupBy"
     :listProperties="listProperties"
   />

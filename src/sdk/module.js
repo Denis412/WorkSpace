@@ -81,6 +81,13 @@ const moduleCreate = async (form) => {
 
   refetchAllPages();
 
+  console.log({
+    createdModule,
+    createdPage,
+    createdPermissionRuleForPage,
+    createdPermissionRuleForModuleObject,
+  });
+
   return {
     createdModule,
     createdPage,
@@ -108,13 +115,13 @@ const moduleUpdate = async (Moduleform, bufferModule) => {
   filtredValue.date_start
     ? (input.startdate = {
         date: new Date(filtredValue.date_start).toLocaleDateString(),
-        time:"01:00:00"
+        time: "01:00:00",
       })
     : null;
   filtredValue.date_end
     ? (input.expirationdate = {
         date: new Date(filtredValue?.date_end).toLocaleDateString(),
-        time: "23:55:00"
+        time: "23:55:00",
       })
     : null;
 
