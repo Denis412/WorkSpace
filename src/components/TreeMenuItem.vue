@@ -61,13 +61,7 @@ const modulesType_id = ref(process.env.MODULE_ID);
 const isOwner = inject("isOwner");
 
 const subjectModules = computed(() => {
-  const moduless = modules?.reduce((modulesArr, subject) => {
-    modulesArr.push(...subject.modules);
-
-    return modulesArr;
-  }, []);
-
-  const module = moduless?.find((el) => el.id === page.object.id);
+  const module = modules?.find((el) => el.id === page.object.id);
 
   return module
     ? module.responsible.user_id === parseFloat(Cookies.get("user_id"))

@@ -1,9 +1,5 @@
 <template>
   <tbody>
-    <!-- <div v-if="subject.modules.length" class="text-h6 text-center w-100p">
-      {{ subject.fullname.first_name }}
-    </div> -->
-
     <tr v-for="module in SortModules(sortBy)" :key="module.id">
       <td class="q-pa-md text-center">
         {{ module.name }}
