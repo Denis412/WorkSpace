@@ -9,7 +9,7 @@ import {
   deleteTask,
   createPermissionRule,
 } from "src/graphql/mutations";
-import { getModuleById } from "src/graphql/queries";
+import { getModuleById, getUserTasks } from "src/graphql/queries";
 import apolloClient from "src/apollo/apollo-client";
 
 provideApolloClient(apolloClient);
@@ -23,9 +23,9 @@ const { refetch: refetchModule } = useQuery(getModuleById, {
   module_id: "1",
 });
 
-const taskCreate = async (form, moduleId) => {
-  console.log(form, process.env.MODULE_ID);
+const { refetch: refetchTasks } = useQuery(getUserTasks);
 
+const taskCreate = async (form, moduleId) => {
   const { data: createdTask } = await creatingTask({
     input: {
       name: form.name,
@@ -53,6 +53,8 @@ const taskCreate = async (form, moduleId) => {
   refetchModule({
     module_id: moduleId,
   });
+
+  await refetchTasks();
 
   return {
     createdTask,

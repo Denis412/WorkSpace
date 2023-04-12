@@ -1,59 +1,27 @@
 <template>
-  <tbody>
-    <tr
-      v-for="task in sortTasks"
-      :key="task.id"
-      :style="{ 'background-color': calculatedCurrentStatus(task?.status) }"
-    >
-      <td>
-        <div class="link">
-          {{ task.name }}
-        </div>
-      </td>
+  <SortedTasks
+    v-if="!groupBy"
+    :tasks="resultModule?.get_type2.property7"
+    :sortBy="sortBy"
+    :listProperties="listProperties"
+    :moduleId="moduleId"
+  />
 
-      <td>
-        {{ task.description }}
-      </td>
-
-      <td>
-        <router-link
-          :to="{ name: 'subject', params: { id: task.executor.id } }"
-        >
-          {{ task.executor.fullname.first_name }}
-        </router-link>
-      </td>
-
-      <td class="flex justify-center">
-        <TaskAction
-          :module-id="moduleId"
-          title="Редактирование задачи"
-          button-label="Изменить"
-          :task="task"
-        />
-
-        <q-btn
-          class="q-ml-md"
-          @click="deleteTask(task.id)"
-          color="negative"
-          label="Удалить"
-        />
-      </td>
-    </tr>
-  </tbody>
+  <GroupedModuleTasks
+    :tasks="resultModule?.get_type2.property7"
+    :groupBy="groupBy"
+    :listProperties="listProperties"
+    :moduleId="moduleId"
+  />
 </template>
 
 <script setup>
-import { ref, computed, inject } from "vue";
 import { useQuery } from "@vue/apollo-composable";
 import { getModuleById, getListProperty } from "src/graphql/queries";
-import TaskAction from "./TaskAction.vue";
-import taskApi from "src/sdk/task";
-import sortApi from "src/utils/sort.js";
-import { useQuasar } from "quasar";
+import SortedTasks from "./SortedModuleTasks.vue";
+import GroupedModuleTasks from "./GroupedModuleTasks.vue";
 
-const $q = useQuasar();
-
-const { moduleId, pageId, sortBy } = defineProps({
+const { moduleId, sortBy, groupBy } = defineProps({
   moduleId: String,
   sortBy: String,
 });

@@ -407,7 +407,6 @@ export const getModuleById = gql`
         id
         fullname {
           first_name
-          middle_name
           last_name
         }
       }
