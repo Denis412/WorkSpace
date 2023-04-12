@@ -26,8 +26,13 @@ import MainHeader from "src/components/MainHeader.vue";
 import MainDrawer from "src/components/MainDrawer.vue";
 import MainFooter from "src/components/MainFooter.vue";
 import TreeMenu from "src/components/TreeMenu.vue";
-import { provideApolloClient, useQuery } from "@vue/apollo-composable";
+import {
+  provideApolloClient,
+  useQuery,
+  useMutation,
+} from "@vue/apollo-composable";
 import { pages } from "src/graphql/queries";
+import { createQueue } from "src/graphql/mutations";
 import apolloClient from "src/apollo/apollo-client";
 import { onMounted } from "vue";
 import stompApi from "src/sdk/stomp";
@@ -38,6 +43,8 @@ provideApolloClient(apolloClient);
 const leftDrawerOpen = ref(false);
 const isOwner = ref(Cookies.get("user_id") === process.env.OWNER_ID);
 
+const { mutate: creatingQueue } = useMutation(createQueue);
+
 const { result: currentSpacePages, refetch: refetchPages } = useQuery(pages);
 
 const toggleLeftDrawer = () => {
@@ -47,8 +54,9 @@ const toggleLeftDrawer = () => {
 provide("updatePages", refetchPages);
 provide("isOwner", isOwner);
 
+stompApi.queueCreate();
+
 onMounted(() => {
-  stompApi.queueCreate().then((result) => {});
   stompApi.stompConnect();
 });
 </script>

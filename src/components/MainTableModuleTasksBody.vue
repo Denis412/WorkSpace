@@ -25,6 +25,7 @@ import GroupedModuleTasks from "./GroupedModuleTasks.vue";
 const { moduleId, sortBy, groupBy } = defineProps({
   moduleId: String,
   sortBy: String,
+  groupBy: String,
 });
 
 const updateTasks = inject("updateTasks");

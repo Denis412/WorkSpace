@@ -47,7 +47,6 @@ const $q = useQuasar();
 const calculatedStatus = ref({});
 
 const sortTasks = (tasks, sortBy) => {
-  console.log(listProperties);
   if (sortBy === "Сначала новые") return sortApi.sortDESCByCreate(tasks);
   else if (sortBy === "Сначала старые") return sortApi.sortASCByCreate(tasks);
   else if (sortBy === "По названию") return sortApi.sortByModuleName(tasks);
