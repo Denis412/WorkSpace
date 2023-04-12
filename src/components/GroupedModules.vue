@@ -4,7 +4,7 @@
     v-for="subject in modules"
     :key="subject.id"
   >
-    <div
+    <tr
       class="relative-position tbody"
       v-for="(group, key) in groupModules(subject.modules, groupBy)"
       :key="key"
@@ -14,7 +14,7 @@
         >. Обьектов: <strong>{{ group.length }}</strong>
       </div>
       <Dropdown :group="group" />
-    </div>
+    </tr>
   </tbody>
 </template>
 
