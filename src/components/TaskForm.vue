@@ -47,13 +47,10 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from "vue";
+import { ref, computed } from "vue";
 import { getExecutorGroupSubjects } from "src/graphql/queries";
 import { useQuery } from "@vue/apollo-composable";
-import {
-  getTaskStatus,
-  getAllStatusesForSelect,
-} from "src/utils/getTaskStatus";
+import { getAllStatusesForSelect } from "src/utils/getTaskStatus";
 
 const { formContext, task, executorEdit } = defineProps({
   formContext: String,
@@ -66,7 +63,7 @@ const options = getAllStatusesForSelect();
 const form = ref({
   name: task?.name || "",
   description: task?.description || "",
-  status: "",
+  status: task?.status.label,
   executor: {
     label: `${task?.executor.fullname.first_name || ""} ${
       task?.executor.fullname.last_name || ""
@@ -77,8 +74,8 @@ const form = ref({
 
 const isDisabledSelectStatus = computed(() =>
   executorEdit
-    ? form.value.status?.label !== "Назначена"
-    : form.value.status?.label !== "Выполнена"
+    ? task.status.label !== "Назначена"
+    : task.status.label !== "Выполнена"
 );
 
 const { result: executorGroupSubjects } = useQuery(getExecutorGroupSubjects);
@@ -89,12 +86,4 @@ const executorGroupSubjectsNames = computed(() =>
     value: subject.id,
   }))
 );
-
-const calculatedStatus = (property) => {
-  form.value.status = getTaskStatus(property);
-};
-
-onMounted(async () => {
-  calculatedStatus(task?.status);
-});
 </script>

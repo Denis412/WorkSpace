@@ -19,7 +19,7 @@
 
       <td>
         <TaskAction
-          :module-id="task.module?.id"
+          :module="task.module"
           title="Редактирование задачи"
           button-label="Изменить"
           :task="task"
