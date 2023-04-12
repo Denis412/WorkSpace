@@ -12,7 +12,7 @@
 
     <!-- <pre>fhfgh{{ currentModules?.paginate_module }}</pre> -->
     <MainTable
-      :modules="currentModules?.paginate_subject.data"
+      :modules="currentModules?.paginate_module.data"
       :columnNames="columnNames"
     />
   </q-page>
@@ -21,10 +21,9 @@
 <script setup>
 import MainTable from "src/components/MainTable.vue";
 import { useQuery } from "@vue/apollo-composable";
-import { getUserModules, getModulesAll, getM } from "src/graphql/queries";
+import { getAllModules } from "src/graphql/queries";
 import { inject, onMounted, provide, ref } from "vue";
 import ModuleAction from "src/components/ModuleAction.vue";
-import { Cookies } from "quasar";
 
 const { page } = defineProps({
   page: Object,
@@ -32,24 +31,11 @@ const { page } = defineProps({
 
 provide("page", page);
 
-let currentModules = ref(null);
 let loading = ref(null);
 let refetchModules;
 const isOwner = inject("isOwner");
 
-// const { result: currentModules } = useQuery(getM);
-
-Cookies.get("user_id") === process.env.OWNER_ID
-  ? ({
-      result: currentModules,
-      loading,
-      refetch: refetchModules,
-    } = useQuery(getModulesAll))
-  : ({
-      result: currentModules,
-      loading,
-      refetch: refetchModules,
-    } = useQuery(getUserModules));
+const { result: currentModules } = useQuery(getAllModules);
 
 const columnNames = ref();
 

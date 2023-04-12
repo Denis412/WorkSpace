@@ -1,10 +1,10 @@
 <template>
-  <tbody v-for="subject in modules" :key="subject.id">
-    <div v-if="subject.modules.length" class="text-h6 text-center w-100p">
+  <tbody>
+    <!-- <div v-if="subject.modules.length" class="text-h6 text-center w-100p">
       {{ subject.fullname.first_name }}
-    </div>
+    </div> -->
 
-    <tr v-for="module in SortModules(subject.modules, sortBy)" :key="module.id">
+    <tr v-for="module in SortModules(sortBy)" :key="module.id">
       <td class="q-pa-md text-center">
         {{ module.name }}
       </td>
@@ -32,7 +32,7 @@
 </template>
 
 <script setup>
-import { inject } from "vue";
+import { computed, inject } from "vue";
 import sortApi from "src/utils/sort.js";
 import ModuleAction from "src/components/ModuleAction.vue";
 
@@ -41,13 +41,20 @@ const { modules, sortBy } = defineProps({
   sortBy: String,
 });
 
+const filteredModules = computed(() =>
+  modules.filter((module) => module.level !== 4)
+);
+
 const isOwner = inject("isOwner");
 
-const SortModules = (modules, sortBy) => {
-  if (sortBy === "Сначала новые") return sortApi.sortDESCByCreate(modules);
-  else if (sortBy === "Сначала старые") return sortApi.sortASCByCreate(modules);
-  else if (sortBy === "По названию") return sortApi.sortByModuleName(modules);
-  else return modules;
+const SortModules = (sortBy) => {
+  if (sortBy === "Сначала новые")
+    return sortApi.sortDESCByCreate(filteredModules.value);
+  else if (sortBy === "Сначала старые")
+    return sortApi.sortASCByCreate(filteredModules.value);
+  else if (sortBy === "По названию")
+    return sortApi.sortByModuleName(filteredModules.value);
+  else return filteredModules.value;
 };
 
 const reduceTasks = (tasks, status) => {

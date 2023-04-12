@@ -1,12 +1,8 @@
 <template>
-  <tbody
-    class="relative-position tbody"
-    v-for="subject in modules"
-    :key="subject.id"
-  >
+  <tbody class="relative-position tbody">
     <tr
       class="relative-position tbody"
-      v-for="(group, key) in groupModules(subject.modules, groupBy)"
+      v-for="(group, key) in groupModules(groupBy)"
       :key="key"
     >
       <div class="th q-py-sm q-pl-sm">
@@ -19,7 +15,7 @@
 </template>
 
 <script setup>
-import { defineProps } from "vue";
+import { computed } from "vue";
 import groupApi from "src/utils/group";
 import Dropdown from "./GroupedModulesDropdown.vue";
 
@@ -28,12 +24,17 @@ const { modules, groupBy } = defineProps({
   groupBy: String,
 });
 
-const groupModules = (modules, groupBy) => {
-  if (groupBy === "По названию") return groupApi.groupByModuleName(modules);
+const filteredModules = computed(() =>
+  modules.filter((module) => module.level !== 4)
+);
+
+const groupModules = (groupBy) => {
+  if (groupBy === "По названию")
+    return groupApi.groupByModuleName(filteredModules.value);
   else if (groupBy === "По дате начала")
-    return groupApi.groupByStartDate(modules);
+    return groupApi.groupByStartDate(filteredModules.value);
   else if (groupBy === "По дате окончания")
-    return groupApi.groupByEndDate(modules);
+    return groupApi.groupByEndDate(filteredModules.value);
 };
 </script>
 

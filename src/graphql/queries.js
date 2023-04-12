@@ -247,8 +247,8 @@ export const getPage = gql`
   }
 `;
 
-export const getM = gql`
-  query getUserModules {
+export const getAllModules = gql`
+  query getAllModules {
     paginate_module(page: 1, perPage: 100) {
       data {
         id

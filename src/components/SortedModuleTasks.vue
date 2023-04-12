@@ -1,7 +1,7 @@
 <template>
   <tbody>
     <tr
-      v-for="task in sortTasks(tasks, sortBy)"
+      v-for="task in sortTasks(sortBy)"
       :key="task.id"
       :style="{ 'background-color': calculatedCurrentStatus(task?.status) }"
     >
@@ -60,7 +60,7 @@ const $q = useQuasar();
 
 const calculatedStatus = ref({});
 
-const sortTasks = (tasks, sortBy) => {
+const sortTasks = (sortBy) => {
   if (sortBy === "Сначала новые") return sortApi.sortDESCByCreate(tasks);
   else if (sortBy === "Сначала старые") return sortApi.sortASCByCreate(tasks);
   else if (sortBy === "По названию") return sortApi.sortByModuleName(tasks);

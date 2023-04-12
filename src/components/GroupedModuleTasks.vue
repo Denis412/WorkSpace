@@ -1,7 +1,7 @@
 <template>
   <tbody
     class="relative-position tbody"
-    v-for="(group, key) in groupTasks(tasks, groupBy)"
+    v-for="(group, key) in groupTasks(groupBy)"
     :key="key"
   >
     <div class="th q-py-sm q-pl-sm">
@@ -21,18 +21,19 @@
 import groupApi from "src/utils/group";
 import Dropdown from "./GroupedTasksDropdown.vue";
 
-const { tasks, grouptBy, listProperties, module } = defineProps({
-  tasks: Array,
+const { grouptBy, listProperties, module } = defineProps({
   groupBy: String,
   listProperties: Object,
   module: Object,
 });
 
-const groupTasks = (tasks, groupBy) => {
-  if (groupBy === "По названию") return groupApi.groupByModuleName(tasks);
-  else if (groupBy === "По исполнителю") return groupApi.groupByExecutor(tasks);
+const groupTasks = (groupBy) => {
+  if (groupBy === "По названию")
+    return groupApi.groupByModuleName(module.tasks);
+  else if (groupBy === "По исполнителю")
+    return groupApi.groupByExecutor(module.tasks);
   else if (groupBy === "По статусу задачи")
-    return groupApi.groupByStatus(tasks);
+    return groupApi.groupByStatus(module.tasks);
 };
 </script>
 

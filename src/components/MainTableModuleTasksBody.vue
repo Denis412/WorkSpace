@@ -8,7 +8,6 @@
   />
 
   <GroupedModuleTasks
-    :tasks="resultModule?.get_module.tasks"
     :groupBy="groupBy"
     :listProperties="listProperties"
     :module="module"

@@ -11,7 +11,7 @@ import SortedModules from "./SortedModules.vue";
 import GroupedModules from "./GroupedModules.vue";
 
 const { modules, sortBy, groupBy } = defineProps({
-  modules: Object,
+  modules: Array,
   sortBy: String,
   groupBy: String,
 });
