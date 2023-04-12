@@ -3,7 +3,7 @@
     <tr
       v-for="task in sortTasks(sortBy)"
       :key="task.id"
-      :style="{ 'background-color': calculatedCurrentStatus(task?.status) }"
+      :style="{ 'background-color': task.status.color }"
     >
       <td>
         {{ task.name }}
@@ -14,7 +14,7 @@
       </td>
 
       <td>
-        {{ calculatedStatus?.label }}
+        {{ task.status.label }}
       </td>
 
       <td>
@@ -33,8 +33,8 @@
 <script setup>
 import sortApi from "src/utils/sort.js";
 import TaskAction from "./TaskAction.vue";
-import { ref } from "vue";
-import { useQuasar } from "quasar";
+import { computed } from "vue";
+import _ from "lodash";
 
 const { tasks, sortBy, listProperties } = defineProps({
   tasks: Object,
@@ -42,25 +42,25 @@ const { tasks, sortBy, listProperties } = defineProps({
   listProperties: Object,
 });
 
-const $q = useQuasar();
-
-const calculatedStatus = ref({});
+const editedTasks = computed(() =>
+  tasks.map((task) =>
+    Object.assign(_.cloneDeep(task), {
+      status:
+        listProperties?.property.meta.options.find(
+          (status) => status.id === task.status
+        ) || null,
+    })
+  )
+);
 
 const sortTasks = (sortBy) => {
-  if (sortBy === "Сначала новые") return sortApi.sortDESCByCreate(tasks);
-  else if (sortBy === "Сначала старые") return sortApi.sortASCByCreate(tasks);
-  else if (sortBy === "По названию") return sortApi.sortByModuleName(tasks);
-  else return tasks;
-};
-
-const calculatedCurrentStatus = (taskProperty) => {
-  const obj = listProperties?.property.meta.options.find(
-    (status) => status.id === taskProperty
-  );
-
-  calculatedStatus.value = obj;
-
-  return obj?.color;
+  if (sortBy === "Сначала новые")
+    return sortApi.sortDESCByCreate(editedTasks.value);
+  else if (sortBy === "Сначала старые")
+    return sortApi.sortASCByCreate(editedTasks.value);
+  else if (sortBy === "По названию")
+    return sortApi.sortByModuleName(editedTasks.value);
+  else return editedTasks.value;
 };
 </script>
 

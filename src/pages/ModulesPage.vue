@@ -10,7 +10,6 @@
       <ModuleAction />
     </div>
 
-    <!-- <pre>fhfgh{{ currentModules?.paginate_module }}</pre> -->
     <MainTable
       :modules="currentModules?.paginate_module.data"
       :columnNames="columnNames"
@@ -31,11 +30,13 @@ const { page } = defineProps({
 
 provide("page", page);
 
-let loading = ref(null);
-let refetchModules;
 const isOwner = inject("isOwner");
 
-const { result: currentModules } = useQuery(getAllModules);
+const {
+  result: currentModules,
+  loading,
+  refetch: refetchModules,
+} = useQuery(getAllModules);
 
 const columnNames = ref();
 

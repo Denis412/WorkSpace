@@ -7,12 +7,6 @@
   <ModulePage v-else-if="pageType === 'Модуль'" :page="page?.page" />
 
   <TasksPage v-else-if="pageType === 'Задачи'" :page="page?.page" />
-  <TaskPage v-else-if="pageType === 'Задача'" :page="page?.page" />
-
-  <!-- <q-page>
-    page
-    <pre>{{ page }}</pre>
-  </q-page> -->
 </template>
 
 <script setup>
@@ -23,7 +17,6 @@ import { useRoute } from "vue-router";
 import ModulesPage from "./ModulesPage.vue";
 import ModulePage from "./ModulePage.vue";
 import TasksPage from "./TasksPage.vue";
-import TaskPage from "./TaskPage.vue";
 
 const route = useRoute();
 const id = route.params.id;
@@ -40,7 +33,6 @@ const pageTypeUpdate = () => {
 
   if (page_type_id === null) pageType.value = page_title;
   else if (page_type_id === "3787230485103944499") pageType.value = "Модуль";
-  else if (page_type_id === "8666135715858217678") pageType.value = "Задача";
 };
 
 onMounted(() => {
