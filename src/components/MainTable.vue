@@ -72,12 +72,6 @@
         :groupBy="groupBy"
       />
 
-      <MainTableModulesBody
-        v-if="modules"
-        :modules="modules"
-        :sortBy="sortBy"
-      />
-
       <MainTableTasksBody
         v-if="tasks"
         :key="sortBy"
