@@ -65,6 +65,14 @@
         :groupBy="groupBy"
       />
 
+      <MainTableSubjectsBody
+        v-if="subjects"
+        :subjects="subjects"
+        :moduleId="moduleId"
+        :sortBy="sortBy"
+        :groupBy="groupBy"
+      />
+
       <MainTableModuleTasksBody
         v-if="moduleId"
         :moduleId="moduleId"

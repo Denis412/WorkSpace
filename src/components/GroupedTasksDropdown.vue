@@ -1,46 +1,47 @@
 <template>
   <q-btn
-  class="btn-position absolute"
-  round
-  flat
-  icon="chevron_right"
-  :class="{rotate: dropdown}"
-  @click="dropdown=!dropdown"/>
-    <tr
-      v-for="task in group"
-      :key="task.id"
-      :style="{ 'background-color': calculatedCurrentStatus(task?.property3) }"
-      v-show="dropdown"
-    >
-      <td>
-        {{ task.name }}
-      </td>
+    class="btn-position absolute"
+    round
+    flat
+    icon="chevron_right"
+    :class="{ rotate: dropdown }"
+    @click="dropdown = !dropdown"
+  />
+  <tr
+    v-for="task in group"
+    :key="task.id"
+    :style="{ 'background-color': calculatedCurrentStatus(task?.status) }"
+    v-show="dropdown"
+  >
+    <td>
+      {{ task.name }}
+    </td>
 
-      <td>
-        {{ task.property1 }}
-      </td>
+    <td>
+      {{ task.description }}
+    </td>
 
-      <td>
-        {{ calculatedStatus?.label }}
-      </td>
+    <td>
+      {{ calculatedStatus?.label }}
+    </td>
 
-      <td>
-        <TaskAction
-          :module-id="moduleId||task.property7?.id"
-          title="Редактирование задачи"
-          button-label="Изменить"
-          :task="task"
-          :executor-edit="true"
-        />
-        <q-btn
-          v-if="deleteBtn"
-          class="q-ml-md"
-          @click="deleteTask(task.id)"
-          color="negative"
-          label="Удалить"
-        />
-      </td>
-    </tr>
+    <td>
+      <TaskAction
+        :module-id="moduleId || task.module?.id"
+        title="Редактирование задачи"
+        button-label="Изменить"
+        :task="task"
+        :executor-edit="true"
+      />
+      <q-btn
+        v-if="deleteBtn"
+        class="q-ml-md"
+        @click="deleteTask(task.id)"
+        color="negative"
+        label="Удалить"
+      />
+    </td>
+  </tr>
 </template>
 
 <script setup>
@@ -53,8 +54,8 @@ const { group, listProperties, moduleId } = defineProps({
   group: Array,
   listProperties: Object,
   moduleId: String,
-  deleteBtn: Boolean
-})
+  deleteBtn: Boolean,
+});
 
 const dropdown = ref(false);
 
@@ -84,15 +85,14 @@ const deleteTask = async (taskId) => {
     console.log(error);
   }
 };
-
 </script>
 
 <style lang="scss" scoped>
-.rotate{
+.rotate {
   transform: rotate(90deg);
 }
 
-.btn-position{
+.btn-position {
   top: 0;
   right: 0;
 }

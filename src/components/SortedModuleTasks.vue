@@ -1,9 +1,9 @@
 <template>
   <tbody>
     <tr
-      v-for="task in sortTasks(tasks,sortBy)"
+      v-for="task in sortTasks(tasks, sortBy)"
       :key="task.id"
-      :style="{ 'background-color': calculatedCurrentStatus(task?.property3) }"
+      :style="{ 'background-color': calculatedCurrentStatus(task?.status) }"
     >
       <td>
         <div class="link">
@@ -12,14 +12,14 @@
       </td>
 
       <td>
-        {{ task.property1 }}
+        {{ task.description }}
       </td>
 
       <td>
         <router-link
-          :to="{ name: 'subject', params: { id: task.property2.id } }"
+          :to="{ name: 'subject', params: { id: task.executor.id } }"
         >
-          {{ task.property2.fullname.first_name }}
+          {{ task.executor.fullname.first_name }}
         </router-link>
       </td>
 
@@ -49,7 +49,7 @@ import taskApi from "src/sdk/task";
 import { ref } from "vue";
 import { useQuasar } from "quasar";
 
-const { tasks, sortBy, listProperties,moduleId } = defineProps({
+const { tasks, sortBy, listProperties, moduleId } = defineProps({
   tasks: Array,
   sortBy: String,
   listProperties: Object,
@@ -58,20 +58,15 @@ const { tasks, sortBy, listProperties,moduleId } = defineProps({
 
 const $q = useQuasar();
 
-
 const calculatedStatus = ref({});
 
-const sortTasks = (tasks,sortBy) => {
-  console.log(listProperties)
-  if (sortBy === 'Сначала новые')
-    return sortApi.sortDESCByCreate(tasks);
-  else if (sortBy === 'Сначала старые')
-    return sortApi.sortASCByCreate(tasks);
-  else if (sortBy === 'По названию')
-    return sortApi.sortByModuleName(tasks);
-  else
-    return tasks;
-}
+const sortTasks = (tasks, sortBy) => {
+  console.log(listProperties);
+  if (sortBy === "Сначала новые") return sortApi.sortDESCByCreate(tasks);
+  else if (sortBy === "Сначала старые") return sortApi.sortASCByCreate(tasks);
+  else if (sortBy === "По названию") return sortApi.sortByModuleName(tasks);
+  else return tasks;
+};
 
 const calculatedCurrentStatus = (taskProperty) => {
   const obj = listProperties?.property.meta.options.find(
@@ -95,7 +90,6 @@ const deleteTask = async (taskId) => {
     console.log(error);
   }
 };
-
 </script>
 
 <style lang="scss" scoped></style>

@@ -1,4 +1,5 @@
 <template>
+  <!-- <pre>{{ modules }}</pre> -->
   <SortedModules v-if="!groupBy" :sortBy="sortBy" :modules="modules" />
 
   <GroupedModules :groupBy="groupBy" :modules="modules" />
