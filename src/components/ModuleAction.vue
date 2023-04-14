@@ -37,7 +37,7 @@
 </template>
 
 <script setup>
-import { defineProps, ref } from "vue";
+import { defineProps, inject, ref } from "vue";
 import ModuleForm from "./ModuleForm.vue";
 import moduleApi from "src/sdk/module";
 
@@ -53,9 +53,9 @@ const bufferModule = [];
 const showForm = (module) => {
   show.value = true;
   form.value.module_name = module.name;
-  form.value.user_name = `${module.property4.fullname.first_name} ${module.property4.fullname.last_name}`;
-  form.value.date_start = module.property5.date;
-  form.value.date_end = module.property6.date;
+  form.value.user_name = `${module.responsible.fullname.first_name} ${module.responsible.fullname.last_name}`;
+  form.value.date_start = module.startdate.date;
+  form.value.date_end = module.expirationdate.date;
 
   Object.values(form.value).forEach((el) => bufferModule.push(el));
   bufferModule.push(module.id);
@@ -63,11 +63,17 @@ const showForm = (module) => {
 
 const form = ref({});
 
+const updatePages = inject("updatePages");
+const updateModules = inject("updateModules");
+
 const onSubmit = async (moduleForm) => {
   try {
     module
       ? await moduleApi.moduleUpdate(moduleForm, bufferModule)
       : await moduleApi.moduleCreate(moduleForm);
+
+    await updatePages();
+    await updateModules();
   } catch (error) {
     console.log(error);
   }
@@ -76,6 +82,9 @@ const onSubmit = async (moduleForm) => {
 const deleteModule = async () => {
   try {
     await moduleApi.moduleDelete(moduleDelete.id);
+
+    await updatePages();
+    await updateModules();
   } catch (error) {
     console.log(error);
   }

@@ -1,5 +1,9 @@
 <template>
-  <q-item class="q-pa-none column">
+  <q-item
+    class="q-pa-none column"
+    :key="modules"
+    v-if="subjectModules || page.object.type_id != modulesType_id || isOwner"
+  >
     <router-link :to="{ name: routeName(), params: { id: page.id } }">
       <q-item
         clickable
@@ -27,24 +31,47 @@
 
     <q-item-section :class="childrenItemsClass">
       <div>
-        <TreeMenu v-show="isChildrens" :pages="page.children?.data" />
+        <TreeMenu
+          v-show="isChildrens"
+          :modules="modules"
+          :pages="page.children?.data"
+        />
       </div>
     </q-item-section>
   </q-item>
 </template>
 
 <script setup>
-import { computed, ref } from "vue";
+import { computed, ref, inject } from "vue";
 import { useQuery } from "@vue/apollo-composable";
 import { getGroupSubjects } from "src/graphql/queries";
 import TreeMenu from "./TreeMenu.vue";
+import { Cookies } from "quasar";
 
-const { page } = defineProps({
+const { page, modules } = defineProps({
   page: Object,
+  modules: Array,
 });
 
 const { result: subjects } = useQuery(getGroupSubjects, {
   group_id: page?.object?.id,
+});
+
+const modulesType_id = ref(process.env.MODULE_ID);
+const isOwner = inject("isOwner");
+
+const subjectModules = computed(() => {
+  const moduless = modules?.reduce((modulesArr, subject) => {
+    modulesArr.push(...subject.modules);
+
+    return modulesArr;
+  }, []);
+
+  const module = moduless?.find((el) => el.id === page.object.id);
+
+  return module
+    ? module.responsible.user_id === parseFloat(Cookies.get("user_id"))
+    : false;
 });
 
 const showChildren = ref(false);
@@ -83,13 +110,13 @@ a {
 .children-wrapper-collapsed {
   @extend .children-wrapper;
   max-height: 0;
-  transition: max-height .35s ease-out;
+  transition: max-height 0.35s ease-out;
 }
 
 .children-wrapper-expanded {
   @extend .children-wrapper;
   max-height: 999px;
-  transition: max-height .67s ease-in;
+  transition: max-height 0.67s ease-in;
 }
 
 .drop-down-icon {

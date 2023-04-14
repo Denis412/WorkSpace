@@ -1,37 +1,94 @@
 <template>
-  <div style="min-width: 300px; overflow-x: auto;">
-    <table style="width: 100%"  class="table">
-    <thead class="rounded-borders border-black-1">
-      <tr>
-        <th
-          v-for="columnName in columnNames"
-          :key="columnName"
-          class="q-pa-md text-center"
-        >
-          {{ columnName }}
-        </th>
-      </tr>
-    </thead>
+  <div style="min-width: 300px; overflow-x: auto">
+    <div class="row no-wrap">
+      <Select
+        v-if="modules || tasks || moduleId"
+        :options="['Сначала новые', 'Сначала старые', 'По названию']"
+        :changeValue="sortBy"
+        :key="sortBy"
+        :label="'Сортировка'"
+        :icon="'sort'"
+        @change="sort"
+      />
 
-    <MainTableModulesBody v-if="modules" :modules="modules" />
+      <Select
+        v-if="modules"
+        class="q-ml-sm"
+        :options="['По названию', 'По дате начала', 'По дате окончания']"
+        :changeValue="groupBy"
+        :key="groupBy"
+        :label="'Группировка'"
+        :icon="'workspaces'"
+        @change="group"
+      />
 
-    <MainTableModuleTasksBody
-      v-else-if="moduleId"
-      :moduleId="moduleId"
-      :pageId="pageId"
-    />
+      <Select
+        v-if="moduleId"
+        class="q-ml-sm"
+        :options="['По названию', 'По исполнителю', 'По статусу задачи']"
+        :changeValue="groupBy"
+        :key="groupBy"
+        :label="'Группировка'"
+        :icon="'workspaces'"
+        @change="group"
+      />
 
-    <MainTableSubjectsBody
-      v-else-if="subjects"
-      :columnLength="columnNames.length"
-      :propertyType="columnNames.at(-1)"
-      :subjects="subjects"
-    />
+      <Select
+        v-if="tasks"
+        class="q-ml-sm"
+        :options="['По названию', 'По статусу задачи']"
+        :changeValue="groupBy"
+        :key="groupBy"
+        :label="'Группировка'"
+        :icon="'workspaces'"
+        @change="group"
+      />
+    </div>
 
-    <MainTableTasksBody v-else-if="tasks" :tasks="tasks" />
-  </table>
+    <table style="width: 100%" class="table q-mt-lg">
+      <thead class="rounded-borders border-black-1">
+        <tr>
+          <th
+            v-for="columnName in columnNames"
+            :key="columnName"
+            class="q-pa-md text-center"
+          >
+            {{ columnName }}
+          </th>
+        </tr>
+      </thead>
+
+      <MainTableModulesBody
+        v-if="modules"
+        :modules="modules"
+        :sortBy="sortBy"
+        :groupBy="groupBy"
+      />
+
+      <MainTableSubjectsBody
+        v-if="subjects"
+        :subjects="subjects"
+        :moduleId="moduleId"
+        :sortBy="sortBy"
+        :groupBy="groupBy"
+      />
+
+      <MainTableModuleTasksBody
+        v-if="moduleId"
+        :moduleId="moduleId"
+        :sortBy="sortBy"
+        :groupBy="groupBy"
+      />
+
+      <MainTableTasksBody
+        v-if="tasks"
+        :key="sortBy"
+        :tasks="tasks"
+        :sortBy="sortBy"
+        :groupBy="groupBy"
+      />
+    </table>
   </div>
-  
 </template>
 
 <script setup>
@@ -39,6 +96,8 @@ import MainTableModulesBody from "src/components/MainTableModulesBody.vue";
 import MainTableSubjectsBody from "src/components/MainTableSubjectsBody.vue";
 import MainTableTasksBody from "src/components/MainTableTasksBody.vue";
 import MainTableModuleTasksBody from "./MainTableModuleTasksBody.vue";
+import Select from "./Select.vue";
+import { ref, computed } from "vue";
 
 const { columnNames, subjects, modules, tasks, moduleId, pageId } = defineProps(
   {
@@ -50,6 +109,19 @@ const { columnNames, subjects, modules, tasks, moduleId, pageId } = defineProps(
     pageId: String,
   }
 );
+
+const sortBy = ref(null);
+const groupBy = ref(null);
+
+const sort = (sortValue) => {
+  sortBy.value = sortValue;
+  groupBy.value = null;
+};
+
+const group = (groupValue) => {
+  groupBy.value = groupValue;
+  sortBy.value = null;
+};
 </script>
 
 <style>

@@ -20,7 +20,7 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, inject } from "vue";
 import TaskForm from "./TaskForm.vue";
 import { useQuasar } from "quasar";
 import taskApi from "src/sdk/task";
@@ -36,12 +36,15 @@ const { moduleId, title, buttonLabel, task, executorEdit } = defineProps({
 });
 
 const showForm = ref(false);
+const updateTasks = inject("updateTasks");
 
 const actionTask = async (form) => {
   try {
     task
       ? await taskApi.taskUpdate(form, task.id, moduleId)
       : await taskApi.taskCreate(form, moduleId);
+
+    updateTasks();
 
     $q.notify({
       type: "positive",

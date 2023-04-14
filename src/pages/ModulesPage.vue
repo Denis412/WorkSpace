@@ -6,12 +6,13 @@
   <q-page v-else class="q-pa-md">
     <div class="text-h3 text-center q-pb-md">Модули</div>
 
-    <div class="q-my-md flex">
+    <div v-if="isOwner" class="q-my-md flex">
       <ModuleAction />
     </div>
 
+    <!-- <pre>{{ currentModules?.paginate_subject.data }}</pre> -->
     <MainTable
-      :modules="modules?.paginate_subject.data[0]"
+      :modules="currentModules?.paginate_subject.data"
       :columnNames="columnNames"
     />
   </q-page>
@@ -20,9 +21,10 @@
 <script setup>
 import MainTable from "src/components/MainTable.vue";
 import { useQuery } from "@vue/apollo-composable";
-import { getUserModules } from "src/graphql/queries";
-import { provide, ref } from "vue";
+import { getUserModules, getModulesAll } from "src/graphql/queries";
+import { inject, onMounted, provide, ref } from "vue";
 import ModuleAction from "src/components/ModuleAction.vue";
+import { Cookies } from "quasar";
 
 const { page } = defineProps({
   page: Object,
@@ -30,15 +32,39 @@ const { page } = defineProps({
 
 provide("page", page);
 
-const showCreateForm = ref(false);
+let currentModules = ref(null);
+let loading = ref(null);
+let refetchModules;
+const isOwner = inject("isOwner");
 
-const { result: modules, loading } = useQuery(getUserModules);
+Cookies.get("user_id") === process.env.OWNER_ID
+  ? ({
+      result: currentModules,
+      loading,
+      refetch: refetchModules,
+    } = useQuery(getModulesAll))
+  : ({
+      result: currentModules,
+      loading,
+      refetch: refetchModules,
+    } = useQuery(getUserModules));
 
-const columnNames = [
-  "Название",
-  "Дата и время начала",
-  "Дата и время окончания",
-  "Задачи",
-  "Действия",
-];
+const columnNames = ref();
+
+provide("updateModules", refetchModules);
+
+onMounted(() => {
+  const constColumns = [
+    "Название",
+    "Дата и время начала",
+    "Дата и время окончания",
+    "Задачи",
+  ];
+
+  isOwner.value ? constColumns.push("Действия") : null;
+
+  console.log(constColumns);
+
+  columnNames.value = constColumns;
+});
 </script>

@@ -1,67 +1,26 @@
 <template>
-  <tbody>
-    <tr v-for="module in modules.property4" :key="module.id">
-      <td class="q-pa-md text-center">
-        {{ module.name }}
-      </td>
+  <!-- <pre>{{ modules }}</pre> -->
+  <SortedModules v-if="!groupBy" :sortBy="sortBy" :modules="modules" />
 
-      <!-- <td class="q-pa-md text-center">
-        <router-link :to="{ name: 'subject', params: { id: module.id } }">
-          {{ module.property4.fullname.first_name }}
-          {{ module.property4.fullname.last_name }}
-        </router-link>
-      </td> -->
-
-      <td class="q-pa-md text-center">
-        C {{ module.property5.date }} {{ module.property5.time }}
-      </td>
-
-      <td class="q-pa-md text-center">
-        До {{ module.property6.date }} {{ module.property6.time }}
-      </td>
-
-      <td class="q-pa-md text-center">
-        <div>Назначено: {{ reduceTasks(0) }}</div>
-        <div>Выполнено: {{ reduceTasks(1) }}</div>
-        <div>Завершено: {{ reduceTasks(2) }}</div>
-      </td>
-      <div class="row no-wrap">
-        <ModuleAction :module="module" />
-        <ModuleAction :moduleDelete="module" />
-      </div>
-    </tr>
-  </tbody>
+  <GroupedModules :groupBy="groupBy" :modules="modules" />
 </template>
 
 <script setup>
-import { defineProps, computed } from "vue";
-import ModuleAction from "./ModuleAction.vue";
-const { modules } = defineProps({
+import { defineProps } from "vue";
+import SortedModules from "./SortedModules.vue";
+import GroupedModules from "./GroupedModules.vue";
+
+const { modules, sortBy, groupBy } = defineProps({
   modules: Object,
+  sortBy: String,
+  groupBy: String,
 });
-
-const task = computed(() => modules?.property4[0]?.property7);
-
-const reduceTasks = (status) => {
-  if (!task.value?.length) return 0;
-
-  let sum = 0;
-
-  if (status === 0) {
-    task.value?.forEach((elem) => {
-      elem.property3 === process.env.APPOINTED_ID ? sum++ : null;
-    });
-    return sum;
-  } else if (status === 1) {
-    task.value?.forEach((elem) => {
-      elem.property3 === process.env.COMPLETED_ID ? sum++ : null;
-    });
-    return sum;
-  } else {
-    task.value?.forEach((elem) => {
-      elem.property3 === process.env.FINISHED_ID ? sum++ : null;
-    });
-    return sum;
-  }
-};
 </script>
+
+<style lang="scss" scoped>
+.icon-hover {
+  &:hover {
+    color: $primary;
+  }
+}
+</style>

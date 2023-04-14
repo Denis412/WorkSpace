@@ -65,20 +65,20 @@ const options = getAllStatusesForSelect();
 
 const form = ref({
   name: task?.name || "",
-  description: task?.property1 || "",
+  description: task?.description || "",
   status: "",
   executor: {
-    label: `${task?.property2.fullname.first_name || ""} ${
-      task?.property2.fullname.last_name || ""
+    label: `${task?.executor.fullname.first_name || ""} ${
+      task?.executor.fullname.last_name || ""
     }`,
-    value: task?.property2.id || "",
+    value: task?.executor.id || "",
   },
 });
 
 const isDisabledSelectStatus = computed(() =>
   executorEdit
-    ? form.value.status.label !== "Назначена"
-    : form.value.status.label !== "Выполнена"
+    ? form.value.status?.label !== "Назначена"
+    : form.value.status?.label !== "Выполнена"
 );
 
 const { result: executorGroupSubjects } = useQuery(getExecutorGroupSubjects);
@@ -95,6 +95,6 @@ const calculatedStatus = (property) => {
 };
 
 onMounted(async () => {
-  calculatedStatus(task?.property3);
+  calculatedStatus(task?.status);
 });
 </script>

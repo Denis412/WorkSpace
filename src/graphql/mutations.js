@@ -24,8 +24,8 @@ export const userGroupInviteUser = gql`
 `;
 
 export const createModule = gql`
-  mutation ($input: create_type2_input!) {
-    create_type2(input: $input) {
+  mutation ($input: create_module_input!) {
+    create_module(input: $input) {
       status
       recordId
       record {
@@ -37,7 +37,7 @@ export const createModule = gql`
         created_at
         updated_at
         name
-        property4 {
+        responsible {
           id
           user_id
           fullname {
@@ -45,11 +45,11 @@ export const createModule = gql`
             last_name
           }
         }
-        property5 {
+        startdate {
           date
           time
         }
-        property6 {
+        expirationdate {
           date
           time
         }
@@ -59,8 +59,8 @@ export const createModule = gql`
 `;
 
 export const createTask = gql`
-  mutation ($input: create_type1_input!) {
-    create_type1(input: $input) {
+  mutation ($input: create_task_input!) {
+    create_task(input: $input) {
       status
       recordId
       record {
@@ -72,8 +72,8 @@ export const createTask = gql`
         created_at
         updated_at
         name
-        property1
-        property2 {
+        description
+        executor {
           id
           user_id
           fullname {
@@ -81,7 +81,7 @@ export const createTask = gql`
             last_name
           }
         }
-        property7 {
+        module {
           id
         }
       }
@@ -111,8 +111,8 @@ export const createPermissionRule = gql`
 `;
 
 export const updateTask = gql`
-  mutation ($id: String!, $input: update_type1_input!) {
-    update_type1(id: $id, input: $input) {
+  mutation ($id: String!, $input: update_task_input!) {
+    update_task(id: $id, input: $input) {
       status
       recordId
       record {
@@ -124,8 +124,8 @@ export const updateTask = gql`
         created_at
         updated_at
         name
-        property1
-        property2 {
+        description
+        executor {
           id
           user_id
           fullname {
@@ -133,15 +133,15 @@ export const updateTask = gql`
             last_name
           }
         }
-        property3
+        status
       }
     }
   }
 `;
 
 export const updatePage = gql`
-mutation updatePage($id: String!, $input: PageUpdateInput!) {
-  pageUpdate(id: $id, input: $input) {
+  mutation updatePage($id: String!, $input: PageUpdateInput!) {
+    pageUpdate(id: $id, input: $input) {
       recordId
       record {
         parent_id
@@ -151,15 +151,15 @@ mutation updatePage($id: String!, $input: PageUpdateInput!) {
         icon
         level
         is_public
-				is_block
+        is_block
         position
         config
         created_at
         updated_at
       }
       status
+    }
   }
-}
 `;
 
 export const createPage = gql`
@@ -189,8 +189,8 @@ export const createPage = gql`
 `;
 
 export const updateModule = gql`
-  mutation ($input: update_type2_input!, $id: String!) {
-    update_type2(id: $id, input: $input) {
+  mutation ($input: update_module_input!, $id: String!) {
+    update_module(id: $id, input: $input) {
       status
       recordId
       record {
@@ -209,7 +209,7 @@ export const updateModule = gql`
 
 export const deleteModule = gql`
   mutation deleteModule($module_id: String!) {
-    delete_type2(id: $module_id) {
+    delete_module(id: $module_id) {
       recordId
     }
   }
@@ -217,7 +217,7 @@ export const deleteModule = gql`
 
 export const deleteTask = gql`
   mutation deleteTask($task_id: String!) {
-    delete_type1(id: $task_id) {
+    delete_task(id: $task_id) {
       recordId
     }
   }
@@ -227,6 +227,23 @@ export const deletePage = gql`
   mutation deletePage($page_id: String!) {
     pageDelete(id: $page_id) {
       recordId
+    }
+  }
+`;
+
+export const createQueue = gql`
+  mutation {
+    notificationSubscribe {
+      hash
+    }
+  }
+`;
+
+export const filesUpload = gql`
+  mutation filesUpload($files: [Upload]!) {
+    filesUpload(files: $files) {
+      status
+      ids
     }
   }
 `;

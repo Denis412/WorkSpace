@@ -7,13 +7,13 @@
     <!-- <pre>{{ page }}</pre> -->
     <!-- <pre>re{{ resultModule }}</pre> -->
     <header class="text-h3 text-center">
-      {{ resultModule?.get_type2.name }}
+      {{ resultModule?.get_module.name }}
     </header>
 
     <main class="q-mt-md">
       <div class="flex">
         <TaskAction
-          :module-id="resultModule?.get_type2.id"
+          :module-id="resultModule?.get_module.id"
           title="Создание задачи"
           button-label="Создать задачу"
         />
@@ -27,7 +27,7 @@
           'Исполнитель',
           'Действия',
         ]"
-        :module-id="resultModule?.get_type2.id"
+        :module-id="resultModule?.get_module.id"
       />
     </main>
   </q-page>
@@ -36,8 +36,8 @@
 <script setup>
 import MainTable from "src/components/MainTable.vue";
 import { useQuery } from "@vue/apollo-composable";
-import { getModuleById } from "src/graphql/queries";
-import { onMounted } from "vue";
+import { getModuleById, getUserTasks } from "src/graphql/queries";
+import { onMounted, provide } from "vue";
 import TaskAction from "src/components/TaskAction.vue";
 
 const { page } = defineProps({
@@ -51,6 +51,11 @@ const {
 } = useQuery(getModuleById, {
   module_id: page.object.id,
 });
+
+const { refetch: refetchTasks } = useQuery(getUserTasks);
+
+provide("updateTasks", refetchTasks);
+provide("updateModule", refetchModule);
 
 onMounted(() => {
   if (!page) return;
