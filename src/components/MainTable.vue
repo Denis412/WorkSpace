@@ -68,7 +68,8 @@
       <MainTableSubjectsBody
         v-if="subjects"
         :subjects="subjects"
-        :moduleId="moduleId"
+        :column-length="columnNames.length"
+        :property-type="columnNames.at(-1)"
         :sortBy="sortBy"
         :groupBy="groupBy"
       />
