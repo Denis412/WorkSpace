@@ -72,8 +72,8 @@ const onSubmit = async (moduleForm) => {
       ? await moduleApi.moduleUpdate(moduleForm, bufferModule)
       : await moduleApi.moduleCreate(moduleForm);
 
-    updatePages();
-    updateModules();
+    await updatePages();
+    await updateModules();
   } catch (error) {
     console.log(error);
   }
@@ -83,8 +83,8 @@ const deleteModule = async () => {
   try {
     await moduleApi.moduleDelete(moduleDelete.id);
 
-    updatePages();
-    updateModules();
+    await updatePages();
+    await updateModules();
   } catch (error) {
     console.log(error);
   }

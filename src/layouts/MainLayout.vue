@@ -21,7 +21,7 @@
 </template>
 
 <script setup>
-import { provide, ref } from "vue";
+import { onUnmounted, provide, ref } from "vue";
 import MainHeader from "src/components/MainHeader.vue";
 import MainDrawer from "src/components/MainDrawer.vue";
 import MainFooter from "src/components/MainFooter.vue";
@@ -43,8 +43,6 @@ provideApolloClient(apolloClient);
 const leftDrawerOpen = ref(false);
 const isOwner = ref(Cookies.get("user_id") === process.env.OWNER_ID);
 
-const { mutate: creatingQueue } = useMutation(createQueue);
-
 const { result: currentSpacePages, refetch: refetchPages } = useQuery(pages);
 
 const toggleLeftDrawer = () => {
@@ -57,6 +55,12 @@ provide("isOwner", isOwner);
 stompApi.queueCreate();
 
 onMounted(() => {
+  if (!Cookies.get("queue")) stompApi.queueCreate();
+
   stompApi.stompConnect();
+});
+
+onUnmounted(() => {
+  Cookies.set("queue", null);
 });
 </script>

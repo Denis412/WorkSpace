@@ -50,7 +50,7 @@ const taskCreate = async (form, moduleId) => {
     },
   });
 
-  refetchModule({
+  await refetchModule({
     module_id: moduleId,
   });
 
@@ -78,9 +78,13 @@ const taskUpdate = async (form, taskId) => {
   return data;
 };
 
-const taskDelete = async (taskId) => {
+const taskDelete = async (taskId, moduleId) => {
   const { data } = await deletingTask({
     task_id: taskId,
+  });
+
+  await refetchModule({
+    module_id: moduleId,
   });
 
   return data;

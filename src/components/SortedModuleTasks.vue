@@ -79,7 +79,7 @@ const calculatedCurrentStatus = (taskProperty) => {
 
 const deleteTask = async (taskId) => {
   try {
-    await taskApi.taskDelete(taskId, moduleId, 0);
+    await taskApi.taskDelete(taskId, moduleId);
 
     $q.notify({
       type: "positive",
