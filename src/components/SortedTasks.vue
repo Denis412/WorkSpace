@@ -3,7 +3,9 @@
     <tr
       v-for="task in sortTasks(tasks, sortBy)"
       :key="task.id"
-      :style="{ 'background-color': calculatedCurrentStatus(task?.status) }"
+      :style="{
+        'background-color': calculatedCurrentStatus(task?.status).color,
+      }"
     >
       <td>
         {{ task.name }}
@@ -14,7 +16,7 @@
       </td>
 
       <td>
-        {{ calculatedStatus?.label }}
+        {{ calculatedCurrentStatus(task?.status).label }}
       </td>
 
       <td>
@@ -58,9 +60,7 @@ const calculatedCurrentStatus = (taskProperty) => {
     (status) => status.id === taskProperty
   );
 
-  calculatedStatus.value = obj;
-
-  return obj?.color;
+  return obj;
 };
 </script>
 
