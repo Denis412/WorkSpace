@@ -1,6 +1,6 @@
 <template>
   <q-form @submit="$emit('submitForm', form)">
-    <main class="text-h4 text-center q-mb-md justify-between form-width">
+    <main class="text-h4 text-center q-mb-md justify-between">
       <q-input
         :disable="executorEdit"
         v-model="form.name"

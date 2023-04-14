@@ -1,11 +1,13 @@
 <template>
-  <q-form
-    class="flex column rounded-borders bg-grey-3 justify-between q-pa-md form-width"
+  <div class="bg">
+    <q-form
+    class="flex column rounded-borders justify-between q-pa-md form-width"
     @submit="signIn"
   >
-    <header class="text-center text-h6">Вход</header>
+    <header class="text-center text-h6 bg">Вход</header>
 
-    <main>
+    <main
+    >
       <q-input
         v-model="form.email"
         type="email"
@@ -24,10 +26,12 @@
 
     <footer>
       <div class="q-mt-md">
-        <q-btn label="Войти" class="bg-green w-100p" type="submit" />
+        <q-btn label="Войти" class="bg-green w-100p " type="submit" />
       </div>
     </footer>
   </q-form>
+  </div>
+  
 </template>
 
 <script setup>

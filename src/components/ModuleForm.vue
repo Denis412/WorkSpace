@@ -1,9 +1,9 @@
 <template>
-  <div class="bg-white q-pa-md rounded-borders">
+  <div class="q-pa-md rounded-borders bg">
     <q-form @submit="onSubmit">
-      <header class="text-h4 text-center q-mb-md">{{ moduleName }}</header>
+      <header class="text-h4 text-center q-mb-md bg">{{ moduleName }}</header>
 
-      <main>
+      <main class="bg">
         <q-input
           v-model="form.name"
           type="text"
@@ -57,7 +57,7 @@
         </q-dialog>
       </main>
 
-      <footer>
+      <footer class="bg">
         <div class="col-12 q-mt-md">
           <q-btn
             class="block"

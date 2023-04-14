@@ -1,7 +1,7 @@
 <template>
-  <div style="min-width: 300px; overflow-x: auto">
-    <div class="row no-wrap">
-      <Select
+  <div  class="table" style="min-width: 300px; overflow-x: auto">
+    <div class="row no-wrap ">
+      <Select  
         v-if="modules || tasks || moduleId"
         :options="['Сначала новые', 'Сначала старые', 'По названию']"
         :changeValue="sortBy"
@@ -58,7 +58,7 @@
         </tr>
       </thead>
 
-      <MainTableModulesBody
+      <MainTableModulesBody 
         v-if="modules"
         :modules="modules"
         :sortBy="sortBy"
@@ -124,8 +124,12 @@ const group = (groupValue) => {
 };
 </script>
 
-<style>
+<style lang="scss">
 .border-bottom {
   border-bottom: 1px solid black;
 }
+.table {
+color: var( --text-color-2);
+}
+
 </style>
